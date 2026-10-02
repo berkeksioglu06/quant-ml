@@ -1,0 +1,30 @@
+[project]
+name = "quant-ml"
+version = "0.1.0"
+description = "Machine learning research for trading"
+readme = "README.md"
+authors = [
+    { name = "canokan", email = "canokan@okancore.com" },
+    { name = "berkeksioglu", email = "berkeksioglu@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "pandas>=3.0.6",
+    "scikit-learn>=1.9.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.9,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.4.0",
+    "pytest>=9.1.1",
+    "ruff>=0.16.10",
+]
+
+[tool.ruff]
+line-length = 100

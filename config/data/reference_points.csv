@@ -6,11 +6,11 @@
 symbol,date,gercek_kapanis,gercek_hacim,kaynak
 NVDA,2021-07-19,,,
 NVDA,2024-06-07,,,
-TSLA,2020-08-28,,,
+TSLA,2020-08-28,2213.40,,"Drive Tesla Canada 2020-08-31: closing at $2,213.40 last week https://driveteslacanada.ca/?p=12297 (Benzinga 2020-08-31 2238.75 yazıyor ama kendi 442.68x5=2213.40 ile çelişiyor)"
 TSLA,2022-08-24,,,
-AAPL,2020-08-28,,,
-AMZN,2022-06-03,,,
-GOOGL,2022-07-15,,,
+AAPL,2020-08-28,499.23,,"Market Realist 2020-08-31 (Mark Pygas): worth $499.23 when markets closed https://marketrealist.com/p/what-does-the-apple-stock-split-mean/"
+AMZN,2022-06-03,2447,,"Deseret News 2022-06-07 (Lindsey Harper): going from $2,447 a share https://www.deseret.com/2022/6/7/23157244/amazon-stock-split-2022-shares-what-it-means-market-buying-amazon-stock/ (yuvarlanmış)"
+GOOGL,2022-07-15,2235.55,,"Motley Fool 2022-07-18: stock had risen to $2,235.55 https://www.fool.com/investing/2022/07/18/alphabets-stock-split-has-taken-effect-now-what/ (sınıf GOOGL/GOOG belirtilmemiş; fark %2 toleransın altında beklenir)"
 SHOP,2022-06-28,,,
 SMCI,2024-09-30,,,
 WMT,2024-02-23,,,

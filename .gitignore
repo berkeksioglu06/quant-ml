@@ -218,3 +218,9 @@ __marimo__/
 .streamlit/secrets.toml
 
 .DS_Store
+
+# Local research outputs and temporary review tools
+/data/
+/output/
+/tmp/
+/tests/_son_data_test_raporu.md

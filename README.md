@@ -1,12 +1,9 @@
 # quant-ml
 
-Machine learning research for trading.
-
-## Quick start
-
 ```bash
 uv sync
-uv run python main.py
+uv run python market_data.py all      # indir + temizle + kontrol
 ```
 
-Full setup guide: [docs/00_installation.md](docs/00_installation.md)
+Çıktı `data/<snapshot>/` altında: `raw/`, `clean/`, `issues.csv`, `coverage.csv`.
+Python'dan: `market_data.load()`.

@@ -186,10 +186,7 @@
         "ana20"
       ],
       "asset": "equity",
-      "legacy_symbol": "SQ",
-      "ticker_change_date": "2025-01-21",
-      "event": "Block: SQ -> XYZ ticker değişimi 2025-01-21. Geçmişin XYZ altında kesintisiz olup olmadığı kontrol edilir.",
-      "legacy_merge_approved": false
+      "event": "Block: SQ -> XYZ ticker değişimi 2025-01-21. Geçmişin XYZ altında kesintisiz olup olmadığı kontrol edilir."
     },
     {
       "symbol": "SNAP",

@@ -1,8 +1,11 @@
-# Geniş evren (2.957 hisse) → Deney G1 hazırlığı
+# Geniş evren (2.957 hisse) → Deney 6 hazırlığı
 
 Amaç: Kural tabanlı geniş evreni repodaki kodla tekrar üretilebilir hale getirmek, deney koduna
-(`research/`) bellek dostu şekilde bağlamak ve ilk deneyi (G1) **önceden yazılmış** haliyle koşulmaya
-hazır bırakmak. 2025+ kapalı kalır. Sonuçlar görüldükten sonra hiçbir ayar değişmez. Veri Git'e girmez.
+(`research/`) bellek dostu şekilde bağlamak ve geniş evrendeki ilk deneyi (Deney 6) **önceden yazılmış**
+haliyle koşmak. 2025+ kapalı kalır. Sonuçlar görüldükten sonra hiçbir ayar değişmez. Veri Git'e girmez.
+
+Adlandırma: Deney 1–4b 28 hisselik evrende, Deney 2/4a tekrarı 281 hisselik evrende koşuldu.
+Deney 5 üç bariyerli hedefe ayrılmıştı. Bu deney Deney 6'dır.
 
 ## 0. Bağlam ve alınmış kararlar
 
@@ -63,7 +66,7 @@ H20'de bu ~10,4 M satır × ~60 kolon demek, 5 GB'ı aşıyor. Makinede 16 GB RA
     geçen satırlar. Özellikler `float32`.
   - Bölmeler `partition_membership`'ten indeks olarak tutulur. `split` istendiğinde oluşturulur,
     satır kopyası tutulmaz.
-  - Kesitsel `xs_*` özellikleri G1'de **gerekmiyor**. Hesaplanmasın (bellek).
+  - Kesitsel `xs_*` özellikleri Deney 6'da **gerekmiyor**. Hesaplanmasın (bellek).
 - **Beta:** 252 seans, en az 200 gözlem, yalnız t'ye kadar. Bütün hisseler için **geniş `clean/`
   klasöründen**. QQQ ve ^VIX sabit snapshot'tan. Mevcut `rolling_beta` / `daily_returns` kullanılsın.
 - **Rejim** (QQQ ↑ / yatay / ↓, ±%2) ve 6 piyasa durumu özelliği mevcut fonksiyonlarla.
@@ -76,7 +79,7 @@ H20'de bu ~10,4 M satır × ~60 kolon demek, 5 GB'ı aşıyor. Makinede 16 GB RA
   çalışmalı. Gerekirse `daily_rank_ic` ve `feature_ic` hızlandırılsın, sonuçları aynı kalsın
   (test ile).
 
-## 3. Deney G1: önceden yazılı (koşmadan önce `docs/deney_g1_plan.md` olarak commit'le)
+## 3. Deney 6: önceden yazılı (koşmadan önce `docs/deney6_plan.md` olarak commit'le)
 
 - **Evren:** 2.957 kural tabanlı (aday satırlar yukarıdaki gibi). H = 20.
 - **Hedef:** `target_vs_20` (oynaklığa göre ölçekli).
@@ -119,17 +122,31 @@ H20'de bu ~10,4 M satır × ~60 kolon demek, 5 GB'ı aşıyor. Makinede 16 GB RA
 - Hızlandırılan IC fonksiyonları eskiyle aynı sonucu veriyor.
 - Mevcut testlerin hepsi geçmeye devam ediyor.
 
-## 5. Duman koşusu (G1'den ÖNCE, sonuç okunmadan)
+## 5. Duman koşusu (Deney 6'dan ÖNCE, sonuç okunmadan)
 
 - 150 rastgele hisse (sabit seed) ile bütün zinciri bir kez çalıştır. Yalnız süreyi, belleği ve
   hatasız bittiğini raporla. **Metriklere bakma, yorumlama.** Duman çıktısı ayrı klasörde kalsın,
   runs.csv'ye "smoke" olarak işaretlensin.
-- Tam G1 için tahmini süre ve bellek yazılsın.
+- Tam Deney 6 için tahmini süre ve bellek yazılsın.
 
-## 6. Teslim
+## 6. Çalıştırma sırası ve teslim
 
-- Kod ve `docs/deney_g1_plan.md` → push. Veri ve çıktılar Git'e girmez.
-- G1'i koşmadan önce plan belgesini birlikte gözden geçirelim. Doğrulamayı ben (Claude) yapacağım.
+Bu belge bir Claude oturumuna doğrudan verilebilir; baştan sona şu sırayla ilerlesin:
+
+1. Bölüm 1–2–4: kod ve testler. Bütün testler geçsin, doğrulama sayıları tutsun.
+2. **Bölüm 3'ü olduğu gibi `docs/deney6_plan.md` olarak commit'le ve push'la. Deneyden ÖNCE.**
+   Commit tarihi, planın sonuçtan önce yazıldığının kaydıdır.
+3. Bölüm 5: duman koşusu (yalnız süre ve bellek).
+4. Deney 6'yı koş. Kod, plan ile commit arasında değişmesin. Değişmesi gerekirse (hata) önce
+   düzeltmeyi ve nedenini ayrı commit'le, sonra koş.
+5. Sonuç raporunu `docs/deney6_sonuc.md` olarak yaz. Önceden yazılı kriter tablosu, kol A/B,
+   kıyaslar, alt kümeler ve 281/28 hisselik referanslar olsun. Sonra push.
+   Sonuca bakıp ayar değiştirme, ek kol ekleme.
+6. Veri ve çıktılar Git'e girmez. runs.csv'ye kayıt düşsün.
+
+Doğrulama: Push'tan sonra Berk'in tarafındaki Claude aynı commit'ten bağımsız olarak doğrulayacak
+(sızma, tekrar üretilebilirlik, metriklerin bağımsız hesabı). Rapor ve kod buna izin verecek kadar
+açık olsun.
 
 Referans dosyalar (`tools/genis_evren_ref/`): `ref_build_clean.py`, `ref_build_dataset.py`, `ref_crosscheck.py`,
 `beklenen_fold_counts.csv`.

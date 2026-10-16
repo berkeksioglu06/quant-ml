@@ -138,6 +138,35 @@ arası *karışık*.
 Kod: `research/data.py` (hedefler, beta, rejim, bölmeler), `research/models.py`,
 `research/metrics.py`, `research/experiment.py`, `research/report.py`.
 
+## Tanı — LightGBM neden öğrenmiyor?
+
+`uv run python -m research.diag_lgbm` (K1–K4, test kapalı; `--jobs 4` ile ~1,5 dk). Deney 4a
+ayarlarıyla early stopping'siz sabit ağaç sayılarında eğitim/validation eğrisi, etiket
+karıştırma, 12 ayarlık küçük ızgara (yalnız bilgi; seçim yapılmaz), l2 ve IC ile early
+stopping, özellik kümesi ablasyonu. Çıktı `output/experiments/<zaman>_diag_lgbm_h20/TANI.md`.
+
+İlk koşu (`20261016T184204Z_diag_lgbm_h20`) bulguları:
+
+- **Az epoch/ağaç değil.** Ağaç 1→1000: eğitim IC +0,07→+0,27, validation IC −0,04→−0,03,
+  validation R² −2%→−15%. Ağaç eklemek yalnız eğitime uyumu artırıyor.
+- **Ayar değil.** min_child {20,200,1000} × yaprak {7,31} × lr {0,03,0,1}, 300 ağaç: raw24'te
+  val IC −0,011…−0,037, xs22'de −0,036…−0,083; 24 ayarın hiçbiri momentumu (+0,027) geçmiyor.
+  Eğitim IC +0,65'e çıkıyor (ezber).
+- **Eğitimdeki uyum büyük ölçüde gürültü.** Hedef karıştırılınca 200 ağaçta eğitim IC aynı
+  kalıyor (K1 gerçek +0,18, karışık +0,19). Gerçek hedefteki ek eğitim R²'si gün bazlı
+  özelliklerle dönem ezberinden geliyor: yalnız 8 `market_*` özelliğiyle eğitim R² +18%,
+  sıralama IC'si tanım gereği 0, validation R² −11%.
+- **Negatif IC'nin kaynağı işaret dönmesi.** Volatilite ailesi (`atr_14_ratio`, `volatility_10/20`,
+  `range_ratio`) eğitim yıllarında IC +0,04…+0,05, validation yıllarında −0,09…−0,12. Model
+  eğitimde "oynak hisse kazanır"ı öğreniyor; 2021–22'de tersi oluyor. K3–K4'te eğitim bu
+  yılları içerince volatilite etkisi eğitimde sönüyor ve val IC sıfıra yaklaşıyor.
+- **Early stopping'in 1 ağaç seçmesi hata değil, dürüst sonuç.** İç bölmede l2 ağaç eklendikçe
+  kötüleşiyor; IC ile seçmek de validation'da kazandırmıyor (raw24 K2: l2→1 ağaç −0,090,
+  IC→150 ağaç −0,117).
+- Tavan: tek özelliklerin validation IC'si en çok +0,03 (`sma_distance_20`, `return_10`);
+  günde 19–28 hisse, 20 seanslık örtüşen etiket. Bu kesitte ağaç modelinin momentumun
+  üstüne koyacağı sinyal görünmüyor.
+
 ## Sonraki deneyler
 
 Aynı değerlendirme çerçevesine, sırası sonuçlara göre belirlenir:

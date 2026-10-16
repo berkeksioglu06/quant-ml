@@ -172,8 +172,95 @@ stopping, özellik kümesi ablasyonu. Çıktı `output/experiments/<zaman>_diag_
 Tanının önerisiyle evren 29'dan 281 şirkete çıkarıldı (`universe_genis.json`, snapshot
 `yahoo_20261016T185837Z`, veri seti `output/yahoo_20261016T185837Z_dataset_v1_1`). `train_baseline.py` ve
 `research.diag_lgbm` artık varsayılan olarak bu veri setini okur; eski veri seti `--dataset`
-ile verilebilir. Deney 1–4b sonuçları yukarıda 29 hisselik evrene aittir; geniş evrende
-yeniden koşulmadı. 2025+ test dönemi yine kapalıdır.
+ile verilebilir. Deney 1–4b sonuçları yukarıda 29 hisselik evrene aittir; Deney 2, 4a ve tanı
+geniş evrende yeniden koşuldu (aşağıda). 2025+ test dönemi yine kapalıdır.
+
+### Geniş evrende Deney 2, 4a ve tanı
+
+Koşular: Deney 2 `20261016T191028Z_ridge_xs_h20`, Deney 4a `20261016T191113Z_lgbm_h20`, tanı
+`20261016T192000Z_diag_lgbm_h20` (`--jobs 4`, 6 dk). Kriterler, ayarlar ve satır kuralları değişmedi;
+validation'a bakılarak seçim yapılmadı. Kesit K1 validation'da günde 211 hisse (eski 23), K4'te
+273 (28); evren betası 1,22 (eski 1,33), volatilitesi 0,54 (aynı). Eski sütun 29 hisselik koşular.
+
+**Deney 2 — Ridge, sıralı özellikler (hüküm: geçmiyor → geçmiyor)**
+
+| Ölçü | 29 hisse | 281 hisse |
+|---|---:|---:|
+| Ridge K1–K4 rank IC (NW t) | −0,079 (−2,07) | −0,061 (−2,54) |
+| Momentum / geri dönüş IC | +0,027 / −0,021 | +0,001 / +0,000 |
+| Pozitif IC'li dönem | 0/4 | 0/4 |
+| QQQ ↓ IC | −0,343 | −0,223 (t −9,06) |
+| Beta-düzeltmeli IC | −0,087 | −0,067 |
+| İlk 5 beta / vol. (evren) | 1,58 / 0,82 (1,33 / 0,54) | 1,48 / 0,91 (1,22 / 0,54) |
+| Skor–volatilite sıra kor. | 0,75–0,95 (girdi kor.) | +0,68; skor–beta +0,45 |
+| R²_oos | −1,09% | −0,18% |
+
+Katsayı yine 4/4 dönemde `xs_atr_14_ratio` başta (+1,00); volatilite ailesi bu kez karışık işaretli.
+Momentum kıyası geniş evrende sıfır: eski evrendeki +0,027 bu özellik kümesinin değil, 29 hissenin
+özelliğiymiş.
+
+**Deney 4a — LightGBM, sabit ayar (kriter: 1/4 geçti → 0/4)**
+
+| Ölçü | 29 hisse | 281 hisse |
+|---|---:|---:|
+| Rank IC (NW t) | −0,050 (−1,48) | −0,105 (−2,56); sabit günler 0 sayılırsa −0,052 |
+| IC hesaplanan gün | 925/925 | 463/925: K3 0/230, K4 0/232 (her gün bütün hisselere aynı skor) |
+| Pozitif IC'li dönem | 2/4 | 0/4 |
+| QQQ ↓ IC (NW t) | −0,257 (−5,42) | −0,255 (−6,25) |
+| Skor–beta / skor–vol. sıra kor. | +0,30 / +0,46 | +0,52 / +0,86 |
+| R²_oos | −2,92% | −1,10% |
+| Ağaç K1/K2/K3/K4 | 124/1/1/1 | 147/30/1/2 |
+| `market_spy_return_20` kazanç payı | %17–87 | %43–91 |
+
+K3–K4'te 1–2 ağaç yalnız gün bazlı `market_spy_return_20`'ye bölünüyor; sıralama üretmiyor.
+Kısmi bağımlılık: K1'de volatilite etkisi QQQ ↑ ve ↓ alt kümelerinde aynı yönde pozitif (Δ +0,36 /
++0,30 puan), K2–K4 düz. Koşullu ilişki yine yok.
+
+**Tanı — eski koşuyla yan yana** (`20261016T184204Z` → geniş)
+
+| Soru | 29 hisse | 281 hisse |
+|---|---|---|
+| Öğrenme eğrisi raw24, 1→1000 ağaç: eğitim IC | +0,07 → +0,27 | +0,006 → +0,10 |
+| … validation IC | −0,04 → −0,03 | −0,02 → −0,03 (en kötü 50 ağaçta −0,057) |
+| … validation R² | −2% → −15% | −0,8% → −6% |
+| Etiket karıştırma, raw24 K1, 200 ağaç: eğitim IC gerçek / karışık | +0,18 / +0,19 | +0,059 / +0,072 |
+| … eğitim R² gerçek / karışık | +22% / +10% | +0,5% / +0,2% |
+| Yalnız `market_*` ile eğitim R² (200 ağaç) | +18% | +0,9% |
+| Izgara (24 ayar) validation IC aralığı raw24 / xs22 | −0,011…−0,037 / −0,036…−0,083 | −0,020…−0,040 / −0,022…−0,053 |
+| Momentumu geçen ayar | 0/24 (kıyas +0,027) | 0/24 (kıyas +0,001) |
+| Izgarada en yüksek eğitim IC | +0,65 | +0,24 |
+| Tek özellik validation IC tavanı | +0,034 (`sma_distance_20`), +0,031 (`return_10`) | +0,016 (`relative_volume_20`); diğerleri ≤ +0,009 |
+| Volatilite ailesi IC eğitim → validation | +0,04…+0,05 → −0,09…−0,12 (ters) | −0,005…+0,007 → −0,06…−0,08 |
+| Early stopping l2 / IC, raw24 K2 | 1 ağaç −0,090 / 150 ağaç −0,117 | 25 ağaç −0,122 / 1 ağaç −0,014 |
+
+Okuma:
+
+- **Kesit büyümesi LightGBM'i kurtarmadı.** Günde 20 yerine 170–270 hisseyle de ağaç eklemek
+  yalnız eğitime uyumu artırıyor; karıştırılmış etiketle eğitim IC'si gerçek etiketinkinden yüksek.
+  Eski evrendeki dönem ezberi (gün bazlı özelliklerle eğitim R² +18%) geniş evrende kayboldu
+  (+0,9%), yani eğitimdeki uyumun hemen tamamı gürültü düzeyinde.
+- **Tavan düştü, momentum kıyası sıfırlandı.** Tek özelliklerin validation IC'si en çok +0,016;
+  `return_20` +0,001. Eski evrenin +0,03'lük momentumu geniş evrende yok. Bu özellik kümesiyle
+  20 seanslık sıralama sinyali bu evrende de görünmüyor; sorun kesit darlığı değil.
+- **Volatilite işareti artık "dönmüyor", eğitimde sıfır.** Eğitim IC'si −0,005…+0,007 iken Ridge
+  katsayısı ve LightGBM kazancı yine ATR/volatiliteye yükleniyor: modeller MSE'ye fit ediliyor ve
+  kırpılmış hedefte oynak hisselerin eğitim ortalaması yüksek; validation'da bu −0,06…−0,08 IC
+  ve QQQ ↓'da −0,22…−0,26 oluyor. Risk kriterleri (skor–beta +0,45/+0,52) eski evrenden kötü.
+- **Veri kalitesi notu.** Eğitim hedef varyansı K1'de 0,71 (validation 0,028; eski evrende
+  0,027 / 0,023), gün-arası pay %25 → %1. Kaynak tek hisse: QUBT 2018-07-02/03'te
+  `target_return_20` +34.567% (Yahoo'da ters split düzeltmesi: kapanış 3,00 → 0,015, `issues.csv`
+  DONUK/ZERO_VOL/GIZLI_SPLIT uyarıları var). 2018 hedef varyansı 5,6; diğer yıllar 0,02–0,07.
+  2016–2024'te 26 hissede |getiri| > 200% olan 314 satır (GME, RGTI, LUNR, BBAI, MARA…). Eğitim
+  hedefinin %1/%99 kırpılması bunu bastırıyor (kırpılmış varyans 0,024), ama early stopping'in
+  iç l2'si ve R²_oos kırpılmamış hedefle hesaplanıyor; K1'in iç penceresi (2020) QS (+459%) ve
+  HUT (+456%) gibi satırlar içeriyor. Sıralama ölçüleri (rank IC) etkilenmez. Kodda değişiklik yapılmadı;
+  ters split artefaktları veri üreticisinde ayrıca incelenmeli.
+- Kod düzeltmesi: `research/diag_lgbm.py` ızgara bölümünde momentum kıyası +0,027 olarak gömülüydü
+  (eski evrenin değeri); artık bölüm 1'deki `return_20` validation IC ortalamasından okunuyor.
+  İlk geniş koşu (`20261016T191010Z_diag_lgbm_h20`) aynı sayılarla yalnız bu metinde farklıdır.
+
+Sonuç: Deney 2 ve 4a geniş evrende de önceden yazılı kriterleri karşılamadı; "Sonraki deneyler"
+sırası değişmedi.
 
 ## Sonraki deneyler
 

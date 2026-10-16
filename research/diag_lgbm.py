@@ -352,9 +352,14 @@ def write_report(output, panel, structure, fic, curve, shuffle, grid, es, elapse
     L.append("")
 
     L.append("## 4. Hiperparametre taraması (300 ağaç; yalnız bilgi, seçim yapılmaz)\n")
+    # Momentum kıyası (return_20) bölüm 1'deki tek özellik tablosundan: K1–K4 validation
+    # IC ortalaması. Evrene göre değişir; sabit bir sayı yazılmaz.
+    momentum = float(
+        fic.loc[fic["partition"].eq("validation") & fic["feature"].eq("return_20"), "ic"].mean()
+    )
     L.append(
         "Her ayar için K1–K4 validation rank IC ortalaması ve pozitif dönem sayısı. "
-        "Kıyas: momentum_20 birleşik +0.027.\n"
+        f"Kıyas: momentum_20 (return_20) validation IC ortalaması {_fmt(momentum)}.\n"
     )
     for set_name, g in grid.groupby("set", sort=False):
         agg = (
@@ -378,7 +383,7 @@ def write_report(output, panel, structure, fic, curve, shuffle, grid, es, elapse
             )
         L.append(
             f"\nEn iyi/en kötü val IC: {_fmt(agg.val_ic.max())} / {_fmt(agg.val_ic.min())}; "
-            f"{int((agg.val_ic > 0.027).sum())}/{len(agg)} ayar momentumu geçiyor.\n"
+            f"{int((agg.val_ic > momentum).sum())}/{len(agg)} ayar momentumu geçiyor.\n"
         )
 
     L.append("## 5. Early stopping ölçüsü: l2 mi, IC mi?\n")

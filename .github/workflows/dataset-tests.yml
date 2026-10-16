@@ -12,5 +12,5 @@ jobs:
           version: "0.12.23"
       - run: uv sync --locked --group dev --python 3.12
       - run: uv run pytest -q
-      - run: uv run ruff check market_data.py dataset_builder tests build_dataset.py verify_dataset.py validate_dataset.py
+      - run: uv run ruff check market_data.py dataset_builder research tests build_dataset.py verify_dataset.py validate_dataset.py train_baseline.py
       - run: uv run python verify_dataset.py output/yahoo_20261016T121656Z_dataset_v1_1

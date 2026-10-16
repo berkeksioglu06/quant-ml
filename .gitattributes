@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.parquet binary
+# Preserve checksummed snapshot bytes, including CRLF text artifacts.
+/data/yahoo_20261016T121656Z/** -text whitespace=cr-at-eol
+/output/yahoo_20261016T121656Z_dataset_v1_1/** -text whitespace=cr-at-eol

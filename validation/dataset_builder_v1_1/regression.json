@@ -1,0 +1,110 @@
+{
+  "status": "passed",
+  "unchanged_dataset_columns": [
+    "date",
+    "return_1",
+    "return_5",
+    "return_10",
+    "return_20",
+    "sma_distance_10",
+    "sma_distance_20",
+    "sma_distance_60",
+    "sma_slope_10_5",
+    "sma_slope_20_5",
+    "sma_slope_60_5",
+    "volatility_10",
+    "volatility_20",
+    "range_ratio",
+    "gap_return",
+    "intraday_return",
+    "atr_14_ratio",
+    "relative_spy_5",
+    "relative_spy_20",
+    "relative_qqq_5",
+    "relative_qqq_20",
+    "market_spy_return_20",
+    "market_qqq_return_20",
+    "symbol",
+    "price_valid",
+    "eligible",
+    "prior_valid_sessions",
+    "warmup_ready",
+    "price_features_ready",
+    "quality_status",
+    "price_sample_candidate",
+    "entry_date",
+    "label_end_5",
+    "label_ready_5",
+    "target_return_5",
+    "target_long_net_5",
+    "label_status_5",
+    "label_end_10",
+    "label_ready_10",
+    "target_return_10",
+    "target_long_net_10",
+    "label_status_10",
+    "label_end_20",
+    "label_ready_20",
+    "target_return_20",
+    "target_long_net_20",
+    "label_status_20"
+  ],
+  "labels_source_unchanged": true,
+  "price_counts_and_purge_unchanged": true,
+  "all_12_train_and_validation_all24_equal_price_only": true,
+  "k1_h5_old_all24": 11766,
+  "k1_h5_new_all24": 20137,
+  "date_cuts": [
+    {
+      "as_of": "2020-12-31",
+      "rows": 24723,
+      "symbols": 24,
+      "skipped_symbols": [
+        {
+          "symbol": "RKLB",
+          "reason": "no_eligible_data_on_or_before_cutoff"
+        },
+        {
+          "symbol": "HIMS",
+          "reason": "no_eligible_data_on_or_before_cutoff"
+        },
+        {
+          "symbol": "SOFI",
+          "reason": "no_data_on_or_before_cutoff"
+        },
+        {
+          "symbol": "RIVN",
+          "reason": "no_data_on_or_before_cutoff"
+        },
+        {
+          "symbol": "NBIS",
+          "reason": "no_data_on_or_before_cutoff"
+        }
+      ],
+      "features_equal_to_full": true,
+      "matured_targets_equal": 73338
+    },
+    {
+      "as_of": "2022-12-30",
+      "rows": 38315,
+      "symbols": 28,
+      "skipped_symbols": [
+        {
+          "symbol": "NBIS",
+          "reason": "no_data_on_or_before_cutoff"
+        }
+      ],
+      "features_equal_to_full": true,
+      "matured_targets_equal": 113965
+    },
+    {
+      "as_of": "2024-12-31",
+      "rows": 52421,
+      "symbols": 29,
+      "skipped_symbols": [],
+      "features_equal_to_full": true,
+      "matured_targets_equal": 156248
+    }
+  ],
+  "old_zip_unchanged": true
+}

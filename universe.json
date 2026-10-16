@@ -377,21 +377,42 @@
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2025-12-05",
+          2
+        ]
+      ],
+      "split_source": "https://www.ssga.com/us/en/intermediary/library-content/products/fund-docs/etfs/us/information-schedules/select-sector-spdr-fund-share-splits-faq.pdf"
     },
     {
       "symbol": "SMH",
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2023-05-05",
+          2
+        ]
+      ],
+      "split_source": "https://www.vaneck.com/us/en/press-releases/smh-vaneck-semiconductor-etf-share-split-press-release.pdf"
     },
     {
       "symbol": "IGV",
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2024-03-07",
+          5
+        ]
+      ],
+      "split_source": "https://www.sec.gov/Archives/edgar/data/1100663/000119312523298660/d611816d497.htm"
     },
     {
       "symbol": "XLC",
@@ -407,21 +428,38 @@
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2025-12-05",
+          2
+        ]
+      ],
+      "split_source": "https://www.ssga.com/us/en/intermediary/library-content/products/fund-docs/etfs/us/information-schedules/select-sector-spdr-fund-share-splits-faq.pdf"
     },
     {
       "symbol": "XLF",
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "historical_unverified_before": "2016-09-19",
+      "historical_unverified_reason": "XLRE pay dağıtımı; sağlayıcının 1.231 split kaydı sıradan hisse bölünmesi değildir. Olay öncesi tarihsel fiyat/hacim ayrıca doğrulanmalıdır.",
+      "corporate_action_source": "https://www.miaxglobal.com/sites/default/files/alert-files/XLF_Distribution_39575.pdf"
     },
     {
       "symbol": "XLE",
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2025-12-05",
+          2
+        ]
+      ],
+      "split_source": "https://www.ssga.com/us/en/intermediary/library-content/products/fund-docs/etfs/us/information-schedules/select-sector-spdr-fund-share-splits-faq.pdf"
     },
     {
       "symbol": "XLV",
@@ -449,7 +487,14 @@
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2020-12-07",
+          2
+        ]
+      ],
+      "split_source": "https://www.miaxglobal.com/sites/default/files/alert-files/ITA_Split_47890.pdf"
     },
     {
       "symbol": "ICLN",

@@ -1,4 +1,4 @@
-"""Aşama 1 raporu: 'Ridge basit kıyasları geçiyor mu, hangi hedefte, hangi dönemde?'"""
+"""Aşama 1 raporu: 'Ana model basit kıyasları geçiyor mu, hangi hedefte, hangi dönemde?'"""
 
 from __future__ import annotations
 
@@ -7,9 +7,9 @@ import math
 from .data import REGIMES
 from .experiment import (
     ERROR_BASELINES,
-    MAIN_MODEL,
     NEUTRAL_MODEL,
     RANK_BASELINES,
+    REFERENCE_MODEL,
     RISK_BASELINES,
 )
 
@@ -27,10 +27,29 @@ MODEL_NAMES = {
     "en_oynak_20": "En oynak (volatility_20)",
     "yuksek_beta": "Yüksek beta (beta_252)",
     "ridge": "**Ridge**",
+    "lightgbm": "**LightGBM**",
     "ridge_beta_notr": "Ridge · beta-nötrlenmiş skor",
     "ridge_deney1": "Ridge · Deney 1 (referans)",
 }
+MAIN_LABELS = {"ridge": "Ridge", "lightgbm": "LightGBM"}
 REGIME_NAMES = {"yukari": "QQQ ↑", "yatay": "Yatay", "asagi": "QQQ ↓"}
+CRITERIA = {
+    "risk_notr": {
+        "info": NEUTRAL_MODEL,
+        "info_label": "Beta-nötrlenmiş Ridge (bilgi)",
+        "passed": "",
+        "failed": " Sıradaki adım: Deney 4 (uzun momentum: 60/120/250 seans).",
+    },
+    "lgbm_4a": {
+        "info": REFERENCE_MODEL,
+        "info_label": "Ridge · Deney 1 (bilgi)",
+        "passed": " Sıradaki adım: Deney 4b (piyasa durumu özellikleri).",
+        "failed": (
+            " Sonuç raporlanır; Deney 4b yine denenir. 4b de geçemezse Deney 5 "
+            "(üç bariyerli hedef)."
+        ),
+    },
+}
 
 
 def _missing(x):
@@ -60,9 +79,9 @@ def table(header, rows, left=1):
     return "\n".join(lines)
 
 
-def _rank_models(summary):
+def _rank_models(summary, main):
     present = set(summary["model"])
-    order = (*RANK_BASELINES, *RISK_BASELINES, MAIN_MODEL, NEUTRAL_MODEL, "ridge_deney1")
+    order = (*RANK_BASELINES, *RISK_BASELINES, main, NEUTRAL_MODEL, REFERENCE_MODEL)
     return [m for m in order if m in present]
 
 
@@ -75,62 +94,81 @@ def _universe(context):
     }
 
 
-def risk_neutral_criteria(model, target, folds, summary, universe):
-    """Deney 3 için önceden yazılı başarı kriterleri; her satır (ad, eşik, değer, geçti)."""
+def criteria_rows(kind, model, target, folds, summary, universe):
+    """Önceden yazılı başarı kriterleri; her satır (ad, eşik, değer, geçti)."""
     s = summary.loc[summary["target"].eq(target)].set_index("model")
     f = folds.loc[folds["target"].eq(target) & folds["model"].eq(model)]
     m = s.loc[model]
     momentum = s.loc["momentum_20", "ic_mean"]
     positive = int((f["ic_mean"] > 0).sum())
-    gap = m["top5_beta"] - universe["beta"]
-    return [
+    ic_label = "Artık IC" if kind == "risk_notr" else "Rank IC"
+    down = (
+        "QQQ ↓ rejiminde IC",
+        "NW t > −2",
+        f"{num(m['ic_asagi'])} (t {num(m['ic_asagi_t_nw'], 2)})",
+        m["ic_asagi_t_nw"] > -2,
+    )
+    rows = [
         (
-            "1a. Artık IC > momentum",
+            f"1a. {ic_label} > momentum",
             "birleşik",
             f"{num(m['ic_mean'])} vs {num(momentum)}",
             m["ic_mean"] > momentum,
         ),
         ("1b. Pozitif IC'li dönem", "≥ 3/4", f"{positive}/{len(f)}", positive >= 3),
+    ]
+    if kind == "risk_notr":
+        gap = m["top5_beta"] - universe["beta"]
+        return [
+            *rows,
+            (
+                "2a. Skor–beta sıra korelasyonu",
+                "−0.20 < r < 0.20",
+                num(m["corr_beta"]),
+                abs(m["corr_beta"]) < 0.2,
+            ),
+            (
+                "2b. İlk 5 beta − evren",
+                "±0.20",
+                f"{num(gap, 2)} ({plain(m['top5_beta'])})",
+                abs(gap) <= 0.2,
+            ),
+            (f"3. {down[0]}", *down[1:]),
+        ]
+    return [
+        *rows,
+        (f"2. {down[0]}", *down[1:]),
         (
-            "2a. Skor–beta sıra korelasyonu",
-            "−0.20 < r < 0.20",
-            num(m["corr_beta"], 2),
-            abs(m["corr_beta"]) < 0.2,
-        ),
-        (
-            "2b. İlk 5 beta − evren",
-            "±0.20",
-            f"{num(gap, 2)} ({plain(m['top5_beta'])})",
-            abs(gap) <= 0.2,
-        ),
-        (
-            "3. QQQ ↓ rejiminde IC",
-            "NW t > −2",
-            f"{num(m['ic_asagi'])} (t {num(m['ic_asagi_t_nw'], 2)})",
-            m["ic_asagi_t_nw"] > -2,
+            "3. Skor–beta sıra korelasyonu",
+            "−0.30 < r < 0.30",
+            num(m["corr_beta"]),
+            abs(m["corr_beta"]) < 0.3,
         ),
     ]
 
 
 def _criteria_lines(config, folds, summary, context):
+    spec = CRITERIA[config["criteria"]]
+    main = config["main_model"]
     universe = _universe(context)
     lines = []
     for target in config["targets"]:
-        main = risk_neutral_criteria(MAIN_MODEL, target, folds, summary, universe)
-        neutral = risk_neutral_criteria(NEUTRAL_MODEL, target, folds, summary, universe)
+        own = criteria_rows(config["criteria"], main, target, folds, summary, universe)
+        info = criteria_rows(config["criteria"], spec["info"], target, folds, summary, universe)
         rows = [
             [a[0], a[1], f"{'✅' if a[3] else '❌'} {a[2]}", f"{'✅' if b[3] else '❌'} {b[2]}"]
-            for a, b in zip(main, neutral, strict=True)
+            for a, b in zip(own, info, strict=True)
         ]
-        passed = all(c[3] for c in main)
+        passed = all(c[3] for c in own)
+        label = MAIN_LABELS[main]
         lines += [
             para(
                 f"**Önceden yazılı başarı kriteri: {'karşılandı' if passed else 'karşılanmadı'}.** ",
-                "Karar Ridge satırına göre verilir; beta-nötrlenmiş skor bilgi içindir.",
-                "" if passed else " Sıradaki adım: Deney 4 (uzun momentum: 60/120/250 seans).",
+                f"Karar {label} satırına göre verilir; son sütun bilgi içindir.",
+                spec["passed"] if passed else spec["failed"],
             ),
             "",
-            table(["Kriter", "Eşik", "Ridge", "Beta-nötrlenmiş Ridge (bilgi)"], rows, left=2),
+            table(["Kriter", "Eşik", label, spec["info_label"]], rows, left=2),
             "",
             para(
                 '"Düşen piyasada belirgin negatif değil" ölçüsü: QQQ ↓ rejimindeki günlük IC\'lerin ',
@@ -142,7 +180,7 @@ def _criteria_lines(config, folds, summary, context):
     return lines
 
 
-def verdict(target, folds, summary, consistency):
+def verdict(target, folds, summary, consistency, main):
     """Kural tabanlı kısa hüküm; eşikler raporda açıkça yazılıdır."""
     s = summary.loc[summary["target"].eq(target)].set_index("model")
     c = consistency.loc[consistency["target"].eq(target)].iloc[0]
@@ -151,25 +189,25 @@ def verdict(target, folds, summary, consistency):
 
     best_error = max(ERROR_BASELINES, key=lambda m: s.loc[m, "r2_oos"])
     error_wins = min(c[f"mse_beats_{m}"] for m in ERROR_BASELINES)
-    ridge_r2 = s.loc[MAIN_MODEL, "r2_oos"]
-    if ridge_r2 > s.loc[best_error, "r2_oos"] and error_wins >= n - 1:
+    main_r2 = s.loc[main, "r2_oos"]
+    if main_r2 > s.loc[best_error, "r2_oos"] and error_wins >= n - 1:
         error = "geçiyor"
-    elif ridge_r2 < s.loc[best_error, "r2_oos"] and error_wins <= 1:
+    elif main_r2 < s.loc[best_error, "r2_oos"] and error_wins <= 1:
         error = "geçmiyor"
     else:
         error = "karışık"
 
     best_rank = max(RANK_BASELINES, key=lambda m: s.loc[m, "ic_mean"])
     rank_wins = min(c[f"ic_beats_{m}"] for m in RANK_BASELINES)
-    ridge_ic = s.loc[MAIN_MODEL, "ic_mean"]
+    main_ic = s.loc[main, "ic_mean"]
     if (
-        ridge_ic > s.loc[best_rank, "ic_mean"]
-        and ridge_ic > 0
+        main_ic > s.loc[best_rank, "ic_mean"]
+        and main_ic > 0
         and rank_wins >= n - 1
         and c["ic_positive"] >= n - 1
     ):
         rank = "geçiyor"
-    elif ridge_ic < s.loc[best_rank, "ic_mean"] and rank_wins <= 1:
+    elif main_ic < s.loc[best_rank, "ic_mean"] and rank_wins <= 1:
         rank = "geçmiyor"
     else:
         rank = "karışık"
@@ -178,24 +216,23 @@ def verdict(target, folds, summary, consistency):
     error_folds = [
         k
         for k in names
-        if f.loc[(MAIN_MODEL, k), "mse"] < min(f.loc[(m, k), "mse"] for m in ERROR_BASELINES)
+        if f.loc[(main, k), "mse"] < min(f.loc[(m, k), "mse"] for m in ERROR_BASELINES)
     ]
     rank_folds = [
         k
         for k in names
-        if f.loc[(MAIN_MODEL, k), "ic_mean"]
-        > max(0, *(f.loc[(m, k), "ic_mean"] for m in RANK_BASELINES))
+        if f.loc[(main, k), "ic_mean"] > max(0, *(f.loc[(m, k), "ic_mean"] for m in RANK_BASELINES))
     ]
     return {
         "error": error,
         "rank": rank,
         "error_folds": error_folds,
         "rank_folds": rank_folds,
-        "ridge_r2": ridge_r2,
+        "main_r2": main_r2,
         "best_error": best_error,
         "best_error_r2": s.loc[best_error, "r2_oos"],
-        "ridge_ic": ridge_ic,
-        "ridge_t": s.loc[MAIN_MODEL, "ic_t_nw"],
+        "main_ic": main_ic,
+        "main_t": s.loc[main, "ic_t_nw"],
         "best_rank": best_rank,
         "best_rank_ic": s.loc[best_rank, "ic_mean"],
     }
@@ -203,45 +240,47 @@ def verdict(target, folds, summary, consistency):
 
 def _short_answer(config, folds, summary, consistency, context, exposures):
     names = [f["name"] for f in config["folds"]]
+    main = config["main_model"]
+    label = MAIN_LABELS[main]
     universe = _universe(context)
     lines = _criteria_lines(config, folds, summary, context) if config.get("criteria") else []
     for target in config["targets"]:
-        v = verdict(target, folds, summary, consistency)
+        v = verdict(target, folds, summary, consistency, main)
         s = summary.loc[summary["target"].eq(target)].set_index("model")
         lines += [
             f"**{TARGET_NAMES[target]}**",
             para(
-                f"- Tahmin hatası: Ridge **{v['error']}**. K1–K4 R²: Ridge {pct(v['ridge_r2'])}, ",
-                f"en iyi sabit kıyas ({MODEL_NAMES[v['best_error']]}) {pct(v['best_error_r2'])}. ",
-                "İki sabit kıyası birden geçtiği dönemler: ",
+                f"- Tahmin hatası: {label} **{v['error']}**. K1–K4 R²: {label} ",
+                f"{pct(v['main_r2'])}, en iyi sabit kıyas ({MODEL_NAMES[v['best_error']]}) ",
+                f"{pct(v['best_error_r2'])}. İki sabit kıyası birden geçtiği dönemler: ",
                 f"{', '.join(v['error_folds']) or 'yok'}.",
             ),
             para(
-                f"- Günlük sıralama: Ridge **{v['rank']}**. K1–K4 rank IC: Ridge ",
-                f"{num(v['ridge_ic'])} (Newey-West t = {num(v['ridge_t'], 2)}), en iyi skor ",
+                f"- Günlük sıralama: {label} **{v['rank']}**. K1–K4 rank IC: {label} ",
+                f"{num(v['main_ic'])} (Newey-West t = {num(v['main_t'], 2)}), en iyi skor ",
                 f"kıyası ({MODEL_NAMES[v['best_rank']]}) {num(v['best_rank_ic'])}. ",
                 "Momentum ve geri dönüşü birlikte geçip pozitif kaldığı dönemler: ",
                 f"{', '.join(v['rank_folds']) or 'yok'}.",
             ),
             para(
                 "- Rejim ve risk: rank IC QQQ ↑ / yatay / QQQ ↓ = ",
-                " / ".join(num(s.loc[MAIN_MODEL, f"ic_{r}"]) for r in REGIMES),
-                f"; ham getiriye göre IC {num(s.loc[MAIN_MODEL, 'ic_raw_mean'])}, ",
-                f"beta-düzeltmeli IC {num(s.loc[MAIN_MODEL, 'ic_beta_mean'])}; ",
-                f"skor–beta sıra korelasyonu {num(s.loc[MAIN_MODEL, 'corr_beta'], 2)}. ",
+                " / ".join(num(s.loc[main, f"ic_{r}"]) for r in REGIMES),
+                f"; ham getiriye göre IC {num(s.loc[main, 'ic_raw_mean'])}, ",
+                f"beta-düzeltmeli IC {num(s.loc[main, 'ic_beta_mean'])}; ",
+                f"skor–beta sıra korelasyonu {num(s.loc[main, 'corr_beta'], 2)}. ",
                 f"Seçilen ilk {config['top_k']} hissenin ortalama betası ",
-                f"{plain(s.loc[MAIN_MODEL, 'top5_beta'])}, volatilitesi ",
-                f"{plain(s.loc[MAIN_MODEL, 'top5_vol'])} ",
+                f"{plain(s.loc[main, 'top5_beta'])}, volatilitesi ",
+                f"{plain(s.loc[main, 'top5_vol'])} ",
                 f"(evren: {plain(universe['beta'])} / {plain(universe['vol'])}).",
             ),
         ]
-        if "ridge_deney1" in s.index:
-            ref = s.loc["ridge_deney1"]
-            better = "üstünde" if v["ridge_ic"] > ref["ic_mean"] else "altında"
+        if REFERENCE_MODEL in s.index:
+            ref = s.loc[REFERENCE_MODEL]
+            better = "üstünde" if v["main_ic"] > ref["ic_mean"] else "altında"
             lines.append(
                 para(
                     f"- Deney 1 Ridge'i (referans) K1–K4 rank IC {num(ref['ic_mean'])} ",
-                    f"(t = {num(ref['ic_t_nw'], 2)}); bu deneyin Ridge'i referansın {better}.",
+                    f"(t = {num(ref['ic_t_nw'], 2)}); bu deneyin ana modeli referansın {better}.",
                 )
             )
         lines.append("")
@@ -249,7 +288,7 @@ def _short_answer(config, folds, summary, consistency, context, exposures):
     lead = lead.sort_values(ascending=False)
     lines += [
         para(
-            "Ridge skorunun validation yıllarındaki ortalama mutlak korelasyonu en yüksek "
+            f"{label} skorunun validation yıllarındaki ortalama mutlak korelasyonu en yüksek ",
             "girdiler: ",
             ", ".join(f"`{x}` ({lead[x]:.2f})" for x in lead.index[:3]),
             ". Ayrıntı: bölüm 6.",
@@ -268,19 +307,23 @@ def _short_answer(config, folds, summary, consistency, context, exposures):
 
 def _error_section(config, folds, summary):
     names = [f["name"] for f in config["folds"]]
+    main = config["main_model"]
     lines = [
         "## 1. Tahmin hatası",
         "",
         para(
             "R²_oos = 1 − Σ(y − ŷ)² / Σy². Sıfır tahmini tanım gereği 0'dır; pozitif değer ",
-            "sıfırdan iyi demektir. Skor kıyasları ve referans satırı getiri tahmini olmadığı ",
-            "için bu tabloda yoktur.",
+            "sıfırdan iyi demektir. Skor kıyasları getiri tahmini olmadığı için bu tabloda yoktur; ",
+            "referans satırı yalnız aynı hedefe eğitildiyse gösterilir.",
         ),
         "",
     ]
     for target in config["targets"]:
         f = folds.loc[folds["target"].eq(target)].set_index(["model", "fold"])
         s = summary.loc[summary["target"].eq(target)].set_index("model")
+        models = [*ERROR_BASELINES, main]
+        if REFERENCE_MODEL in s.index and s.loc[REFERENCE_MODEL, "kind"] == "forecast":
+            models.append(REFERENCE_MODEL)
         rows = [
             [
                 MODEL_NAMES[m],
@@ -288,7 +331,7 @@ def _error_section(config, folds, summary):
                 pct(s.loc[m, "r2_oos"]),
                 f"{s.loc[m, 'mse']:.5f}",
             ]
-            for m in (*ERROR_BASELINES, MAIN_MODEL)
+            for m in models
         ]
         header = ["Model", *names, "K1–K4", "MSE K1–K4"]
         lines += [f"**{TARGET_NAMES[target]}**", "", table(header, rows), ""]
@@ -307,7 +350,8 @@ def _rank_section(config, folds, summary):
             f"{h} seanslık etiketleri örtüştüğü için t-istatistiği Newey-West ({h - 1} gecikme) ",
             "ile hesaplandı. Sıfır ve eğitim ortalaması sabit olduğu için sıralama üretmez. ",
             f"Son sütun: en yüksek skorlu {k_top} hissenin {h} seanslık ortalama getirisi eksi ",
-            "bütün hisselerin ortalaması (maliyetsiz; portföy getirisi değildir).",
+            "bütün hisselerin ortalaması (maliyetsiz; portföy getirisi değildir). Eşit skorlu ",
+            "hisseler kesimde kalan yer oranında ağırlık alır.",
         ),
         "",
     ]
@@ -323,7 +367,7 @@ def _rank_section(config, folds, summary):
                 f"{100 * s.loc[m, 'ic_pos_frac']:.0f}%",
                 pct(s.loc[m, "top5_minus_all"]),
             ]
-            for m in _rank_models(s.reset_index())
+            for m in _rank_models(s.reset_index(), config["main_model"])
         ]
         header = ["Model", *names, "K1–K4", "NW t", "IC>0 gün", f"Top{k_top}−tümü"]
         lines += [f"**{TARGET_NAMES[target]}**", "", table(header, rows), ""]
@@ -339,7 +383,7 @@ def _rank_section(config, folds, summary):
     else:
         note += [
             "Bu yüzden skor kıyaslarının değerleri ham, QQQ'ya göre ve gün içi hedeflerde ",
-            "aynıdır; Ridge farklı hedefe eğitildiği için farklıdır.",
+            "aynıdır; eğitilen modeller hedefe göre farklıdır.",
         ]
     lines += [para(*note), ""]
     return lines
@@ -383,7 +427,7 @@ def _regime_section(config, summary, context):
     ]
     for target in config["targets"]:
         s = summary.loc[summary["target"].eq(target)].set_index("model")
-        models = _rank_models(s.reset_index())
+        models = _rank_models(s.reset_index(), config["main_model"])
         regime_rows = [
             [
                 MODEL_NAMES[m],
@@ -422,7 +466,7 @@ def _regime_section(config, summary, context):
     return lines
 
 
-def _consistency_section(consistency):
+def _consistency_section(config, consistency):
     columns = {
         "mse_beats_sifir": "MSE < sıfır",
         "mse_beats_egitim_ortalamasi": "MSE < ortalama",
@@ -439,15 +483,39 @@ def _consistency_section(consistency):
     return [
         "## 4. Dönemler arası tutarlılık",
         "",
+        f"{MAIN_LABELS[config['main_model']]} satırının dönem bazında kıyasları geçtiği dönem sayısı.",
+        "",
         table(["Hedef", *columns.values()], rows),
         "",
     ]
 
 
-def _context_section(config, context, alphas):
-    h = config["horizon"]
+def _tuning(config, result):
+    """Dönem bağlamı tablosu için (başlık, hedef×dönem → değer, açıklama)."""
+    if result["trees"] is not None:
+        trees = result["trees"].set_index(["target", "fold"])["n_trees"]
+        lgbm = config["lightgbm"]
+        note = para(
+            f"Ağaç sayısı: en fazla {lgbm['max_trees']}, early stopping ",
+            f"{lgbm['early_stopping_rounds']} tur; eğitimin son 252 seansında (purge'lü) bulunup ",
+            "bütün eğitime aynı sayıyla yeniden fit edildi. Çok az ağaç, iç validation'da ilk ",
+            "ağaçlardan sonra iyileşme olmadığını gösterir.",
+        )
+        return "Ağaç", {k: f"{v:d}" for k, v in trees.items()}, note
+    alphas = result["alphas"].set_index(["target", "fold"])["alpha"]
     grid = config["ridge"]["alpha_grid"]
+    note = para(
+        f"α ızgarası {min(grid):g}–{max(grid):g}. α üst sınırdaysa iç validation doğrusal ",
+        "sinyal bulamamış, Ridge tahmini eğitim ortalamasına çekilmiştir; sıralaması ise ",
+        "hâlâ katsayıların yönünden gelir.",
+    )
+    return "α", {k: f"{v:.3g}" for k, v in alphas.items()}, note
+
+
+def _context_section(config, context, result):
+    h = config["horizon"]
     targets = list(config["targets"])
+    label, tuning, note = _tuning(config, result)
     rows = [
         [
             c["fold"],
@@ -457,7 +525,7 @@ def _context_section(config, context, alphas):
             pct(c["stock_mean"]),
             " / ".join(str(c[f"days_{r}"]) for r in REGIMES),
             f"{100 * c['beta_coverage']:.0f}%",
-            *[f"{alphas.loc[(t, c['fold']), 'alpha']:.3g}" for t in targets],
+            *[tuning[(t, c["fold"])] for t in targets],
             *(
                 [f"{int(c['excluded_train'])} / {int(c['excluded_validation'])}"]
                 if "excluded_train" in c
@@ -467,25 +535,15 @@ def _context_section(config, context, alphas):
         for _, c in context.iterrows()
     ]
     header = ["Dönem", "Sinyal günleri", "Hisse", f"QQQ {h}g ort.", f"Hisse {h}g ort."]
-    header += ["Gün ↑/yatay/↓", "Beta kapsamı", *[f"α {TARGET_NAMES[t]}" for t in targets]]
+    header += ["Gün ↑/yatay/↓", "Beta kapsamı", *[f"{label} {TARGET_NAMES[t]}" for t in targets]]
     if "excluded_train" in context:
         header.append("Betasız dışarıda (eğitim / val.)")
-    return [
-        "## 5. Dönem bağlamı",
-        "",
-        table(header, rows, left=2),
-        "",
-        para(
-            f"α ızgarası {min(grid):g}–{max(grid):g}. α üst sınırdaysa iç validation doğrusal ",
-            "sinyal bulamamış, Ridge tahmini eğitim ortalamasına çekilmiştir; sıralaması ise ",
-            "hâlâ katsayıların yönünden gelir.",
-        ),
-        "",
-    ]
+    return ["## 5. Dönem bağlamı", "", table(header, rows, left=2), "", note, ""]
 
 
 def _why_section(config, result):
     names = [f["name"] for f in config["folds"]]
+    label = MAIN_LABELS[config["main_model"]]
     exp = result["exposures"]
     fic = result["feature_ic"].pivot_table(
         index=["feature", "fold"], columns="partition", values="ic_mean"
@@ -509,16 +567,17 @@ def _why_section(config, result):
         for x in lead
     ]
     return [
-        "## 6. Neden? Ridge neye bahis oynuyor?",
+        f"## 6. Neden? {label} neye bahis oynuyor?",
         "",
-        "Validation yılında Ridge skorunun en çok korele olduğu üç girdi:",
+        f"Validation yılında {label} skorunun en çok korele olduğu üç girdi:",
         "",
         table(["Hedef", "Dönem", "Skor–girdi korelasyonu"], rows, left=3),
         "",
         para(
             "Bu özelliklerin tek başına günlük rank IC'si (eğitim → validation). Gün içi sıraya ",
-            "çevirmek günlük rank IC'yi değiştirmez. Tablo açıklama içindir, model seçiminde ",
-            "kullanılmadı:",
+            "çevirmek günlük rank IC'yi değiştirmez. Aynı gün bütün hisselerde aynı olan ",
+            "özelliklerin (market_*) günlük rank IC'si tanımsızdır. Tablo açıklama içindir, ",
+            "model seçiminde kullanılmadı:",
         ),
         "",
         table(["Özellik", *names], ic_rows),
@@ -558,6 +617,112 @@ def _coefficient_section(config, coefficients):
     return lines
 
 
+def _direction(delta):
+    return "+" if delta > 1e-9 else "−" if delta < -1e-9 else "düz"
+
+
+def _lgbm_section(config, result):
+    names = [f["name"] for f in config["folds"]]
+    trees = result["trees"].set_index(["target", "fold"])
+    imp = result["importance"]
+    dep = result["partial_dependence"]
+    pd_spec = config["lightgbm"]["partial_dependence"]
+    lines = ["## 7. LightGBM ayrıntıları", ""]
+    for target in config["targets"]:
+        rows = [
+            [
+                k,
+                f"{trees.loc[(target, k), 'n_trees']:d}",
+                f"{trees.loc[(target, k), 'inner_mse']:.5f}",
+            ]
+            for k in names
+        ]
+        lines += [
+            f"**{TARGET_NAMES[target]}** — ağaç sayısı",
+            "",
+            table(["Dönem", "Ağaç", "İç validation MSE"], rows),
+            "",
+        ]
+        part = imp.loc[imp["target"].eq(target)]
+        tops = {
+            k: part.loc[part["fold"].eq(k)].sort_values("gain_share", ascending=False).head(10)
+            for k in names
+        }
+        rows = [
+            [
+                str(i + 1),
+                *[
+                    (
+                        f"{tops[k].iloc[i]['feature']} {100 * tops[k].iloc[i]['gain_share']:.0f}%"
+                        if i < len(tops[k]) and tops[k].iloc[i]["gain_share"] > 0
+                        else "—"
+                    )
+                    for k in names
+                ],
+            ]
+            for i in range(10)
+        ]
+        market = []
+        for feature in ("market_qqq_return_20", "market_spy_return_20"):
+            cells = []
+            for k in names:
+                fold = part.loc[part["fold"].eq(k)].sort_values("gain_share", ascending=False)
+                share = float(fold.set_index("feature").loc[feature, "gain_share"])
+                rank = int(fold["feature"].tolist().index(feature)) + 1
+                cells.append(f"{k} {100 * share:.0f}%" + (f" ({rank}.)" if share > 0 else ""))
+            market.append(f"`{feature}`: " + ", ".join(cells))
+        lines += [
+            para(
+                f"**{TARGET_NAMES[target]}** — kazanç (gain) payı, dönem başına ilk 10 özellik ",
+                "(kullanılmayan özellik —):",
+            ),
+            "",
+            table(["Sıra", *names], rows),
+            "",
+            "Piyasa özellikleri kullanılıyor mu? " + " · ".join(market) + ".",
+            "",
+        ]
+        part = dep.loc[dep["target"].eq(target)]
+        quantiles = sorted(part["quantile"].unique())
+        rows = []
+        for k in names:
+            fold = part.loc[part["fold"].eq(k)]
+            deltas = {}
+            for subset, title in (("pozitif", "> 0"), ("negatif", "< 0")):
+                sub = fold.loc[fold["subset"].eq(subset)].set_index("quantile")
+                deltas[subset] = sub.loc[quantiles[-1], "pd"] - sub.loc[quantiles[0], "pd"]
+                rows.append(
+                    [
+                        k,
+                        f"QQQ 20g {title} ({int(sub['rows'].iloc[0])} satır)",
+                        *[pct(sub.loc[q, "pd"]) for q in quantiles],
+                        pct(deltas[subset]),
+                    ]
+                )
+            same = _direction(deltas["pozitif"]) == _direction(deltas["negatif"])
+            rows[-1].append("aynı" if same else "**farklı**")
+            rows[-2].append("")
+        header = ["Dönem", "Alt küme", *[f"vol q{100 * q:.0f}" for q in quantiles]]
+        header += ["Δ (q90 − q10)", "Yön"]
+        lines += [
+            para(
+                f"**{TARGET_NAMES[target]}** — basit kısmi bağımlılık: `{pd_spec['feature']}` ",
+                "sabit değerlere çekildiğinde ortalama tahmini 20 seanslık getiri, ",
+                f"`{pd_spec['condition']}` alt kümelerinde ayrı. Izgara o dönemin validation ",
+                "satırlarındaki volatilite kantilleri. Yön iki alt kümede farklıysa model ",
+                "piyasa durumuna bağlı (koşullu) bir volatilite ilişkisi kurmuş demektir.",
+            ),
+            "",
+            table(header, rows, left=2),
+            "",
+        ]
+    lines += [
+        "Ayrıntılar: `lgbm_trees.csv`, `lgbm_importance.csv`, `lgbm_partial_dependence.csv`.",
+        "",
+    ]
+    return lines
+
+
 TARGET_SETUP = {
     "raw": "`{col}`: hissenin t+1 açılış → t+H kapanış getirisi.",
     "vs_qqq": "`{col}`: hisse getirisi − aynı pencerede QQQ getirisi.",
@@ -568,7 +733,7 @@ TARGET_SETUP = {
     ),
 }
 FEATURE_SETUP = {
-    "raw": "manifestteki 24 `feature_columns`, ham değerleriyle.",
+    "raw": "manifestteki 24 `feature_columns`, ham değerleriyle (market_* dahil).",
     "xs_rank": para(
         "manifestteki özelliklerden aynı gün bütün hisselerde aynı olanlar (market_*) ",
         "çıkarıldı; kalan {n} özellik her gün hisseler arasında sıraya çevrildi (−0,5…+0,5).",
@@ -576,8 +741,34 @@ FEATURE_SETUP = {
 }
 
 
+def _model_setup(config):
+    if config["main_model"] == "lightgbm":
+        lgbm = config["lightgbm"]
+        params = ", ".join(f"{k} {v}" for k, v in lgbm["params"].items())
+        return [
+            para(
+                f"- LightGBM: sabit ayarlar ({params}); validation'a bakılarak değiştirilmez. ",
+                "Hedef eğitim dönemi %1/%99 kantillerine kırpılır, özellikler ham kalır. Ağaç ",
+                f"sayısı en fazla {lgbm['max_trees']}; eğitimin son 252 seansında (etiketi bu ",
+                "pencereden önce biten satırlarla eğitilerek) early stopping ",
+                f"({lgbm['early_stopping_rounds']} tur, kırpılmamış hedefin MSE'si) ile bulunur, ",
+                "sonra bütün eğitime aynı sayıyla yeniden fit edilir. ",
+                f"seed {lgbm['seed']}, deterministic, sütun bazlı histogram.",
+            )
+        ]
+    return [
+        para(
+            "- Ridge: girdiler ve eğitim hedefi eğitim dönemi %1/%99 kantillerine kırpılır, ",
+            "girdiler standartlaştırılır. α eğitimin son 252 seansında (etiketi bu pencereden ",
+            "önce biten satırlarla eğitilerek) MSE ile seçilir, sonra bütün eğitime yeniden fit ",
+            "edilir.",
+        )
+    ]
+
+
 def _setup_section(config):
     h = config["horizon"]
+    features = FEATURE_SETUP[config["feature_set"]].format(n=len(config["features"]))
     lines = [
         "## Kurulum",
         "",
@@ -586,13 +777,8 @@ def _setup_section(config):
             "`volume_features_ready = True`. Eğitim etiketleri eğitim sonunu aşmaz (purge).",
         ),
         *[f"- Hedef: {TARGET_SETUP[t].format(col=c)}" for t, c in config["targets"].items()],
-        f"- Ridge girdileri: {FEATURE_SETUP[config['feature_set']].format(n=len(config['features']))}",
-        para(
-            "- Ridge: girdiler ve eğitim hedefi eğitim dönemi %1/%99 kantillerine kırpılır, ",
-            "girdiler standartlaştırılır. α eğitimin son 252 seansında (etiketi bu pencereden ",
-            "önce biten satırlarla eğitilerek) MSE ile seçilir, sonra bütün eğitime yeniden fit ",
-            "edilir.",
-        ),
+        f"- Model girdileri: {features}",
+        *_model_setup(config),
         para(
             "- Skor kıyasları eğitim gerektirmez: momentum = `return_20`, geri dönüş = ",
             "−`return_5`, en oynak = `volatility_20`, yüksek beta = `beta_252`.",
@@ -620,6 +806,12 @@ def _setup_section(config):
         lines.append(
             "- Referans: Deney 1 Ridge'i (ham 24 girdi, hissenin kendi getirisine eğitilmiş)."
         )
+    prefix = "lgbm" if config["main_model"] == "lightgbm" else "ridge"
+    model_files = (
+        "`lgbm_trees.csv`, `lgbm_importance.csv`, `lgbm_partial_dependence.csv`"
+        if prefix == "lgbm"
+        else "`ridge_coefficients.csv`, `ridge_alpha.csv`"
+    )
     lines += [
         "- Değerlendirme her zaman kırpılmamış hedefle yapılır.",
         "",
@@ -627,9 +819,9 @@ def _setup_section(config):
         "",
         para(
             "`fold_metrics.csv`, `pooled_metrics.csv`, `consistency.csv`, `period_context.csv`, ",
-            "`ridge_coefficients.csv`, `ridge_alpha.csv`, `ridge_exposure.csv`, `feature_ic.csv`, ",
-            "`daily_ic.parquet`, `predictions.parquet`, `config.json`. Her çalıştırma ",
-            "`output/experiments/runs.csv` kaydına eklenir.",
+            f"{model_files}, `{prefix}_exposure.csv`, `feature_ic.csv`, `daily_ic.parquet`, ",
+            "`predictions.parquet`, `config.json`. Her çalıştırma `output/experiments/runs.csv` ",
+            "kaydına eklenir.",
         ),
         "",
     ]
@@ -640,6 +832,11 @@ def write_report(output, config, result, summary, consistency, context):
     folds = result["folds"]
     commit = (config["git_commit"] or "?")[:7]
     dirty = " (kaydedilmemiş değişiklik var)" if config["git_dirty"] else ""
+    model_section = (
+        _lgbm_section(config, result)
+        if result["trees"] is not None
+        else _coefficient_section(config, result["coefficients"])
+    )
     lines = [
         f"# Aşama 1 · {config['title']} (H = {config['horizon']} seans)",
         "",
@@ -659,10 +856,10 @@ def write_report(output, config, result, summary, consistency, context):
         *_error_section(config, folds, summary),
         *_rank_section(config, folds, summary),
         *_regime_section(config, summary, context),
-        *_consistency_section(consistency),
-        *_context_section(config, context, result["alphas"].set_index(["target", "fold"])),
+        *_consistency_section(config, consistency),
+        *_context_section(config, context, result),
         *_why_section(config, result),
-        *_coefficient_section(config, result["coefficients"]),
+        *model_section,
         *_setup_section(config),
     ]
     (output / "RAPOR.md").write_text("\n".join(lines), encoding="utf-8")

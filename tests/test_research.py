@@ -1,4 +1,6 @@
+import csv
 import json
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
@@ -16,7 +18,14 @@ from research.data import (
     residual_return,
     rolling_beta,
 )
-from research.experiment import EXPERIMENTS, run
+from research.experiment import (
+    EXPERIMENTS,
+    LEGACY_REGISTRY_FIELDS,
+    REGISTRY_FIELDS,
+    _migrate_registry,
+    evaluate,
+    run,
+)
 from research.metrics import (
     daily_rank_ic,
     neutralize,
@@ -24,7 +33,7 @@ from research.metrics import (
     top_k_mean,
     top_minus_all,
 )
-from research.models import RidgeModel, Winsorizer
+from research.models import LGBMModel, RidgeModel, Winsorizer
 
 ROOT = Path(__file__).resolve().parents[1]
 DATASET = ROOT / "output" / "yahoo_20261016T121656Z_dataset_v1_1"
@@ -142,6 +151,76 @@ def test_top_k_mean_skips_missing_values():
     frame["pred"] = [6.0, 5, 4, 3, 2, 1]
     frame["beta"] = [1.0, np.nan, 3.0, 9, 9, 9]
     assert top_k_mean(frame, "beta", k=3).iloc[0] == pytest.approx(2.0)
+
+
+def test_top_k_mean_splits_ties_at_the_cutoff():
+    frame = panel_frame(days=1, names=5)
+    frame["pred"] = [3.0, 2, 2, 2, 1]
+    frame["value"] = [10.0, 1, 2, 3, 100]
+    # İlk hisse tam, eşit üçlü kalan tek yeri paylaşır: (10 + (1 + 2 + 3) / 3) / 2.
+    assert top_k_mean(frame, "value", k=2).iloc[0] == pytest.approx(6.0)
+    shuffled = frame.iloc[[4, 2, 0, 3, 1]]
+    assert top_k_mean(shuffled, "value", k=2).iloc[0] == pytest.approx(6.0)
+
+
+def synthetic_rows(days=600, names=8, seed=10):
+    rng = np.random.default_rng(seed)
+    dates = pd.bdate_range("2018-01-01", periods=days)
+    rows = pd.DataFrame(
+        [(d, f"S{i}") for d in dates for i in range(names)], columns=["date", "symbol"]
+    )
+    rows["label_end"] = rows["date"] + pd.offsets.BDay(20)
+    rows["signal"] = rng.normal(size=len(rows))
+    rows["noise"] = rng.normal(size=len(rows))
+    rows["y"] = 0.02 * rows["signal"] + rng.normal(0, 0.05, len(rows))
+    return rows
+
+
+def test_lgbm_same_seed_gives_identical_predictions():
+    rows = synthetic_rows(days=1200)
+    train, val = rows.iloc[: len(rows) // 2], rows.iloc[len(rows) // 2 :]
+    first = LGBMModel(["signal", "noise"]).fit(train, "y")
+    second = LGBMModel(["signal", "noise"]).fit(train, "y")
+    assert first.n_trees_ == second.n_trees_ > 1
+    assert np.array_equal(first.predict(val), second.predict(val))
+    assert first.importance()["signal"] > first.importance()["noise"]
+
+
+def test_lgbm_tree_count_is_stable_on_a_flat_validation_curve():
+    # İç eğitim min_child_samples'tan küçük: hiç bölünme yok, eğri düz. Çok iş
+    # parçacıklı metrik toplamında bu durumda seçilen tur çalıştırmadan çalıştırmaya oynuyordu.
+    rows = synthetic_rows(days=600)
+    train = rows.iloc[: len(rows) // 2]
+    counts = {LGBMModel(["signal", "noise"]).fit(train, "y").n_trees_ for _ in range(4)}
+    assert counts == {1}
+
+
+def test_lgbm_early_stopping_split_is_purged():
+    rows = synthetic_rows()
+    model = LGBMModel(["signal", "noise"])
+    inner_train, inner_val = model.inner_split(rows)
+    assert inner_train["label_end"].max() < inner_val["date"].min()
+    assert inner_val["date"].nunique() == 252
+    assert set(inner_train.index).isdisjoint(inner_val.index)
+
+
+def test_registry_migration_keeps_rows_and_adds_main_model(tmp_path):
+    registry = tmp_path / "runs.csv"
+    legacy = dict.fromkeys(LEGACY_REGISTRY_FIELDS, "x") | {
+        "ridge_ic": "-0.08",
+        "ridge_ic_t_nw": "-2.1",
+        "ridge_r2": "-0.03",
+    }
+    with registry.open("w", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=LEGACY_REGISTRY_FIELDS)
+        writer.writeheader()
+        writer.writerow(legacy)
+    _migrate_registry(registry)
+    rows = list(csv.DictReader(registry.open(encoding="utf-8")))
+    assert list(rows[0]) == REGISTRY_FIELDS
+    assert rows[0]["main_model"] == "ridge"
+    assert rows[0]["main_ic"] == "-0.08"
+    assert rows[0]["ridge_ic"] == "-0.08"
 
 
 def test_daily_returns_leave_gaps_and_ineligible_days_missing():
@@ -320,7 +399,8 @@ def test_panel_never_loads_prices_from_test_period(monkeypatch):
 @pytest.fixture(scope="module")
 def runs(panel, tmp_path_factory):
     root = tmp_path_factory.mktemp("experiments")
-    return root, {key: run(panel, root / f"deney{key}", EXPERIMENTS[key]) for key in "123"}
+    keys = ("1", "2", "3", "4a")
+    return root, {key: run(panel, root / f"deney{key}", EXPERIMENTS[key]) for key in keys}
 
 
 def test_experiment_writes_report_and_registry(panel, runs):
@@ -345,8 +425,10 @@ def test_experiment_writes_report_and_registry(panel, runs):
     assert "## 3. Rejim ve risk" in report
     assert json.loads((out / "config.json").read_text(encoding="utf-8"))["horizon"] == 20
     registry = pd.read_csv(root / "runs.csv")
-    assert registry["run_id"].tolist() == ["deney1", "deney1", "deney2", "deney3"]
-    assert registry["target"].tolist() == ["raw", "vs_qqq", "xs", "resid"]
+    assert registry["run_id"].tolist() == ["deney1", "deney1", "deney2", "deney3", "deney4a"]
+    assert registry["target"].tolist() == ["raw", "vs_qqq", "xs", "resid", "raw"]
+    assert registry["main_model"].tolist() == ["ridge"] * 4 + ["lightgbm"]
+    assert registry["ridge_ic"].isna().tolist() == [False] * 4 + [True]
     with pytest.raises(ValueError, match="zaten var"):
         run(panel, out)
 
@@ -385,3 +467,44 @@ def test_deney3_residual_target_neutral_row_and_criteria(panel, runs):
     resid -= resid.groupby([rows[k] for k in DAY_KEYS]).transform("mean")
     assert np.allclose(rows["target_resid_20"], resid)
     assert len(rows) == len(panel.rows)
+
+
+def test_deney4a_lightgbm_outputs_and_reference(runs):
+    root, results = runs
+    config, summary, consistency = results["4a"]
+    out = root / "deney4a"
+    assert config["main_model"] == "lightgbm"
+    assert config["targets"] == {"raw": "target_return_20"}
+    assert config["features"] == results["1"][0]["features"]
+    assert len(config["features"]) == 24
+    assert consistency["target"].tolist() == ["raw"]
+    trees = pd.read_csv(out / "lgbm_trees.csv")
+    assert trees["n_trees"].between(1, 2000).all()
+    importance = pd.read_csv(out / "lgbm_importance.csv")
+    assert np.allclose(importance.groupby("fold")["gain_share"].sum(), 1)
+    dependence = pd.read_csv(out / "lgbm_partial_dependence.csv")
+    assert set(dependence["subset"]) == {"pozitif", "negatif"}
+    assert len(dependence) == 4 * 2 * 5
+    # Referans satırı aynı hedefe eğitilmiş Deney 1 Ridge'i: R² ve IC aynı olmalı.
+    ref = summary.set_index("model").loc["ridge_deney1"]
+    deney1 = results["1"][1].set_index(["target", "model"]).loc[("raw", "ridge")]
+    assert ref["ic_mean"] == pytest.approx(deney1["ic_mean"], abs=1e-12)
+    assert ref["r2_oos"] == pytest.approx(deney1["r2_oos"], abs=1e-12)
+    report = (out / "RAPOR.md").read_text(encoding="utf-8")
+    assert "## 7. LightGBM ayrıntıları" in report
+    assert "Önceden yazılı başarı kriteri" in report
+    assert not (out / "ridge_coefficients.csv").exists()
+
+
+def test_shuffled_validation_targets_do_not_change_predictions(panel):
+    one_fold = replace(panel, folds=panel.folds[:1])
+    rows = one_fold.rows.copy()
+    val = rows["partition"].eq("validation")
+    rng = np.random.default_rng(11)
+    for column in one_fold.targets.values():
+        rows.loc[val, column] = rng.permutation(rows.loc[val, column].to_numpy())
+    shuffled = replace(one_fold, rows=rows)
+    original = evaluate(one_fold, EXPERIMENTS["4a"])["predictions"]
+    permuted = evaluate(shuffled, EXPERIMENTS["4a"])["predictions"]
+    pd.testing.assert_series_equal(original["pred"], permuted["pred"])
+    assert not np.allclose(original["y"], permuted["y"])

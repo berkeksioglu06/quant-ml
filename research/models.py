@@ -1,11 +1,12 @@
-"""Basit kıyaslar ve Ridge.
+"""Basit kıyaslar, Ridge ve LightGBM.
 
 Bütün modeller aynı arayüzü kullanır: ``fit(train, target)`` ve ``predict(frame)``.
-Ölçekleme, kırpma ve alpha seçimi yalnız eğitim satırlarında öğrenilir.
+Ölçekleme, kırpma, alpha ve ağaç sayısı seçimi yalnız eğitim satırlarında öğrenilir.
 """
 
 from __future__ import annotations
 
+import lightgbm as lgb
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -14,6 +15,38 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
 ALPHA_GRID = tuple(float(a) for a in np.logspace(0, 6, 13))
+LGBM_SEED = 20261016
+# Sabit ve sığ ayarlar; validation sonuçlarına bakılarak değiştirilmez.
+LGBM_PARAMS = {
+    "max_depth": 3,
+    "num_leaves": 7,
+    "learning_rate": 0.03,
+    "min_child_samples": 200,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "colsample_bytree": 0.8,
+    "reg_lambda": 1.0,
+}
+LGBM_MAX_TREES = 2000
+LGBM_EARLY_STOPPING = 100
+
+
+def purged_inner_split(train, inner_sessions=252):
+    """Eğitimin son ``inner_sessions`` seansı iç validation; iç eğitim etiketleri ondan önce biter."""
+    dates = np.sort(train["date"].unique())
+    if len(dates) <= inner_sessions:
+        raise ValueError("İç validation için eğitim dönemi çok kısa")
+    inner_start = dates[-inner_sessions]
+    inner_val = train["date"] >= inner_start
+    inner_train = train["label_end"] < inner_start
+    return train.loc[inner_train], train.loc[inner_val]
+
+
+def clipped_target(frame, target, quantile):
+    """Hedefi bu satırların kendi %q / %(1−q) kantillerine kırpar."""
+    y = frame[target].to_numpy(dtype=float)
+    lo, hi = np.quantile(y, [quantile, 1 - quantile])
+    return np.clip(y, lo, hi)
 
 
 class Winsorizer(BaseEstimator, TransformerMixin):
@@ -111,19 +144,12 @@ class RidgeModel:
         self.inner_sessions = inner_sessions
 
     def _fit_pipeline(self, frame, target, alpha):
-        y = frame[target].to_numpy(dtype=float)
-        lo, hi = np.quantile(y, [self.quantile, 1 - self.quantile])
         pipe = make_pipeline(Winsorizer(self.quantile), StandardScaler(), Ridge(alpha=alpha))
-        return pipe.fit(frame[self.features].to_numpy(dtype=float), np.clip(y, lo, hi))
+        X = frame[self.features].to_numpy(dtype=float)
+        return pipe.fit(X, clipped_target(frame, target, self.quantile))
 
     def inner_split(self, train):
-        dates = np.sort(train["date"].unique())
-        if len(dates) <= self.inner_sessions:
-            raise ValueError("İç validation için eğitim dönemi çok kısa")
-        inner_start = dates[-self.inner_sessions]
-        inner_val = train["date"] >= inner_start
-        inner_train = train["label_end"] < inner_start
-        return train.loc[inner_train], train.loc[inner_val]
+        return purged_inner_split(train, self.inner_sessions)
 
     def fit(self, train, target):
         inner_train, inner_val = self.inner_split(train)
@@ -143,6 +169,87 @@ class RidgeModel:
     def coefficients(self):
         """Standartlaştırılmış özellikte 1 std artışın tahmini getiri etkisi."""
         return pd.Series(self.pipeline_[-1].coef_, index=self.features)
+
+
+class LGBMModel:
+    """LightGBM regresyon; ağaç sayısı eğitimin içindeki purge'lü son yılda bulunur.
+
+    İç validation Ridge'in alpha seçimiyle aynıdır. Early stopping (``early_stopping``
+    tur) iç validation'da kırpılmamış hedefin MSE'sine bakar; bulunan ağaç sayısıyla
+    bütün eğitim dönemine yeniden fit edilir. Eğitim hedefi kırpılır, özellikler ham
+    kalır. Sabit seed, ``deterministic``, sütun bazlı histogram ve tek iş parçacığı aynı
+    girdide aynı tahmini üretir. Tek iş parçacığı şarttır: çok iş parçacığında metrik
+    toplamı son basamakta oynar ve düz bir validation eğrisinde early stopping farklı tur
+    seçebilir. Farklı işletim sistemi veya LightGBM sürümünde küçük farklar olabilir.
+    """
+
+    def __init__(
+        self,
+        features,
+        params=LGBM_PARAMS,
+        max_trees=LGBM_MAX_TREES,
+        early_stopping=LGBM_EARLY_STOPPING,
+        quantile=0.01,
+        inner_sessions=252,
+        seed=LGBM_SEED,
+        *,
+        name="lightgbm",
+        kind="forecast",
+        target_key=None,
+    ):
+        self.name = name
+        self.kind = kind
+        self.target_key = target_key
+        self.features = list(features)
+        self.params = dict(params)
+        self.max_trees = max_trees
+        self.early_stopping = early_stopping
+        self.quantile = quantile
+        self.inner_sessions = inner_sessions
+        self.seed = seed
+
+    def _regressor(self, n_trees):
+        return lgb.LGBMRegressor(
+            **self.params,
+            n_estimators=n_trees,
+            random_state=self.seed,
+            deterministic=True,
+            force_col_wise=True,
+            n_jobs=1,
+            verbose=-1,
+        )
+
+    def _matrix(self, frame):
+        return pd.DataFrame(frame[self.features].to_numpy(dtype=float), columns=self.features)
+
+    def inner_split(self, train):
+        return purged_inner_split(train, self.inner_sessions)
+
+    def fit(self, train, target):
+        inner_train, inner_val = self.inner_split(train)
+        inner = self._regressor(self.max_trees).fit(
+            self._matrix(inner_train),
+            clipped_target(inner_train, target, self.quantile),
+            eval_X=(self._matrix(inner_val),),
+            eval_y=(inner_val[target].to_numpy(dtype=float),),
+            eval_metric="l2",
+            callbacks=[lgb.early_stopping(self.early_stopping, verbose=False)],
+        )
+        self.n_trees_ = int(inner.best_iteration_ or self.max_trees)
+        self.inner_mse_ = float(inner.best_score_["valid_0"]["l2"])
+        self.model_ = self._regressor(self.n_trees_).fit(
+            self._matrix(train), clipped_target(train, target, self.quantile)
+        )
+        return self
+
+    def predict(self, frame):
+        return self.model_.predict(self._matrix(frame))
+
+    def importance(self):
+        """Toplam kazanç (gain) payı; toplam 1."""
+        gain = self.model_.booster_.feature_importance(importance_type="gain")
+        total = gain.sum()
+        return pd.Series(gain / total if total > 0 else gain, index=self.features)
 
 
 def baseline_models():

@@ -21,7 +21,7 @@ def main():
         "--deney",
         choices=sorted(EXPERIMENTS),
         default="1",
-        help="1: ham özellikler, ham/QQQ hedef; 2: gün içi sıralı özellikler, gün içi hedef",
+        help="1, 2, 3: Ridge deneyleri; 4a: LightGBM (ayrıntılar docs/asama1_plan.md)",
     )
     parser.add_argument(
         "--output",
@@ -40,15 +40,16 @@ def main():
         config, summary, _ = run(panel, output, experiment)
     except (ValueError, OSError, KeyError) as exc:
         parser.exit(2, f"Deney tamamlanamadı: {exc}\n")
-    ridge = summary.loc[summary["model"].eq("ridge")].set_index("target")
+    main = summary.loc[summary["model"].eq(config["main_model"])].set_index("target")
     print(
         json.dumps(
             {
                 "run_id": config["run_id"],
                 "experiment": config["experiment"],
                 "horizon": config["horizon"],
-                "ridge_rank_ic": ridge["ic_mean"].round(4).to_dict(),
-                "ridge_r2_oos": ridge["r2_oos"].round(4).to_dict(),
+                "main_model": config["main_model"],
+                "rank_ic": main["ic_mean"].round(4).to_dict(),
+                "r2_oos": main["r2_oos"].round(4).to_dict(),
             },
             ensure_ascii=False,
             indent=2,

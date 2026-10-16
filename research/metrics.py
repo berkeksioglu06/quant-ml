@@ -38,9 +38,19 @@ def daily_rank_ic(frame, pred_col="pred", target_col="y", min_names=5):
 
 
 def top_k_mean(frame, column, k=5, pred_col="pred"):
-    """Günlük: en yüksek skorlu k hissede ``column`` ortalaması (eksikler atlanır)."""
-    ordered = frame.sort_values(["date", pred_col], ascending=[True, False])
-    return ordered.groupby("date").head(k).groupby("date")[column].mean()
+    """Günlük: en yüksek skorlu k hissede ``column`` ortalaması (eksikler atlanır).
+
+    Kesimde eşit skorlu hisseler varsa her biri kalan yer oranında ağırlık alır; bu,
+    eşitliği rastgele kırmanın beklenen değeridir ve satır sırasına bağlı değildir.
+    """
+    day = frame["date"]
+    better = frame.groupby(day)[pred_col].rank(method="min", ascending=False) - 1
+    tied = frame.groupby([day, frame[pred_col]])[pred_col].transform("size")
+    weight = ((k - better) / tied).clip(0, 1)
+    values = frame[column]
+    weight = weight.where(values.notna(), 0)
+    total = (weight * values.fillna(0)).groupby(day).sum()
+    return total / weight.groupby(day).sum()
 
 
 def top_minus_all(frame, k=5, pred_col="pred", target_col="y"):

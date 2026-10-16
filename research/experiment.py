@@ -1,10 +1,12 @@
-"""Aşama 1 deneyleri: aynı K1–K4 çerçevesinde kıyaslar + Ridge.
+"""Aşama 1 deneyleri: aynı K1–K4 çerçevesinde kıyaslar + ana model.
 
-Deney 1: ham özellikler, hissenin kendi getirisi ve QQQ'ya göre getiri.
+Deney 1: Ridge, ham özellikler, hissenin kendi getirisi ve QQQ'ya göre getiri.
 Deney 2: gün içi sıraya çevrilmiş özellikler, gün içi ortalamadan arındırılmış getiri;
 Deney 1 Ridge'i referans satır olarak aynı tablolarda gösterilir.
 Deney 3: Deney 2 ile aynı; tek fark hedef: hisse − beta_t × QQQ, gün içi arındırılmış.
 Yalnız betası olan satırlar; Ridge skorunun beta-nötrlenmiş hali ek satırdır.
+Deney 4a: Deney 1 ile aynı (hissenin kendi getirisi, ham 24 özellik); tek fark model:
+sabit ayarlı LightGBM.
 """
 
 from __future__ import annotations
@@ -31,7 +33,16 @@ from .metrics import (
     top_k_mean,
     top_minus_all,
 )
-from .models import ALPHA_GRID, RidgeModel, baseline_models
+from .models import (
+    ALPHA_GRID,
+    LGBM_EARLY_STOPPING,
+    LGBM_MAX_TREES,
+    LGBM_PARAMS,
+    LGBM_SEED,
+    LGBMModel,
+    RidgeModel,
+    baseline_models,
+)
 
 TOP_K = 5
 MAIN_MODEL = "ridge"
@@ -39,9 +50,15 @@ ERROR_BASELINES = ("sifir", "egitim_ortalamasi")
 # Hüküm kuralı yalnız bu iki skor kıyasına bakar; diğerleri tanı kıyaslarıdır.
 RANK_BASELINES = ("momentum_20", "geri_donus_5")
 RISK_BASELINES = ("en_oynak_20", "yuksek_beta")
+REFERENCE_MODEL = "ridge_deney1"
 EVAL_COLUMNS = ["date", "symbol", "beta_252", "volatility_20", "beta_adj_return", "regime"]
 NEUTRAL_MODEL = "ridge_beta_notr"
-REGISTRY_FIELDS = [
+PD_FEATURE = "volatility_20"
+PD_CONDITION = "market_qqq_return_20"
+PD_QUANTILES = (0.1, 0.25, 0.5, 0.75, 0.9)
+# İlk sürümdeki kolonlar korunur (eski kayıtlar ve okuyan script'ler için); ana model
+# kolonları sona eklenir. ridge_* yalnız ana model Ridge ise doludur.
+LEGACY_REGISTRY_FIELDS = [
     "run_id",
     "created_at_utc",
     "experiment",
@@ -56,6 +73,7 @@ REGISTRY_FIELDS = [
     "ridge_ic_t_nw",
     "ridge_r2",
 ]
+REGISTRY_FIELDS = [*LEGACY_REGISTRY_FIELDS, "main_model", "main_ic", "main_ic_t_nw", "main_r2"]
 
 
 @dataclass(frozen=True)
@@ -70,6 +88,7 @@ class Experiment:
     universe: str = "all"
     beta_neutral_row: bool = False
     criteria: str | None = None
+    main_model: str = MAIN_MODEL
 
 
 EXPERIMENTS = {
@@ -102,16 +121,31 @@ EXPERIMENTS = {
         beta_neutral_row=True,
         criteria="risk_notr",
     ),
+    "4a": Experiment(
+        key="4a",
+        name="asama1_deney4a_lightgbm",
+        slug="lgbm",
+        title="Deney 4a — LightGBM, hissenin kendi getirisi",
+        targets=("raw",),
+        feature_set="raw",
+        reference=True,
+        criteria="lgbm_4a",
+        main_model="lightgbm",
+    ),
 }
 
 
 def make_models(experiment: Experiment, panel: Panel):
     features = panel.features if experiment.feature_set == "raw" else panel.xs_features
-    models = [*baseline_models(), RidgeModel(features)]
+    if experiment.main_model == "lightgbm":
+        main = LGBMModel(features)
+    else:
+        main = RidgeModel(features)
+    models = [*baseline_models(), main]
     if experiment.reference:
-        models.append(
-            RidgeModel(panel.features, name="ridge_deney1", kind="score", target_key="raw")
-        )
+        # Referans aynı hedefe eğitildiyse getiri tahmini olarak da karşılaştırılır.
+        kind = "forecast" if experiment.targets == ("raw",) else "score"
+        models.append(RidgeModel(panel.features, name=REFERENCE_MODEL, kind=kind, target_key="raw"))
     return models
 
 
@@ -180,10 +214,39 @@ def beta_neutral(val, pred):
     return out
 
 
+def partial_dependence(model, frame, feature=PD_FEATURE, condition=PD_CONDITION):
+    """``feature`` sabit değerlere çekildiğinde ortalama tahmin; ``condition`` > 0 ve < 0 ayrı.
+
+    Izgara bütün satırlardaki ``feature`` kantilleridir; iki alt kümede aynı değerler kullanılır.
+    """
+    grid = frame[feature].quantile(list(PD_QUANTILES))
+    rows = []
+    for subset, mask in (("pozitif", frame[condition] > 0), ("negatif", frame[condition] < 0)):
+        part = frame.loc[mask]
+        for quantile, value in grid.items():
+            pred = model.predict(part.assign(**{feature: value}))
+            rows.append(
+                {
+                    "subset": subset,
+                    "quantile": float(quantile),
+                    "value": float(value),
+                    "pd": float(pred.mean()),
+                    "rows": int(mask.sum()),
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def _frame(items):
+    return pd.concat(items, ignore_index=True) if items else None
+
+
 def evaluate(panel: Panel, experiment: Experiment):
     """Deneyin bütün hedef × dönem × model kombinasyonlarını eğitir ve değerlendirir."""
     lags = panel.horizon - 1
-    fold_rows, daily, preds, coefs, alphas, exposures = [], [], [], [], [], []
+    main_name = experiment.main_model
+    fold_rows, daily, preds, exposures = [], [], [], []
+    coefs, alphas, trees, importance, dependence = [], [], [], [], []
     raw = panel.targets["raw"]
     for target_key in experiment.targets:
         target = panel.targets[target_key]
@@ -195,7 +258,7 @@ def evaluate(panel: Panel, experiment: Experiment):
                 model.fit(train, fit_target)
                 pred = model.predict(val)
                 scores = [(model.name, model.kind, pred)]
-                if model.name == MAIN_MODEL and experiment.beta_neutral_row:
+                if model.name == main_name and experiment.beta_neutral_row:
                     scores.append((NEUTRAL_MODEL, "score", beta_neutral(val, pred)))
                 for model_name, kind, values in scores:
                     meta = {
@@ -210,39 +273,61 @@ def evaluate(panel: Panel, experiment: Experiment):
                     preds.append(scored)
                     if days is not None:
                         daily.append(days)
-                if model.name != MAIN_MODEL:
+                if model.name != main_name:
                     continue
-                coefs.append(
-                    model.coefficients()
-                    .rename("coef")
-                    .rename_axis("feature")
-                    .reset_index()
-                    .assign(target=target_key, fold=name)
-                )
-                alphas.append(
-                    {
-                        "target": target_key,
-                        "fold": name,
-                        "alpha": model.alpha_,
-                        "alpha_at_grid_edge": model.alpha_ in (min(ALPHA_GRID), max(ALPHA_GRID)),
-                        **{f"inner_mse_{a:g}": m for a, m in model.inner_mse_.items()},
-                    }
-                )
+                keys = {"target": target_key, "fold": name}
                 exposures.append(
                     val[model.features]
                     .corrwith(pd.Series(pred, index=val.index))
                     .rename("corr")
                     .rename_axis("feature")
                     .reset_index()
-                    .assign(target=target_key, fold=name)
+                    .assign(**keys)
                 )
+                if isinstance(model, RidgeModel):
+                    coefs.append(
+                        model.coefficients()
+                        .rename("coef")
+                        .rename_axis("feature")
+                        .reset_index()
+                        .assign(**keys)
+                    )
+                    alphas.append(
+                        keys
+                        | {
+                            "alpha": model.alpha_,
+                            "alpha_at_grid_edge": model.alpha_
+                            in (min(ALPHA_GRID), max(ALPHA_GRID)),
+                            **{f"inner_mse_{a:g}": m for a, m in model.inner_mse_.items()},
+                        }
+                    )
+                if isinstance(model, LGBMModel):
+                    trees.append(
+                        keys
+                        | {
+                            "n_trees": model.n_trees_,
+                            "at_max_trees": model.n_trees_ == model.max_trees,
+                            "inner_mse": model.inner_mse_,
+                        }
+                    )
+                    importance.append(
+                        model.importance()
+                        .rename("gain_share")
+                        .rename_axis("feature")
+                        .reset_index()
+                        .assign(**keys)
+                    )
+                    dependence.append(partial_dependence(model, val).assign(**keys))
     return {
         "folds": pd.DataFrame(fold_rows),
         "daily": pd.concat(daily, ignore_index=True),
         "predictions": pd.concat(preds, ignore_index=True),
-        "coefficients": pd.concat(coefs, ignore_index=True),
-        "alphas": pd.DataFrame(alphas),
         "exposures": pd.concat(exposures, ignore_index=True),
+        "coefficients": _frame(coefs),
+        "alphas": pd.DataFrame(alphas) if alphas else None,
+        "trees": pd.DataFrame(trees) if trees else None,
+        "importance": _frame(importance),
+        "partial_dependence": _frame(dependence),
         "feature_ic": feature_ic(panel),
     }
 
@@ -303,13 +388,13 @@ def pooled(result, panel: Panel, experiment: Experiment):
     consistency = []
     for target in experiment.targets:
         f = folds.loc[folds["target"].eq(target)].set_index(["model", "fold"])
-        ridge = f.loc[MAIN_MODEL]
-        rec = {"target": target, "folds": len(ridge)}
+        main = f.loc[experiment.main_model]
+        rec = {"target": target, "folds": len(main)}
         for base in ERROR_BASELINES:
-            rec[f"mse_beats_{base}"] = int((ridge["mse"] < f.loc[base, "mse"]).sum())
-        rec["ic_positive"] = int((ridge["ic_mean"] > 0).sum())
+            rec[f"mse_beats_{base}"] = int((main["mse"] < f.loc[base, "mse"]).sum())
+        rec["ic_positive"] = int((main["ic_mean"] > 0).sum())
         for base in (*RANK_BASELINES, *RISK_BASELINES):
-            rec[f"ic_beats_{base}"] = int((ridge["ic_mean"] > f.loc[base, "ic_mean"]).sum())
+            rec[f"ic_beats_{base}"] = int((main["ic_mean"] > f.loc[base, "ic_mean"]).sum())
         consistency.append(rec)
 
     val = panel.rows.loc[panel.rows["partition"].eq("validation")]
@@ -347,15 +432,24 @@ def run(panel: Panel, output: Path, experiment: Experiment = EXPERIMENTS["1"]):
     summary.to_csv(output / "pooled_metrics.csv", index=False)
     consistency.to_csv(output / "consistency.csv", index=False)
     context.to_csv(output / "period_context.csv", index=False)
-    result["coefficients"].to_csv(output / "ridge_coefficients.csv", index=False)
-    result["alphas"].to_csv(output / "ridge_alpha.csv", index=False)
-    result["exposures"].to_csv(output / "ridge_exposure.csv", index=False)
+    prefix = "lgbm" if experiment.main_model == "lightgbm" else "ridge"
+    result["exposures"].to_csv(output / f"{prefix}_exposure.csv", index=False)
+    files = {
+        "coefficients": "ridge_coefficients.csv",
+        "alphas": "ridge_alpha.csv",
+        "trees": "lgbm_trees.csv",
+        "importance": "lgbm_importance.csv",
+        "partial_dependence": "lgbm_partial_dependence.csv",
+    }
+    for key, file in files.items():
+        if result[key] is not None:
+            result[key].to_csv(output / file, index=False)
     result["feature_ic"].to_csv(output / "feature_ic.csv", index=False)
     result["daily"].to_parquet(output / "daily_ic.parquet", index=False)
     result["predictions"].to_parquet(output / "predictions.parquet", index=False)
 
     models = make_models(experiment, panel)
-    main = next(m for m in models if m.name == MAIN_MODEL)
+    main = next(m for m in models if m.name == experiment.main_model)
     config = {
         "experiment": experiment.name,
         "experiment_key": experiment.key,
@@ -371,13 +465,14 @@ def run(panel: Panel, output: Path, experiment: Experiment = EXPERIMENTS["1"]):
         "horizon": panel.horizon,
         "targets": {k: panel.targets[k] for k in experiment.targets},
         "benchmark": "QQQ",
+        "main_model": experiment.main_model,
         "feature_set": experiment.feature_set,
         "features": main.features,
         "folds": panel.folds,
         "test_start": str(panel.test_start.date()),
         "test_period_read": False,
         "models": [m.name for m in models],
-        "reference_model": "ridge_deney1" if experiment.reference else None,
+        "reference_model": REFERENCE_MODEL if experiment.reference else None,
         "universe": experiment.universe,
         "excluded_rows": (
             panel.excluded.to_dict("records") if panel.excluded is not None else None
@@ -400,6 +495,23 @@ def run(panel: Panel, output: Path, experiment: Experiment = EXPERIMENTS["1"]):
         },
         "top_k": TOP_K,
     }
+    if experiment.main_model == "lightgbm":
+        config["lightgbm"] = {
+            "params": LGBM_PARAMS,
+            "max_trees": LGBM_MAX_TREES,
+            "early_stopping_rounds": LGBM_EARLY_STOPPING,
+            "tree_selection": "eğitimin son 252 seansı iç validation, purge'lü, l2",
+            "seed": LGBM_SEED,
+            "deterministic": True,
+            "force_col_wise": True,
+            "target_winsor_quantile": 0.01,
+            "partial_dependence": {
+                "feature": PD_FEATURE,
+                "condition": f"{PD_CONDITION} > 0 / < 0",
+                "quantiles": list(PD_QUANTILES),
+                "rows": "validation",
+            },
+        }
     (output / "config.json").write_text(
         json.dumps(config, ensure_ascii=False, indent=2), encoding="utf-8"
     )
@@ -411,20 +523,48 @@ def run(panel: Panel, output: Path, experiment: Experiment = EXPERIMENTS["1"]):
     return config, summary, consistency
 
 
+def _migrate_registry(registry):
+    """İlk sürüm kayıtlarına ana model kolonlarını ekler; hiçbir satır silinmez."""
+    with registry.open(encoding="utf-8") as stream:
+        header = next(csv.reader(stream), None)
+    if header == REGISTRY_FIELDS:
+        return
+    if header != LEGACY_REGISTRY_FIELDS:
+        raise ValueError(f"{registry} kolonları beklenen biçimde değil")
+    with registry.open(encoding="utf-8") as stream:
+        rows = list(csv.DictReader(stream))
+    for row in rows:
+        row |= {
+            "main_model": MAIN_MODEL,
+            "main_ic": row["ridge_ic"],
+            "main_ic_t_nw": row["ridge_ic_t_nw"],
+            "main_r2": row["ridge_r2"],
+        }
+    with registry.open("w", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=REGISTRY_FIELDS)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
 def _register(output, config, summary):
     """Denenen her kombinasyon output/experiments/runs.csv dosyasına eklenir."""
     registry = output.parent / "runs.csv"
     if registry.exists():
-        with registry.open(encoding="utf-8") as stream:
-            if next(csv.reader(stream), None) != REGISTRY_FIELDS:
-                raise ValueError(f"{registry} kolonları beklenen biçimde değil")
-    ridge = summary.loc[summary["model"].eq(MAIN_MODEL)].set_index("target")
+        _migrate_registry(registry)
+    main_name = config["main_model"]
+    main = summary.loc[summary["model"].eq(main_name)].set_index("target")
     new = not registry.exists()
     with registry.open("a", newline="", encoding="utf-8") as stream:
         writer = csv.DictWriter(stream, fieldnames=REGISTRY_FIELDS)
         if new:
             writer.writeheader()
         for target in config["targets"]:
+            values = {
+                "ic": round(float(main.loc[target, "ic_mean"]), 5),
+                "ic_t_nw": round(float(main.loc[target, "ic_t_nw"]), 3),
+                "r2": round(float(main.loc[target, "r2_oos"]), 5),
+            }
+            ridge = values if main_name == MAIN_MODEL else dict.fromkeys(values, "")
             writer.writerow(
                 {
                     "run_id": config["run_id"],
@@ -437,8 +577,8 @@ def _register(output, config, summary):
                     "feature_set": config["feature_set"],
                     "models": " ".join(config["models"]),
                     "target": target,
-                    "ridge_ic": round(float(ridge.loc[target, "ic_mean"]), 5),
-                    "ridge_ic_t_nw": round(float(ridge.loc[target, "ic_t_nw"]), 3),
-                    "ridge_r2": round(float(ridge.loc[target, "r2_oos"]), 5),
+                    **{f"ridge_{k}": v for k, v in ridge.items()},
+                    "main_model": main_name,
+                    **{f"main_{k}": v for k, v in values.items()},
                 }
             )

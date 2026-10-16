@@ -9,7 +9,10 @@ test dönemi yalnız bir kez açılır (Aşama 3).
 uv run python train_baseline.py --deney 1
 uv run python train_baseline.py --deney 2
 uv run python train_baseline.py --deney 3
+uv run python train_baseline.py --deney 4a
 ```
+
+LightGBM macOS'ta OpenMP ister: `brew install libomp`. Linux ve Windows paketlerinde gerekmez.
 
 Çıktı `output/experiments/<zaman>_<deney>_h20/RAPOR.md` ve yanındaki CSV/Parquet
 dosyalarıdır. Her çalıştırma hedef başına bir satırla `output/experiments/runs.csv`
@@ -24,7 +27,7 @@ kaydına eklenir; denenen hiçbir kombinasyon silinmez. Bu klasör Git takibinde
 | Hata kıyasları | Sıfır, eğitim ortalaması |
 | Sıralama kıyasları | Momentum (`return_20`), geri dönüş (−`return_5`) |
 | Risk kıyasları | En oynak (`volatility_20`), yüksek beta (`beta_252`); hükme girmez |
-| Model | Ridge: %1/%99 kırpma, standartlaştırma, α eğitimin son 252 seansında seçilir |
+| Model | Ridge (Deney 1–3): %1/%99 kırpma, standartlaştırma, α eğitimin son 252 seansında seçilir; LightGBM (Deney 4a) |
 | Ölçüler | MSE ve R²_oos; günlük Spearman rank IC, Newey-West t (19 gecikme); dönem tutarlılığı |
 | Tanılar | QQQ ↑/yatay/↓ rejim IC'si (±%2), beta-düzeltmeli IC, ilk 5 hissenin beta/volatilitesi |
 
@@ -77,6 +80,34 @@ arası *karışık*.
   negatif (−0,042, t −1,36) ve skor–volatilite korelasyonu +0,43. Momentum artık IC +0,023
   (t 0,90); QQQ ↓ rejiminde onun da t'si −2,22.
 
+## Deney 4a — LightGBM, hissenin kendi getirisi
+
+- Deney 1 ile tek fark model: hedef `target_return_20`, manifestteki 24 ham özellik
+  (market_* dahil), aynı satırlar; eğitim hedefi %1/%99 kırpılır.
+- Sabit ve sığ ayarlar, validation'a bakılarak değiştirilmez: max_depth 3, num_leaves 7,
+  learning_rate 0.03, min_child_samples 200, subsample 0.8 (bagging_freq 1),
+  colsample_bytree 0.8, reg_lambda 1.0, en fazla 2000 ağaç.
+- Ağaç sayısı: early stopping (100 tur) eğitimin son 252 seansında, purge'lü iç bölmeyle;
+  sonra bulunan sayıyla bütün eğitime yeniden fit. Seed sabit, deterministic, sütun bazlı
+  histogram, tek iş parçacığı (çok iş parçacığında metrik toplamı oynuyor ve düz eğride
+  early stopping farklı tur seçebiliyordu).
+- Ek tanılar: fold başına ilk 10 kazanç payı, market_* kullanımı, `volatility_20`'nin
+  kısmi bağımlılığı `market_qqq_return_20` > 0 ve < 0 satırlarında ayrı.
+- Önceden yazılı başarı kriteri:
+  1. Birleşik rank IC > momentum_20 ve en az 3/4 dönemde pozitif.
+  2. QQQ ↓ rejiminde IC'nin NW t'si > −2.
+  3. Skor–beta günlük sıra korelasyonu −0.30 < r < 0.30.
+- Sonuç: **karşılanmadı** (yalnız 3. kriter geçti). Rank IC −0,050 (NW t −1,48), 2/4
+  dönem pozitif (K3 +0,005, K4 +0,018), R²_oos −2,9%; QQQ ↓ IC −0,257 (t −5,42);
+  skor–beta +0,295, skor–volatilite +0,46. Early stopping K1'de 124 ağaç, K2–K4'te 1 ağaç
+  seçti: iç validation'da ilk ağaçtan sonra iyileşme yok. K2–K4'te kazancın %59–87'si
+  aynı gün bütün hisselerde aynı olan `market_spy_return_20`'den; `market_qqq_return_20`
+  yalnız K1'de (%3). Kısmi bağımlılık: K1'de volatilite etkisi iki piyasa durumunda da
+  pozitif (koşullu değil), K2–K4'te düz. Model koşullu bir ilişki kurmadı.
+- Plan değişikliği: Deney 3'ün önceden yazılı kuralı sıradaki adım olarak uzun momentumu
+  gösteriyordu. Plan 4a (LightGBM) → 4b (piyasa durumu özellikleri) → Deney 5 (üç bariyerli
+  hedef) olarak güncellendi; uzun momentum şimdilik planda yok.
+
 Kod: `research/data.py` (hedefler, beta, rejim, bölmeler), `research/models.py`,
 `research/metrics.py`, `research/experiment.py`, `research/report.py`.
 
@@ -84,10 +115,9 @@ Kod: `research/data.py` (hedefler, beta, rejim, bölmeler), `research/models.py`
 
 Aynı değerlendirme çerçevesine, sırası sonuçlara göre belirlenir:
 
-1. Deney 4 (Deney 3'ün önceden yazılı kuralı gereği): uzun momentum, 60/120/250 seans
-   getirisi. Seçim validation sonuçlarına bakılarak özellik atmak biçiminde yapılmaz.
-2. Lojistik regresyon (yön olasılığı; AUC ve kalibrasyon eklenir).
-3. LightGBM (yeni bağımlılık; yalnız bu adımda eklenir).
+1. Deney 4b: piyasa durumu özellikleri (4a'nın kuralı gereği, 4a geçmese de denenir).
+2. 4b de geçemezse Deney 5: üç bariyerli hedef.
+3. Lojistik regresyon (yön olasılığı; AUC ve kalibrasyon eklenir).
 4. 5 ve 10 seanslık ufuklar.
 5. Maliyetli portföy karşılaştırması (top-N, H dilim, %20 pozisyon sınırı,
    10 bps temel, 20/50 bps stres; yalnız long, "sat" = pozisyondan çık).

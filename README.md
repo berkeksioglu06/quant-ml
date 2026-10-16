@@ -58,6 +58,23 @@ Seçim yanlılığı: evren bugün işlem gören hisselerden kuruldu; 2016–202
 sağlayıcının ilk çubuğundan alındı (`first_date_source: yahoo_first_bar`), resmi halka arz
 tarihi değildir. Ayrıntı ve elenen adaylar `universe_genis.json` içindedir.
 
+## Kural tabanlı evren (genis_evren.py)
+
+```bash
+uv run python genis_evren.py symbols                     # Nasdaq dizininden ~5.600 adi hisse
+uv run python genis_evren.py download --workers 4        # kaldığı yerden devam eder (~450 MB, Git dışı)
+uv run python genis_evren.py membership                  # günlük kural: fiyat > 5$, 60 seans medyan $ hacmi > 10 M, ≥ 252 seans
+uv run python genis_evren.py snapshot --out data/yahoo_genis_<tarih>   # evrene girenleri market_data kaydına çevirir + build
+uv run python build_dataset.py --project . --snapshot yahoo_genis_<tarih> --output output/yahoo_genis_<tarih>_dataset_v1_1
+uv run python train_baseline.py --deney 2 --dataset output/yahoo_genis_<tarih>_dataset_v1_1 \
+    --membership data/yahoo_genis_<tarih>/membership.parquet
+```
+
+Kimse hisse seçmez; kural her gün yalnız o güne kadarki veriyle uygulanır. Veri seti evrene en az bir
+gün giren bütün hisseleri içerir; günlük üyelik `--membership` ile araştırma hattında uygulanır
+(`research.diag_lgbm` de aynı seçeneği alır). Aday havuzu bugün işlem görenler (survivorship).
+Sonuçlar: [docs/asama1_plan.md](docs/asama1_plan.md) "Kural tabanlı evren".
+
 ## Özellik ve etiket üreticisi v1.1
 
 ```bash

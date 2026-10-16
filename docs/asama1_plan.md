@@ -262,6 +262,70 @@ Okuma:
 Sonuç: Deney 2 ve 4a geniş evrende de önceden yazılı kriterleri karşılamadı; "Sonraki deneyler"
 sırası değişmedi.
 
+### Kural tabanlı evren (`genis_evren.py`, günde 1.300–1.800 hisse)
+
+Arkadaşın `genis-evren` dalındaki kural evreni: Nasdaq sembol dizinindeki 5.600 ABD adi hissesinin
+tamamı 2015'ten itibaren indirildi; her gün yalnız o güne kadarki veriyle fiyat > 5$, 60 seans medyan
+dolar hacmi > 10 M$, ≥ 252 seans geçmiş kuralı uygulandı. Evrene en az bir gün giren 2.957 hisse
+`genis_evren.py snapshot` ile market_data kaydına (`data/yahoo_genis_20261016`, 2.960 seri, 6 seride
+HATA: 5 split kırılması, 2 geçersiz düzeltme) çevrildi; veri seti `output/yahoo_genis_20261016_dataset_v1_1`
+(7.431.106 satır; büyük Parquet'ler Git dışı). Günlük üyelik veri setine girmez; `train_baseline.py`
+ve `research.diag_lgbm` `--membership data/yahoo_genis_20261016/membership.parquet` ile uygular
+(K1–K4'te 10,4 M satırdan 6,5 M düşer; validation'da günde 1.650–1.780 hisse). Evren betası 0,63–0,78
+(281'lik evren 1,22): bu artık "bizim tarz" değil, bütün piyasa.
+
+Koşular: Deney 2 `20261016T195546Z_ridge_xs_h20`, tanı `20261016T195546Z_diag_lgbm_h20`
+(öğrenme eğrisi + etiket karıştırma, raw24 ve xs22, `--jobs 6`, 17 dk). Kriterler ve ayarlar aynı.
+
+**Deney 2 — Ridge, sıralı özellikler (hüküm: geçmiyor → geçmiyor → geçmiyor)**
+
+| Ölçü | 29 hisse | 281 hisse | Kural evreni |
+|---|---:|---:|---:|
+| Ridge K1–K4 rank IC (NW t) | −0,079 (−2,07) | −0,061 (−2,54) | −0,023 (−1,27) |
+| Momentum / geri dönüş IC | +0,027 / −0,021 | +0,001 / +0,000 | −0,000 / +0,001 |
+| En oynak IC | −0,110 | — | −0,063 (t −2,82) |
+| Pozitif IC'li dönem | 0/4 | 0/4 | 0/4 |
+| QQQ ↓ IC | −0,343 | −0,223 | −0,043 |
+| Skor–beta sıra kor. | — | +0,45 | +0,06 |
+| İlk 5 beta / vol. (evren) | 1,58 / 0,82 (1,33 / 0,54) | 1,48 / 0,91 (1,22 / 0,54) | 0,90 / 0,73 (0,70 / 0,39) |
+| R²_oos | −1,09% | −0,18% | −0,14% |
+
+Skor yine 4/4 dönemde volatiliteye yüklü (ilk 5'in volatilitesi evrenin iki katı); IC'nin sıfıra
+yaklaşması sinyal değil, 1.700 hisselik kesitte gürültünün ortalamasının küçülmesi.
+
+**Tanı — üç evren yan yana**
+
+| Soru | 29 hisse | 281 hisse | Kural evreni |
+|---|---|---|---|
+| Hisse/gün (K4 validation) | 28 | 273 | 1.776 |
+| Öğrenme eğrisi raw24, 1→1000 ağaç: eğitim IC | +0,07 → +0,27 | +0,006 → +0,10 | +0,005 → +0,061 |
+| … validation IC | −0,04 → −0,03 | −0,02 → −0,03 | −0,02 → −0,04 (en kötü 25 ağaçta −0,057) |
+| … validation R² | −2% → −15% | −0,8% → −6% | −0,1% → −4% |
+| Etiket karıştırma raw24 K1, 200 ağaç: eğitim IC gerçek / karışık | +0,18 / +0,19 | +0,059 / +0,072 | +0,030 / +0,026 |
+| … eğitim R² gerçek / karışık | +22% / +10% | +0,5% / +0,2% | +10,8% / +1,6% |
+| xs22 K1 eğitim IC gerçek / karışık | +0,20 / +0,17 | — | +0,035 / +0,026 |
+| Tek özellik validation IC tavanı | +0,034 | +0,016 | +0,014 (`relative_volume_20`); `return_20` −0,000 |
+| Volatilite ailesi IC eğitim → validation | +0,04…+0,05 → −0,09…−0,12 | ≈0 → −0,06…−0,08 | ≈0 → −0,056…−0,066 |
+
+Okuma:
+
+- **Üçüncü evrende de aynı sonuç.** Elle seçilmiş 29 ve 281 hisse ile kural tabanlı 1.700 hisse
+  aynı resmi veriyor: eğitimdeki uyum karıştırılmış etiketle alınan uyumdan ayırt edilemiyor,
+  validation IC'si sıfırın altında ve ağaç eklemek yalnız eğitime uyumu büyütüyor. "Hisse seçimi
+  kötüydü" açıklaması düşüyor.
+- **raw24'ün eğitim R²'si (K1 %10,8) dönem ezberi.** Karıştırılmış etikette %1,6; aradaki fark gün
+  bazlı `market_*` özelliklerinin 2016–2020 piyasa yönünü ezberlemesi. Validation R² yine negatif.
+  xs hedefte (gün ortalaması çıkarılmış) eğitim R² %0,4, yani kesitsel öğrenilecek şey yok.
+- **Momentum bu ufukta sıfır.** 20 seanslık `return_20`'nin 20 seanslık ileri getiriyle kesitsel IC'si
+  bütün piyasada −0,000; eski evrenin +0,027'si 29 hissenin tesadüfüydü. Kesitsel momentum
+  literatürü 12-1 aylık oluşum penceresi kullanır; 1 aylık pencere kısa vadeli geri dönüşle çakışır.
+- **Volatilite ilişkisi evrenden bağımsız:** eğitimde sıfır, validation'da −0,06. Modeller MSE'ye fit
+  edilince kırpılmış hedefte oynak hisselerin eğitim ortalaması yüksek kaldığı için skor volatiliteye
+  yükleniyor. Çözüm hisse sayısı değil; hedefi volatiliteye ölçeklemek ya da volatilite ailesini
+  girdiden çıkarmak/nötrlemek (tanı bölümündeki öneri aynen geçerli).
+- Deney 4a (LightGBM, tek iş parçacığı, 2,8 M satır) bu evrende ayrıca koşuldu; sonucu aşağıdaki
+  alt bölümde.
+
 ## Sonraki deneyler
 
 Aynı değerlendirme çerçevesine, sırası sonuçlara göre belirlenir:

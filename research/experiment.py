@@ -534,6 +534,8 @@ def run(panel: Panel, output: Path, experiment: Experiment = EXPERIMENTS["1"]):
         "dataset_dir": str(panel.dataset_dir),
         "dataset_version": panel.dataset_manifest["version"],
         "dataset_manifest_sha256": sha256(panel.dataset_dir / "manifest.json"),
+        "membership": panel.membership_file,
+        "membership_dropped_rows": panel.membership_dropped,
         "horizon": panel.horizon,
         "targets": {k: panel.targets[k] for k in experiment.targets},
         "benchmark": "QQQ",

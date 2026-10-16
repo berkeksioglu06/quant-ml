@@ -131,6 +131,29 @@ def test_panel_matches_dataset_fold_counts_and_keeps_test_closed(panel):
         assert val["label_end"].max() <= pd.Timestamp(fold["val_end"])
 
 
+def test_membership_mask_drops_rows_outside_daily_universe(tmp_path):
+    from research.data import apply_membership
+
+    rows = pd.DataFrame(
+        {
+            "date": pd.to_datetime(["2020-01-02"] * 3 + ["2020-01-03"] * 3),
+            "symbol": ["A", "B", "C"] * 2,
+            "y": range(6),
+        }
+    )
+    member = pd.DataFrame(
+        {
+            "date": pd.to_datetime(["2020-01-02", "2020-01-02", "2020-01-03", "2020-01-03"]),
+            "symbol": ["A", "B", "A", "C"],
+            "in_universe": [True, False, True, True],
+        }
+    )
+    member.to_parquet(tmp_path / "membership.parquet", index=False)
+    kept, dropped = apply_membership(rows, tmp_path / "membership.parquet")
+    assert dropped == 3
+    assert list(zip(kept["date"].dt.day, kept["symbol"])) == [(2, "A"), (3, "A"), (3, "C")]
+
+
 def test_qqq_target_is_stock_minus_same_window_qqq(panel):
     rows = panel.rows
     raw, excess = panel.targets["raw"], panel.targets["vs_qqq"]

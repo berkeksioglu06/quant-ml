@@ -18,6 +18,11 @@ def main():
     parser.add_argument("--dataset", type=Path, default=DEFAULT_DATASET, help="Hazır veri seti")
     parser.add_argument("--horizon", type=int, default=20, help="Etiket ufku (seans)")
     parser.add_argument(
+        "--membership",
+        type=Path,
+        help="Günlük evren üyeliği parquet'i (genis_evren.py membership); dışı düşer",
+    )
+    parser.add_argument(
         "--deney",
         choices=sorted(EXPERIMENTS),
         default="1",
@@ -36,7 +41,7 @@ def main():
     slug = f"{stamp}_{experiment.slug}_h{args.horizon}"
     output = args.output or project / "output/experiments" / slug
     try:
-        panel = load_panel(dataset, project, args.horizon)
+        panel = load_panel(dataset, project, args.horizon, membership=args.membership)
         config, summary, _ = run(panel, output, experiment)
     except (ValueError, OSError, KeyError) as exc:
         parser.exit(2, f"Deney tamamlanamadı: {exc}\n")

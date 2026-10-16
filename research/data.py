@@ -68,6 +68,8 @@ class Panel:
     dataset_manifest: dict
     excluded: pd.DataFrame | None = None
     market_features: list[str] = field(default_factory=lambda: list(MARKET_FEATURES))
+    membership_file: str | None = None
+    membership_dropped: int = 0
 
     def split(self, fold: str) -> tuple[pd.DataFrame, pd.DataFrame]:
         part = self.rows.loc[self.rows["fold"].eq(fold)]
@@ -214,7 +216,21 @@ def add_cross_sectional(rows, base_features, targets):
     rows[targets["resid"]] = resid - resid.groupby([rows[k] for k in DAY_KEYS]).transform("mean")
 
 
-def load_panel(dataset_dir, project, horizon=20) -> Panel:
+def apply_membership(rows, membership_file):
+    """Günlük evren üyeliği (``date``, ``symbol``, ``in_universe``) dışındaki satırları düşürür.
+
+    Kural tabanlı evren (``genis_evren.py``) her gün yalnız o güne kadarki veriyle karar verir;
+    bu yüzden maske geleceğe bakmaz. Üyelik tablosunda olmayan (tarih, hisse) çifti evren dışı
+    sayılır.
+    """
+    member = pd.read_parquet(membership_file, columns=["date", "symbol", "in_universe"])
+    member = member.loc[member["in_universe"], ["date", "symbol"]].drop_duplicates()
+    member["date"] = pd.to_datetime(member["date"])
+    keep = rows[["date", "symbol"]].merge(member.assign(_in=True), how="left")["_in"].eq(True)
+    return rows.loc[keep.to_numpy()].copy(), int((~keep).sum())
+
+
+def load_panel(dataset_dir, project, horizon=20, membership=None) -> Panel:
     dataset_dir = Path(dataset_dir)
     manifest = json.loads((dataset_dir / "manifest.json").read_text(encoding="utf-8"))
     if horizon not in manifest["horizons"]:
@@ -229,11 +245,11 @@ def load_panel(dataset_dir, project, horizon=20) -> Panel:
     # Test dönemi kapalı: sonraki hiçbir adım bu satırları görmez.
     data = data.loc[data["date"] < test_start]
 
-    membership = pd.read_parquet(dataset_dir / "partition_membership.parquet")
-    membership = membership.loc[membership["horizon"].eq(horizon)]
-    if membership["label_end"].max() >= test_start:
+    partitions = pd.read_parquet(dataset_dir / "partition_membership.parquet")
+    partitions = partitions.loc[partitions["horizon"].eq(horizon)]
+    if partitions["label_end"].max() >= test_start:
         raise ValueError("Bölme kayıtları test dönemine taşıyor")
-    rows = membership.merge(data, on=["date", "symbol"], how="left", validate="many_to_one")
+    rows = partitions.merge(data, on=["date", "symbol"], how="left", validate="many_to_one")
     if rows[raw_target].isna().any():
         raise ValueError("Bölme kaydında hedefi olmayan satır var")
     if not rows["label_end"].eq(rows[f"label_end_{horizon}"]).all():
@@ -242,6 +258,12 @@ def load_panel(dataset_dir, project, horizon=20) -> Panel:
     rows = rows.loc[rows["volume_features_ready"].eq(True)].copy()
     if not np.isfinite(rows[features].to_numpy()).all():
         raise ValueError("Model girdilerinde eksik veya sonsuz değer var")
+    # Günlük evren maskesi en başta uygulanır: beta, sıralar ve hedefler kalan evrende kurulur.
+    dropped = 0
+    if membership is not None:
+        rows, dropped = apply_membership(rows, membership)
+        if rows.empty:
+            raise ValueError("Üyelik maskesinden sonra satır kalmadı")
 
     source = discover(project, manifest["snapshot"], "main")
     bench = benchmark_returns(source, horizon, as_of)
@@ -298,6 +320,8 @@ def load_panel(dataset_dir, project, horizon=20) -> Panel:
         targets=targets,
         folds=folds,
         horizon=horizon,
+        membership_file=str(Path(membership).resolve()) if membership is not None else None,
+        membership_dropped=dropped,
         test_start=test_start,
         snapshot=manifest["snapshot"],
         dataset_dir=dataset_dir,

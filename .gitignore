@@ -19,3 +19,8 @@ __pycache__/
 
 # geçici yerel deneyler
 /tmp/
+# kural tabanlı geniş evren (genis_evren.py): ham veri 450+ MB, Git dışı; veri setinin küçük dosyaları girer
+!/output/yahoo_genis_20261016_dataset_v1_1/
+/output/yahoo_genis_20261016_dataset_v1_1/dataset.parquet
+/output/yahoo_genis_20261016_dataset_v1_1/features.parquet
+/output/yahoo_genis_20261016_dataset_v1_1/partition_membership.parquet

@@ -130,6 +130,8 @@ def shuffle_test(panel, sets, n_jobs, log):
     rows = []
     rng = np.random.default_rng(LGBM_SEED)
     for set_name in ("raw24", "xs22_xs_target"):
+        if set_name not in sets:
+            continue
         features, target_key = sets[set_name]
         target = panel.targets[target_key]
         for fold in panel.folds:
@@ -163,6 +165,8 @@ def hp_grid(panel, sets, n_jobs, log):
     rows = []
     combos = list(itertools.product(*GRID.values()))
     for set_name in ("raw24", "xs22_xs_target"):
+        if set_name not in sets:
+            continue
         features, target_key = sets[set_name]
         target = panel.targets[target_key]
         for fold in panel.folds:
@@ -191,6 +195,8 @@ def early_stopping_metric(panel, sets, n_jobs, log):
     rows = []
     counts = sorted({*CURVE, 2, 3, 150, 300, 600, 800})
     for set_name in ("raw24", "xs22_xs_target"):
+        if set_name not in sets:
+            continue
         features, target_key = sets[set_name]
         target = panel.targets[target_key]
         for fold in panel.folds:
@@ -307,7 +313,15 @@ def write_report(output, panel, structure, fic, curve, shuffle, grid, es, elapse
         L.append(f"| `{f}` | {_fmt(r.train_ic)} | {_fmt(r.val_ic)} | {flip} |")
     L.append("")
 
-    L.append("## 2. Öğrenme eğrisi (early stopping yok)\n")
+    L.append(
+        f"Satır: {len(panel.rows)}; üyelik maskesi: {panel.membership_file or 'yok'}"
+        f" (düşen {panel.membership_dropped}).\n"
+    )
+    if curve is None:
+        L.append("## 2. Öğrenme eğrisi — koşulmadı\n")
+        curve = pd.DataFrame(columns=["set"])
+    else:
+        L.append("## 2. Öğrenme eğrisi (early stopping yok)\n")
     L.append(
         "Her özellik kümesi için ağaç sayısına göre eğitim ve validation rank IC'si (K1–K4 "
         "ortalaması; sabit skorlu günler 0 sayılır) ve R². Eğitim IC'si artıp validation "
@@ -336,6 +350,9 @@ def write_report(output, panel, structure, fic, curve, shuffle, grid, es, elapse
             + "\n"
         )
 
+    if shuffle is None:
+        L.append("## 3. Etiket karıştırma — koşulmadı\n")
+        shuffle = pd.DataFrame(columns=["set", "fold", "label"])
     L.append("## 3. Etiket karıştırma (200 ağaç)\n")
     L.append(
         "Hedef eğitim içinde rastgele karıştırıldı. Eğitim uyumu gerçek hedeftekine yakınsa "
@@ -351,6 +368,9 @@ def write_report(output, panel, structure, fic, curve, shuffle, grid, es, elapse
         )
     L.append("")
 
+    if grid is None:
+        L.append("## 4. Hiperparametre taraması — koşulmadı\n")
+        grid = pd.DataFrame(columns=["set"])
     L.append("## 4. Hiperparametre taraması (300 ağaç; yalnız bilgi, seçim yapılmaz)\n")
     # Momentum kıyası (return_20) bölüm 1'deki tek özellik tablosundan: K1–K4 validation
     # IC ortalaması. Evrene göre değişir; sabit bir sayı yazılmaz.
@@ -386,6 +406,9 @@ def write_report(output, panel, structure, fic, curve, shuffle, grid, es, elapse
             f"{int((agg.val_ic > momentum).sum())}/{len(agg)} ayar momentumu geçiyor.\n"
         )
 
+    if es is None:
+        L.append("## 5. Early stopping ölçüsü — koşulmadı\n")
+        es = pd.DataFrame(columns=["set"])
     L.append("## 5. Early stopping ölçüsü: l2 mi, IC mi?\n")
     L.append("| Küme | Dönem | Kural | Ağaç | Val IC | Val R² | Val sabit gün |")
     L.append("|---|---|---|---:|---:|---:|---:|")
@@ -408,6 +431,12 @@ def main():
     parser.add_argument("--dataset", type=Path, default=DEFAULT_DATASET)
     parser.add_argument("--horizon", type=int, default=20)
     parser.add_argument("--jobs", type=int, default=1, help="LightGBM iş parçacığı")
+    parser.add_argument("--membership", type=Path, help="Günlük evren üyeliği parquet'i")
+    parser.add_argument(
+        "--sets",
+        help="virgülle özellik kümeleri (varsayılan hepsi): raw24,raw30_market,market_only8,"
+        "stock_only22,xs22_xs_target",
+    )
     parser.add_argument("--output", type=Path)
     parser.add_argument(
         "--steps",
@@ -429,8 +458,13 @@ def main():
         return steps is None or step in steps
 
     t0 = time.time()
-    panel = load_panel(dataset, project, args.horizon).with_market()
+    panel = load_panel(dataset, project, args.horizon, membership=args.membership).with_market()
     sets = feature_sets(panel)
+    if args.sets:
+        chosen = args.sets.split(",")
+        if unknown := set(chosen) - set(sets):
+            parser.error(f"bilinmeyen küme: {sorted(unknown)}")
+        sets = {k: v for k, v in sets.items() if k in chosen}
     log(f"panel: {len(panel.rows)} satır, {panel.rows['symbol'].nunique()} hisse")
 
     structure = target_structure(panel)
@@ -457,8 +491,7 @@ def main():
         es = early_stopping_metric(panel, sets, args.jobs, log)
         es.to_csv(output / "early_stopping_metric.csv", index=False)
 
-    if all(x is not None for x in (curve, shuffle, grid, es)):
-        write_report(output, panel, structure, fic, curve, shuffle, grid, es, time.time() - t0)
+    write_report(output, panel, structure, fic, curve, shuffle, grid, es, time.time() - t0)
     (output / "config.json").write_text(
         json.dumps(
             {
@@ -468,6 +501,8 @@ def main():
                 "grid_trees": GRID_TREES,
                 "shuffle_trees": SHUFFLE_TREES,
                 "snapshot": panel.snapshot,
+                "membership": panel.membership_file,
+                "membership_dropped_rows": panel.membership_dropped,
                 "test_period_read": False,
             },
             indent=2,

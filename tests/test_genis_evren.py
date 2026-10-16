@@ -69,3 +69,25 @@ def test_each_condition_can_exclude():
     assert not g.rule_metrics(_daily(volume=1e5))["in_universe"].any()  # dolar hacmi düşük
     # Oynaklık kuralda yok: sakin bir hisse de likitse evrende.
     assert g.rule_metrics(_daily(daily_vol=0.005))["in_universe"].iloc[-50:].all()
+
+
+def test_universe_entries_keep_known_metadata_and_mark_late_listings():
+    template = {
+        "symbols": [
+            {
+                "symbol": "RKLB",
+                "roles": ["ana20"],
+                "asset": "equity",
+                "eligible_from": "2021-08-25",
+            },
+            {"symbol": "QQQ", "roles": ["baglam"], "asset": "etf"},
+        ]
+    }
+    first = {"RKLB": "2020-11-24", "AAA": "2015-01-02", "BBB": "2019-06-03"}
+    entries = {e["symbol"]: e for e in g.universe_entries(first, first, template, "2015-01-01")}
+    assert (
+        entries["RKLB"]["eligible_from"] == "2021-08-25" and "genis" not in entries["RKLB"]["roles"]
+    )
+    assert entries["AAA"] == {"symbol": "AAA", "roles": ["genis"], "asset": "equity"}
+    assert entries["BBB"]["expected_first_date"] == "2019-06-03"
+    assert entries["BBB"]["first_date_source"] == "yahoo_first_bar"

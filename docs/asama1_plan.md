@@ -167,6 +167,14 @@ stopping, özellik kümesi ablasyonu. Çıktı `output/experiments/<zaman>_diag_
   günde 19–28 hisse, 20 seanslık örtüşen etiket. Bu kesitte ağaç modelinin momentumun
   üstüne koyacağı sinyal görünmüyor.
 
+## Geniş evren
+
+Tanının önerisiyle evren 29'dan 281 şirkete çıkarıldı (`universe_genis.json`, snapshot
+`yahoo_20261016T185837Z`, veri seti `output/yahoo_20261016T185837Z_dataset_v1_1`). `train_baseline.py` ve
+`research.diag_lgbm` artık varsayılan olarak bu veri setini okur; eski veri seti `--dataset`
+ile verilebilir. Deney 1–4b sonuçları yukarıda 29 hisselik evrene aittir; geniş evrende
+yeniden koşulmadı. 2025+ test dönemi yine kapalıdır.
+
 ## Sonraki deneyler
 
 Aynı değerlendirme çerçevesine, sırası sonuçlara göre belirlenir:

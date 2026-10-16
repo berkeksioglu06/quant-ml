@@ -208,6 +208,41 @@ def test_download_preserves_earnings_checksum_and_handles_failure(tmp_path, monk
     assert m.sha256(snap / rec["file"]) == rec["sha256"]
 
 
+def test_universe_file_travels_with_snapshot(tmp_path, monkeypatch):
+    """--universe ile indirilen kayıt kendi evren kopyasını taşır; build o kopyayı okur."""
+    monkeypatch.setattr(m, "DATA", tmp_path)
+    df = bars()
+    raw = df[["open", "high", "low", "close", "adj_close", "volume"]].rename(
+        columns={v: k for k, v in m.COLUMNS.items()}
+    )
+    raw.index.name = "Date"
+    monkeypatch.setattr(m, "fetch", lambda *_: raw)
+    monkeypatch.setitem(sys.modules, "yfinance", types.SimpleNamespace(Ticker=None))
+    wide = dict(m.UNIVERSE)
+    wide["version"] = "test-genis"
+    wide["symbols"] = [{"symbol": "GENIS", "roles": ["genis"], "asset": "etf"}]
+    file = tmp_path / "universe_test.json"
+    file.write_text(json.dumps(wide), encoding="utf-8")
+    saved, saved_file = dict(m.UNIVERSE), m.UNIVERSE_FILE
+    try:
+        m.set_universe(file)
+        snap = m.download(pause=0)
+        manifest = json.loads((snap / "manifest.json").read_text())
+        assert list(manifest["symbols"]) == ["GENIS"]
+        assert manifest["universe"]["source"] == "universe_test.json"
+        assert m.sha256(snap / "universe.json") == manifest["universe"]["sha256"]
+        # Varsayılan evrene dönülse de build snapshot'taki kopyayı yükler.
+        m.set_universe(saved_file)
+        assert m.UNIVERSE["version"] != "test-genis"
+        m.build(snap)
+        assert m.UNIVERSE["version"] == "test-genis"
+        assert (snap / "clean" / "GENIS.parquet").is_file()
+    finally:
+        m.UNIVERSE.clear()
+        m.UNIVERSE.update(saved)
+        m.UNIVERSE_FILE = saved_file
+
+
 def test_archived_snapshot_cannot_be_overwritten(tmp_path):
     (tmp_path / "provenance").mkdir()
     with pytest.raises(ValueError, match="Arşiv"):

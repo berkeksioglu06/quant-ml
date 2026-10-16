@@ -10,6 +10,8 @@
 4. `uv run python verify_dataset.py output/<yeni_cikti>`: çıktı bütünlüğünü doğrular.
 5. `uv run streamlit run viz.py`: mevcut görselleştiriciyi açar.
 
+`--universe <dosya>` başka bir evren dosyasıyla indirir (ör. `universe_genis.json`); dosya snapshot'a `universe.json` olarak kopyalanır ve manifestte sha256 ile kaydedilir. `build` ve `dataset_builder` snapshot'taki kopyayı okur; kopyası olmayan eski kayıtlar repo kökündeki `universe.json` ile çalışır. `genis` rolü `ana20`/`kontrol8` gibi eğitim üyesidir.
+
 Yeni snapshot adı ilk komutun sonunda yazdırılır. HATA bulguları özellik üretimini
 durdurur; UYARI ve BILGI kayıtları incelenmek üzere korunur. Genel `*` uyarıları
 bütün hisseleri uyarılı yapmaz. Veri boşlukları doldurulmaz, büyük hareketler silinmez.

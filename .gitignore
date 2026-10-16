@@ -9,8 +9,13 @@ __pycache__/
 # indirilen veri ve çıktılar
 /data/*
 !/data/yahoo_20261016T121656Z/
+!/data/yahoo_20261016T185837Z/
 /output/*
 !/output/yahoo_20261016T121656Z_dataset_v1_1/
+!/output/yahoo_20261016T185837Z_dataset_v1_1/
+# geniş veri setinin büyük Parquet dosyaları Git'e girmez; snapshot'tan yeniden üretilir
+/output/yahoo_20261016T185837Z_dataset_v1_1/dataset.parquet
+/output/yahoo_20261016T185837Z_dataset_v1_1/features.parquet
 
 # geçici yerel deneyler
 /tmp/

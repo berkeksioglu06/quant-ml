@@ -1,0 +1,2916 @@
+{
+  "version": "Geniş evren (16 Ekim 2026) — 29 şirket (eski kayıt) + 252 'genis' rollü şirket + 18 bağlam; universe.json'dan türetildi",
+  "start": "2016-01-01",
+  "calendar": "XNYS",
+  "warmup_sessions": 200,
+  "min_train_samples": 252,
+  "horizons": [
+    5,
+    10,
+    20
+  ],
+  "folds": [
+    {
+      "name": "K1",
+      "train_end": "2020-12-31",
+      "val_start": "2021-01-01",
+      "val_end": "2021-12-31"
+    },
+    {
+      "name": "K2",
+      "train_end": "2021-12-31",
+      "val_start": "2022-01-01",
+      "val_end": "2022-12-31"
+    },
+    {
+      "name": "K3",
+      "train_end": "2022-12-31",
+      "val_start": "2023-01-01",
+      "val_end": "2023-12-31"
+    },
+    {
+      "name": "K4",
+      "train_end": "2023-12-31",
+      "val_start": "2024-01-01",
+      "val_end": "2024-12-31"
+    }
+  ],
+  "test": {
+    "name": "TEST",
+    "start": "2025-01-01"
+  },
+  "_not_tarihler": "eligible_from / expected_first_date / expected_splits elle girildi; script veriyle karşılaştırır, uyuşmazlığı raporlar. Kesin kabul öncesi resmi kaynaktan teyit edilmeli.",
+  "symbols": [
+    {
+      "symbol": "RKLB",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "eligible_from": "2021-08-25",
+      "event": "SPAC: Vector Acquisition (VACQ) birleşmesi; RKLB olarak işlem 2021-08-25. Öncesi boş SPAC dönemi."
+    },
+    {
+      "symbol": "HIMS",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "eligible_from": "2021-01-21",
+      "event": "SPAC: Oaktree Acquisition Corp (OAC) birleşmesi; HIMS olarak işlem 2021-01-21."
+    },
+    {
+      "symbol": "SOFI",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "eligible_from": "2021-06-01",
+      "event": "SPAC: Social Capital Hedosophia V (IPOE) birleşmesi; SOFI olarak işlem 2021-06-01."
+    },
+    {
+      "symbol": "PLTR",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2020-09-30",
+      "event": "Doğrudan listeleme 2020-09-30."
+    },
+    {
+      "symbol": "MU",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "MRVL",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "BE",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2018-07-25",
+      "event": "Halka arz 2018-07-25."
+    },
+    {
+      "symbol": "TSLA",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2020-08-31",
+          5.0
+        ],
+        [
+          "2022-08-25",
+          3.0
+        ]
+      ]
+    },
+    {
+      "symbol": "AMD",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "NVDA",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2021-07-20",
+          4.0
+        ],
+        [
+          "2024-06-10",
+          10.0
+        ]
+      ]
+    },
+    {
+      "symbol": "ENPH",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "SHOP",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2022-06-29",
+          10.0
+        ]
+      ]
+    },
+    {
+      "symbol": "ROKU",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2017-09-28",
+      "event": "Halka arz 2017-09-28."
+    },
+    {
+      "symbol": "XYZ",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "event": "Block: SQ -> XYZ ticker değişimi 2025-01-21. Geçmişin XYZ altında kesintisiz olup olmadığı kontrol edilir."
+    },
+    {
+      "symbol": "SNAP",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2017-03-02",
+      "event": "Halka arz 2017-03-02."
+    },
+    {
+      "symbol": "UPST",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2020-12-16",
+      "event": "Halka arz 2020-12-16."
+    },
+    {
+      "symbol": "SMCI",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2024-10-01",
+          10.0
+        ]
+      ]
+    },
+    {
+      "symbol": "PLUG",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "PTON",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2019-09-26",
+      "event": "Halka arz 2019-09-26."
+    },
+    {
+      "symbol": "RIVN",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2021-11-10",
+      "event": "Halka arz 2021-11-10."
+    },
+    {
+      "symbol": "AAPL",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2020-08-31",
+          4.0
+        ]
+      ]
+    },
+    {
+      "symbol": "MSFT",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "GOOGL",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2022-07-18",
+          20.0
+        ]
+      ]
+    },
+    {
+      "symbol": "AMZN",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2022-06-06",
+          20.0
+        ]
+      ]
+    },
+    {
+      "symbol": "MRNA",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2018-12-07",
+      "event": "Halka arz 2018-12-07."
+    },
+    {
+      "symbol": "JPM",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "XOM",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "WMT",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2024-02-26",
+          3.0
+        ]
+      ]
+    },
+    {
+      "symbol": "NBIS",
+      "roles": [
+        "nbis"
+      ],
+      "asset": "equity",
+      "eligible_from": "2024-10-21",
+      "event": "Eski Yandex N.V.; işlem 2022-02-28'de durdu, NBIS olarak 2024-10-21'de yeniden başladı. Yandex geçmişi birleştirilmez."
+    },
+    {
+      "symbol": "ANET",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ai_altyapi"
+    },
+    {
+      "symbol": "CIEN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ai_altyapi"
+    },
+    {
+      "symbol": "DELL",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ai_altyapi",
+      "expected_first_date": "2016-08-17",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2016-08-17'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "HPE",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ai_altyapi"
+    },
+    {
+      "symbol": "NTAP",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ai_altyapi"
+    },
+    {
+      "symbol": "VRT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ai_altyapi",
+      "expected_first_date": "2018-08-02",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-08-02'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "ALNY",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "ARWR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "BEAM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik",
+      "expected_first_date": "2020-02-06",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-02-06'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "BNTX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik",
+      "expected_first_date": "2019-10-10",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-10-10'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "CRSP",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik",
+      "expected_first_date": "2016-10-19",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2016-10-19'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "DOCS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik",
+      "expected_first_date": "2021-06-24",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-06-24'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "DXCM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "EXEL",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "GH",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik",
+      "expected_first_date": "2018-10-04",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-10-04'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "HALO",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "ILMN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "INCY",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "IONS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "ISRG",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "NBIX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "NTLA",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik",
+      "expected_first_date": "2016-05-06",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2016-05-06'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "NTRA",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "PODD",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "REGN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "RXRX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik",
+      "expected_first_date": "2021-04-16",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-04-16'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "SRPT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "TDOC",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "TEM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik",
+      "expected_first_date": "2024-06-14",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2024-06-14'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "TMDX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik",
+      "expected_first_date": "2019-05-02",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-05-02'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "TWST",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik",
+      "expected_first_date": "2018-10-31",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-10-31'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "VKTX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "VRTX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "biyotek_saglik"
+    },
+    {
+      "symbol": "BABA",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "cin_adr"
+    },
+    {
+      "symbol": "BIDU",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "cin_adr"
+    },
+    {
+      "symbol": "BILI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "cin_adr",
+      "expected_first_date": "2018-03-28",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-03-28'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "JD",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "cin_adr"
+    },
+    {
+      "symbol": "PDD",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "cin_adr",
+      "expected_first_date": "2018-07-26",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-07-26'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "TCOM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "cin_adr"
+    },
+    {
+      "symbol": "ALB",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji"
+    },
+    {
+      "symbol": "ARRY",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2020-10-15",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-10-15'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "BWXT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji"
+    },
+    {
+      "symbol": "CCJ",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji"
+    },
+    {
+      "symbol": "CEG",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2022-01-19",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2022-01-19'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "ENVX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2021-01-05",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-01-05'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "FLNC",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2021-10-28",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-10-28'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "FSLR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji"
+    },
+    {
+      "symbol": "GEV",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2024-03-27",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2024-03-27'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "LCID",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2020-09-18",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-09-18'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "LEU",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji"
+    },
+    {
+      "symbol": "LI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2020-07-30",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-07-30'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "MBLY",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2022-10-26",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2022-10-26'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "NIO",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2018-09-12",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-09-12'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "NRG",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji"
+    },
+    {
+      "symbol": "NXT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2023-02-09",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2023-02-09'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "OKLO",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2021-07-08",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-07-08'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "QS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2020-08-17",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-08-17'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "RUN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji"
+    },
+    {
+      "symbol": "SEDG",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji"
+    },
+    {
+      "symbol": "SMR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2022-03-01",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2022-03-01'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "TLN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2023-06-02",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2023-06-02'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "UEC",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji"
+    },
+    {
+      "symbol": "VST",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2016-10-05",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2016-10-05'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "XPEV",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "ev_enerji",
+      "expected_first_date": "2020-08-27",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-08-27'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "AFRM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto",
+      "expected_first_date": "2021-01-13",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-01-13'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "CIFR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto",
+      "expected_first_date": "2020-10-20",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-10-20'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "CLSK",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto",
+      "expected_first_date": "2016-11-16",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2016-11-16'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "COIN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto",
+      "expected_first_date": "2021-04-14",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-04-14'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "FOUR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto",
+      "expected_first_date": "2020-06-05",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-06-05'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "HOOD",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto",
+      "expected_first_date": "2021-07-29",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-07-29'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "HUT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto",
+      "expected_first_date": "2018-03-08",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-03-08'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "IBKR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto"
+    },
+    {
+      "symbol": "IREN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto",
+      "expected_first_date": "2021-11-17",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-11-17'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "LMND",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto",
+      "expected_first_date": "2020-07-02",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-07-02'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "MA",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto"
+    },
+    {
+      "symbol": "MARA",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto"
+    },
+    {
+      "symbol": "MSTR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto"
+    },
+    {
+      "symbol": "NU",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto",
+      "expected_first_date": "2021-12-09",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-12-09'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "PYPL",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto"
+    },
+    {
+      "symbol": "RIOT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto",
+      "expected_first_date": "2016-03-31",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2016-03-31'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "RKT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto",
+      "expected_first_date": "2020-08-06",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-08-06'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "V",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto"
+    },
+    {
+      "symbol": "WULF",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "fintech_kripto"
+    },
+    {
+      "symbol": "ABNB",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2020-12-10",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-12-10'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "BKNG",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya"
+    },
+    {
+      "symbol": "CART",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2023-09-19",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2023-09-19'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "CHWY",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2019-06-14",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-06-14'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "CPNG",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2021-03-11",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-03-11'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "CVNA",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2017-04-28",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2017-04-28'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "DASH",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2020-12-09",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-12-09'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "DKNG",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2019-07-25",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-07-25'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "EBAY",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya"
+    },
+    {
+      "symbol": "ETSY",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya"
+    },
+    {
+      "symbol": "EXPE",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya"
+    },
+    {
+      "symbol": "GLBE",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2021-05-12",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-05-12'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "GRAB",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2020-12-01",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-12-01'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "LYFT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2019-03-29",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-03-29'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "MELI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya"
+    },
+    {
+      "symbol": "META",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya"
+    },
+    {
+      "symbol": "MGNI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya"
+    },
+    {
+      "symbol": "MTCH",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya"
+    },
+    {
+      "symbol": "NFLX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya"
+    },
+    {
+      "symbol": "PINS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2019-04-18",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-04-18'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "RBLX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2021-03-10",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-03-10'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "RDDT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2024-03-21",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2024-03-21'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "RVLV",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2019-06-07",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-06-07'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "SE",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2017-10-20",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2017-10-20'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "SPOT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2018-04-03",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-04-03'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "TTD",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2016-09-21",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2016-09-21'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "TTWO",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya"
+    },
+    {
+      "symbol": "UBER",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya",
+      "expected_first_date": "2019-05-10",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-05-10'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "W",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "internet_medya"
+    },
+    {
+      "symbol": "BROS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume",
+      "expected_first_date": "2021-09-15",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-09-15'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "CAVA",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume",
+      "expected_first_date": "2023-06-15",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2023-06-15'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "CELH",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume"
+    },
+    {
+      "symbol": "CMG",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume"
+    },
+    {
+      "symbol": "CROX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume"
+    },
+    {
+      "symbol": "DECK",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume"
+    },
+    {
+      "symbol": "ELF",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume",
+      "expected_first_date": "2016-09-22",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2016-09-22'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "GME",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume"
+    },
+    {
+      "symbol": "LULU",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume"
+    },
+    {
+      "symbol": "MNST",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume"
+    },
+    {
+      "symbol": "ONON",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume",
+      "expected_first_date": "2021-09-15",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-09-15'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "SYM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume",
+      "expected_first_date": "2021-03-09",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-03-09'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "WING",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "tuketici_buyume"
+    },
+    {
+      "symbol": "ACHR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma",
+      "expected_first_date": "2020-12-18",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-12-18'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "ASTS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma",
+      "expected_first_date": "2019-11-01",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-11-01'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "AVAV",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma"
+    },
+    {
+      "symbol": "AXON",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma"
+    },
+    {
+      "symbol": "IONQ",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma",
+      "expected_first_date": "2021-01-04",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-01-04'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "JOBY",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma",
+      "expected_first_date": "2020-11-09",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-11-09'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "KTOS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma"
+    },
+    {
+      "symbol": "LUNR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma",
+      "expected_first_date": "2021-11-17",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-11-17'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "PL",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma",
+      "expected_first_date": "2021-04-26",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-04-26'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "QBTS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma",
+      "expected_first_date": "2020-12-11",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-12-11'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "QUBT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma"
+    },
+    {
+      "symbol": "RDW",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma",
+      "expected_first_date": "2021-01-14",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-01-14'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "RGTI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "uzay_savunma",
+      "expected_first_date": "2021-04-22",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-04-22'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "AAOI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "ACLS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "ACMR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken",
+      "expected_first_date": "2017-11-02",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2017-11-02'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "ADI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "AEHR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "ALAB",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken",
+      "expected_first_date": "2024-03-20",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2024-03-20'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "ALGM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken",
+      "expected_first_date": "2020-10-29",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-10-29'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "AMAT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "AMBA",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "APH",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "ARM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken",
+      "expected_first_date": "2023-09-14",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2023-09-14'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "ASML",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "AVGO",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "CAMT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "CLS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "COHR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "CRDO",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken",
+      "expected_first_date": "2022-01-27",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2022-01-27'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "ENTG",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "FLEX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "FN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "FORM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "GFS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken",
+      "expected_first_date": "2021-10-28",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-10-28'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "INTC",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "JBL",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "KLAC",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "LITE",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "LRCX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "LSCC",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "MCHP",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "MPWR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "MTSI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "NVMI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "NXPI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "ON",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "ONTO",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken",
+      "expected_first_date": "2019-10-28",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-10-28'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "POWI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "QCOM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "RMBS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "SITM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken",
+      "expected_first_date": "2019-11-20",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-11-20'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "STX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "SWKS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "TER",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "TSM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "TXN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "UCTT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "WDC",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yari_iletken"
+    },
+    {
+      "symbol": "ADBE",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "ADSK",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "AI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2020-12-09",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-12-09'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "APP",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-04-15",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-04-15'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "APPF",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "APPN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2017-05-25",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2017-05-25'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "ASAN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2020-09-30",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-09-30'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "BBAI",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-04-05",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-04-05'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "BILL",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2019-12-12",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-12-12'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "BOX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "BRZE",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-11-17",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-11-17'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "CDNS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "CHKP",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "CRM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "CRWD",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2019-06-12",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-06-12'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "DBX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2018-03-23",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-03-23'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "DDOG",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2019-09-19",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-09-19'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "DOCN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-03-24",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-03-24'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "DOCU",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2018-04-27",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-04-27'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "DT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2019-08-01",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-08-01'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "DUOL",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-07-28",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-07-28'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "EPAM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "ESTC",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2018-10-05",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-10-05'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "FROG",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2020-09-16",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-09-16'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "FSLY",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2019-05-17",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-05-17'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "FTNT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "GLOB",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "GTLB",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-10-14",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-10-14'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "HUBS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "INTU",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "IOT",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-12-15",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-12-15'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "KVYO",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2023-09-20",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2023-09-20'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "MANH",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "MDB",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2017-10-19",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2017-10-19'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "MNDY",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-06-10",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-06-10'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "NCNO",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2020-07-14",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-07-14'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "NET",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2019-09-13",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-09-13'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "NOW",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "OKTA",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2017-04-07",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2017-04-07'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "ORCL",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "PANW",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "PATH",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-04-21",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-04-21'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "PAYC",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "PCOR",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-05-20",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-05-20'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "PCTY",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "PD",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2019-04-11",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-04-11'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "PTC",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "QLYS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "QTWO",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "RBRK",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2024-04-25",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2024-04-25'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "RNG",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "S",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-06-30",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-06-30'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "SNOW",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2020-09-16",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-09-16'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "SNPS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "SOUN",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2022-04-28",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2022-04-28'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "TEAM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "TENB",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2018-07-26",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-07-26'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "TOST",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-09-22",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-09-22'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "TWLO",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2016-06-23",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2016-06-23'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "TYL",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "U",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2020-09-18",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2020-09-18'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "VEEV",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "VRNS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "WDAY",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "WIX",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut"
+    },
+    {
+      "symbol": "ZETA",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2021-06-10",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2021-06-10'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "ZM",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2019-04-18",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2019-04-18'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "ZS",
+      "roles": [
+        "genis"
+      ],
+      "asset": "equity",
+      "group": "yazilim_bulut",
+      "expected_first_date": "2018-03-16",
+      "first_date_source": "yahoo_first_bar",
+      "event": "Sağlayıcı verisi 2018-03-16'de başlıyor (halka arz/kuruluş tarihi resmi kaynaktan teyit edilmedi)."
+    },
+    {
+      "symbol": "SPY",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "QQQ",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "IWM",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "^VIX",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "index_vol",
+      "event": "Endeks: hacim/temettü yok; seviye ve puan değişimi olarak işlenir."
+    },
+    {
+      "symbol": "^TNX",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "index_rate",
+      "event": "10Y getiri endeksi; ölçek (yüzde mi, x10 mu) doğrulanır; değişim baz puan olarak işlenir."
+    },
+    {
+      "symbol": "XLK",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2025-12-05",
+          2
+        ]
+      ],
+      "split_source": "https://www.ssga.com/us/en/intermediary/library-content/products/fund-docs/etfs/us/information-schedules/select-sector-spdr-fund-share-splits-faq.pdf"
+    },
+    {
+      "symbol": "SMH",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2023-05-05",
+          2
+        ]
+      ],
+      "split_source": "https://www.vaneck.com/us/en/press-releases/smh-vaneck-semiconductor-etf-share-split-press-release.pdf"
+    },
+    {
+      "symbol": "IGV",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2024-03-07",
+          5
+        ]
+      ],
+      "split_source": "https://www.sec.gov/Archives/edgar/data/1100663/000119312523298660/d611816d497.htm"
+    },
+    {
+      "symbol": "XLC",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_first_date": "2018-06-19",
+      "event": "ETF kuruluşu 2018-06-19; öncesine satır yaratılmaz."
+    },
+    {
+      "symbol": "XLY",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2025-12-05",
+          2
+        ]
+      ],
+      "split_source": "https://www.ssga.com/us/en/intermediary/library-content/products/fund-docs/etfs/us/information-schedules/select-sector-spdr-fund-share-splits-faq.pdf"
+    },
+    {
+      "symbol": "XLF",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "historical_unverified_before": "2016-09-19",
+      "historical_unverified_reason": "XLRE pay dağıtımı; sağlayıcının 1.231 split kaydı sıradan hisse bölünmesi değildir. Olay öncesi tarihsel fiyat/hacim ayrıca doğrulanmalıdır.",
+      "corporate_action_source": "https://www.miaxglobal.com/sites/default/files/alert-files/XLF_Distribution_39575.pdf"
+    },
+    {
+      "symbol": "XLE",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2025-12-05",
+          2
+        ]
+      ],
+      "split_source": "https://www.ssga.com/us/en/intermediary/library-content/products/fund-docs/etfs/us/information-schedules/select-sector-spdr-fund-share-splits-faq.pdf"
+    },
+    {
+      "symbol": "XLV",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "XLP",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "XLI",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "ITA",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2020-12-07",
+          2
+        ]
+      ],
+      "split_source": "https://www.miaxglobal.com/sites/default/files/alert-files/ITA_Split_47890.pdf"
+    },
+    {
+      "symbol": "ICLN",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "UFO",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "event": "Procure Space ETF; 2019 Nisan'da kuruldu (yaklaşık ay, teyit edilmeli); öncesine satır yaratılmaz.",
+      "expected_first_month": "2019-04"
+    }
+  ],
+  "_genis_not": "Geniş evren bugün (Ekim 2026) işlem gören büyüme/teknoloji hisselerinden seçildi; 2016–2024 arasında borsadan çıkan şirketler yok. Bu hayatta kalma (survivorship) yanlılığıdır: kesitsel sıralama deneylerinde ortalama getiri seviyesi yukarı yanlı olabilir, sıralama sinyalleri için etkisi daha küçüktür ama sıfır değildir. Üyelik tarih bazlı değildir.",
+  "_genis_secim": {
+    "kaynak": "Ekim 2026 itibarıyla Yahoo'da verisi olan adaylar; ön kontrol precheck.csv",
+    "elenen_indirilemeyen": [
+      "CFLT",
+      "CYBR",
+      "EXAS",
+      "LC",
+      "PSTG",
+      "ZI"
+    ],
+    "elenen_2025_sonrasi_baslayan": [
+      "EA",
+      "QRVO"
+    ],
+    "elenen_dusuk_dolar_hacim_<20M": [
+      "PACB",
+      "RPD",
+      "SDGR"
+    ]
+  }
+}

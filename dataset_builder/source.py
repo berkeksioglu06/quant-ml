@@ -91,7 +91,10 @@ def discover(project, snapshot, layout="auto"):
             project / "data" / snapshot / "clean",
             project / "data" / snapshot,
             project / "data" / snapshot / "issues.csv",
-            project / "universe.json",
+            # Snapshot kendi evren kopyasını taşıyorsa o okunur; yoksa repo kökündeki.
+            (project / "data" / snapshot / "universe.json")
+            if (project / "data" / snapshot / "universe.json").is_file()
+            else project / "universe.json",
         ),
     }
     present = [

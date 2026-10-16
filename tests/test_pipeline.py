@@ -290,3 +290,15 @@ def test_main_auxiliary_files_are_verified(tmp_path, tamper):
     else:
         checked = discover(source.project, SNAPSHOT)
         checked.check_unchanged()
+
+
+def test_main_layout_prefers_snapshot_universe_copy(tmp_path):
+    root = tmp_path / "proje"
+    write_source(root, "main")
+    project_universe = json.loads((root / "universe.json").read_text(encoding="utf-8"))
+    assert discover(root, SNAPSHOT, "main").universe_file == root / "universe.json"
+    copy = dict(project_universe, version="snapshot-kopyasi")
+    (root / "data" / SNAPSHOT / "universe.json").write_text(json.dumps(copy), encoding="utf-8")
+    source = discover(root, SNAPSHOT, "main")
+    assert source.universe_file == root / "data" / SNAPSHOT / "universe.json"
+    assert source.universe["version"] == "snapshot-kopyasi"

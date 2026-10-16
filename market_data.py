@@ -3,6 +3,10 @@
     uv run python market_data.py all                        # indir + build
     uv run python market_data.py download --symbols RKLB SPY
     uv run python market_data.py build [--snapshot yahoo_20261004T171338Z]
+    uv run python market_data.py all --universe universe_genis.json   # geniş evren
+
+Evren dosyası indirmede snapshot'a `universe.json` olarak kopyalanır; build ve veri seti
+üretimi snapshot'taki kopyayı okur (eski kayıtlar repo kökündeki universe.json'u kullanır).
 
 Çıktılar (yalnız sabitlenmiş inceleme kaydı Git'e girer):
     data/<snapshot>/raw/*.parquet     yfinance'in döndürdüğü tablo, dokunulmaz (salt-okunur)
@@ -33,7 +37,8 @@ import pandas as pd
 
 ROOT = Path(__file__).parent
 DATA = ROOT / "data"
-UNIVERSE = json.loads((ROOT / "universe.json").read_text(encoding="utf-8"))
+UNIVERSE_FILE = ROOT / "universe.json"
+UNIVERSE: dict = json.loads(UNIVERSE_FILE.read_text(encoding="utf-8"))
 REFERENCES = ROOT / "reference_points.csv"
 CAL = xc.get_calendar("XNYS", start="2015-01-01")
 
@@ -58,7 +63,7 @@ COLUMNS = {
 SESSION_BUFFER = pd.Timedelta(minutes=15)  # kapanıştan sonra son mumun kesinleşmesi için pay
 BIG_MOVE = 0.25
 REF_TOL = {"price": 0.02, "volume": 0.15}  # hacimde kaynaklar arası fark (konsolide/birincil) büyük
-TRAIN_ROLES = {"ana20", "kontrol8"}
+TRAIN_ROLES = {"ana20", "kontrol8", "genis"}
 
 
 def utf8_console() -> None:
@@ -66,6 +71,24 @@ def utf8_console() -> None:
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8", errors="replace")
+
+
+def set_universe(path: Path) -> dict:
+    """Evren dosyasını değiştirir; `UNIVERSE` sözlüğü yerinde güncellenir (info/coverage aynı nesneyi okur)."""
+    global UNIVERSE_FILE
+    data = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not {"symbols", "start", "folds", "horizons"} <= data.keys():
+        raise ValueError(f"Evren dosyası eksik alanlı: {path}")
+    UNIVERSE.clear()
+    UNIVERSE.update(data)
+    UNIVERSE_FILE = Path(path)
+    return UNIVERSE
+
+
+def snapshot_universe(snap: Path) -> Path | None:
+    """Snapshot kendi evren kopyasını taşıyorsa onu döndürür; yoksa None (repo kökündeki kullanılır)."""
+    file = snap / "universe.json"
+    return file if file.is_file() else None
 
 
 def safe(symbol: str) -> str:
@@ -121,7 +144,15 @@ def download(symbols: list[str] | None = None, pause: float = 1.0) -> Path:
         },
         "symbols": {},
         "auxiliary_files": [],
+        "universe": {
+            "file": "universe.json",
+            "source": UNIVERSE_FILE.name,
+            "version": UNIVERSE.get("version"),
+            "sha256": sha256(UNIVERSE_FILE),
+        },
     }
+    # Evren kopyası snapshot ile birlikte taşınır; build ve veri seti üretimi bu kopyayı okur.
+    (snap / "universe.json").write_bytes(UNIVERSE_FILE.read_bytes())
     for i, sym in enumerate(symbols, 1):
         print(f"[{i}/{len(symbols)}] {sym}", flush=True)
         try:
@@ -944,6 +975,8 @@ def build(snap: Path) -> None:
         raise ValueError("Arşiv veri kaydı değiştirilemez; yeni snapshot oluşturun")
     manifest = json.loads((snap / "manifest.json").read_text(encoding="utf-8"))
     last_session = pd.Timestamp(manifest["last_complete_session"])
+    if universe_file := snapshot_universe(snap):
+        set_universe(universe_file)
 
     for record in manifest.get("auxiliary_files", []):
         file = (snap / record["file"]).resolve()
@@ -1046,6 +1079,8 @@ def build(snap: Path) -> None:
 def load(snapshot: str | None = None, symbols: list[str] | None = None) -> pd.DataFrame:
     """Temiz katmanı (symbol, date) indeksli tek tabloda döndürür."""
     snap = DATA / snapshot if snapshot else latest_snapshot()
+    if universe_file := snapshot_universe(snap):
+        set_universe(universe_file)
     symbols = symbols or [s["symbol"] for s in UNIVERSE["symbols"]]
     frames = {
         s: pd.read_parquet(p)
@@ -1064,8 +1099,15 @@ if __name__ == "__main__":
     ap.add_argument("--symbols", nargs="*")
     ap.add_argument("--snapshot")
     ap.add_argument("--pause", type=float, default=1.0, help="semboller arası bekleme (sn)")
+    ap.add_argument(
+        "--universe",
+        type=Path,
+        help="Evren dosyası (varsayılan universe.json); indirmede snapshot'a kopyalanır",
+    )
     a = ap.parse_args()
 
+    if a.universe:
+        set_universe(a.universe)
     snap = DATA / a.snapshot if a.snapshot else None
     if a.cmd in ("all", "download"):
         snap = download(a.symbols, a.pause)

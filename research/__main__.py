@@ -7,7 +7,7 @@ from pathlib import Path
 from .data import load_panel
 from .experiment import EXPERIMENTS, run
 
-DEFAULT_DATASET = Path("output/yahoo_20261016T121656Z_dataset_v1_1")
+DEFAULT_DATASET = Path("output/yahoo_20261016T185837Z_dataset_v1_1")
 
 
 def main():

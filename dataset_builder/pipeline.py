@@ -85,7 +85,7 @@ def build(
             frame,
             benchmarks,
             symbol,
-            training_member=bool(set(info["roles"]) & {"ana20", "kontrol8"}),
+            training_member=bool(set(info["roles"]) & {"ana20", "kontrol8", "genis"}),
             quality_status=source.statuses[symbol],
             warmup_sessions=universe.get("warmup_sessions", 200),
         )

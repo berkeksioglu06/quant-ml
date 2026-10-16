@@ -1,0 +1,3229 @@
+{
+  "source": "Yahoo Finance via yfinance Ticker.history",
+  "downloaded_at": "2026-10-16T18:58:37.438835+00:00",
+  "last_complete_session": "2026-10-15",
+  "start": "2016-01-01",
+  "options": {
+    "interval": "1d",
+    "auto_adjust": false,
+    "back_adjust": false,
+    "repair": false,
+    "actions": true
+  },
+  "versions": {
+    "yfinance": "1.7.0",
+    "pandas": "3.0.6",
+    "numpy": "2.5.3",
+    "pyarrow": "25.0.1",
+    "exchange_calendars": "4.13.2"
+  },
+  "symbols": {
+    "RKLB": {
+      "rows": 1480,
+      "first": "2020-11-24",
+      "last": "2026-10-16",
+      "sha256": "2094bb58b5a1958c41f798e2044cc8bce9ddfc08cc208f10968fcc0b8b2f0524",
+      "earnings_status": "OK"
+    },
+    "HIMS": {
+      "rows": 1783,
+      "first": "2019-09-13",
+      "last": "2026-10-16",
+      "sha256": "b51a1d17b16c92d7b2e55e0c691ab0c6bdde54db79ae9f71ad8eba611da3e340",
+      "earnings_status": "OK"
+    },
+    "SOFI": {
+      "rows": 1454,
+      "first": "2021-01-04",
+      "last": "2026-10-16",
+      "sha256": "8c52a31a0203962dca7af3777444d67ac2f9e64de630ed0185cd43ddad745265",
+      "earnings_status": "OK"
+    },
+    "PLTR": {
+      "rows": 1519,
+      "first": "2020-09-30",
+      "last": "2026-10-16",
+      "sha256": "1f68f75729f44a51e280304e4ec552ad9fab228703341126f56f9283b2a4cf64",
+      "earnings_status": "OK"
+    },
+    "MU": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "fa353fedbaa65354f7f1720d1ae6f9cb0426afab07a2925823cebc0188765c52",
+      "earnings_status": "OK"
+    },
+    "MRVL": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "b249e95318380f71e07652f7f09d586d9048f60d155bfb0c50a130e36b90e2a0",
+      "earnings_status": "OK"
+    },
+    "BE": {
+      "rows": 2069,
+      "first": "2018-07-25",
+      "last": "2026-10-16",
+      "sha256": "9cfdcceca6ff383fca16a770e6764031acf3af616a98292ac2e9232ac0c138eb",
+      "earnings_status": "OK"
+    },
+    "TSLA": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "d9a211fa9cc3e39ba2d8d27e92cd9650877a66587ef6bfe37887f8ca2bf83067",
+      "earnings_status": "OK"
+    },
+    "AMD": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "a77b0e3a4bf64c2bf2783830c22e4d341fc357d48ed254b3ba39cf8924bcd9a5",
+      "earnings_status": "OK"
+    },
+    "NVDA": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "ee742692cf507396e34054ac9ef6687c264ad1e4a35c6757fa684b97d7c3ab8c",
+      "earnings_status": "OK"
+    },
+    "ENPH": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "c2a012cc1074d74b91bcd1b9a1ee6a517461df99812a709a0dd3d553ea0261d6",
+      "earnings_status": "OK"
+    },
+    "SHOP": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "20bb0b7ff75cb52c330303f59ff06b34a2b446d403d343e258f52ed6afc0d38e",
+      "earnings_status": "OK"
+    },
+    "ROKU": {
+      "rows": 2275,
+      "first": "2017-09-28",
+      "last": "2026-10-16",
+      "sha256": "78bfdc3e71543497dcd76d60d84d8676bfc25c57da6a4485ff47f0ad2af9550f",
+      "earnings_status": "OK"
+    },
+    "XYZ": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "d00bb34b09e26340f7f19e7c3092a30681d6613058ad26021f421c14f3d95e27",
+      "earnings_status": "OK"
+    },
+    "SNAP": {
+      "rows": 2421,
+      "first": "2017-03-02",
+      "last": "2026-10-16",
+      "sha256": "4b9299ac55614d9bd2b970b334e5033b0a8a8a6d8356c31c0bc2ec458c92e16c",
+      "earnings_status": "OK"
+    },
+    "UPST": {
+      "rows": 1465,
+      "first": "2020-12-16",
+      "last": "2026-10-16",
+      "sha256": "fa3456cbd4395a103331e2e569dfa3e857172d8dbd711fb1ac528a49d11fa46d",
+      "earnings_status": "OK"
+    },
+    "SMCI": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "966ef1a4c9d155a0c3c7dac29e08189aca14b4aef728d3e1d00db3853480809e",
+      "earnings_status": "OK"
+    },
+    "PLUG": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "4a64e6e0e0861f278f61a6a30b845590f59295322cf72791163ec060774a239c",
+      "earnings_status": "OK"
+    },
+    "PTON": {
+      "rows": 1774,
+      "first": "2019-09-26",
+      "last": "2026-10-16",
+      "sha256": "7632711d8ad11f5304b9aaa2d1cbe30cecc9deec9c5fb12f4dddc389ee55ecd4",
+      "earnings_status": "OK"
+    },
+    "RIVN": {
+      "rows": 1238,
+      "first": "2021-11-10",
+      "last": "2026-10-16",
+      "sha256": "70836658b056393421f9bcd8b89142d44f3665e2ea950c903d5155f495f4ed1a",
+      "earnings_status": "OK"
+    },
+    "AAPL": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "5a0d53ca9c31b5e424afb280789ffe998c428035a1e4f5ebaadb69663d2d641f",
+      "earnings_status": "OK"
+    },
+    "MSFT": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "89f703c7b0113cae7dd2e1ebc7750614b07b9efa9bdc7572282f4547a8fe2bf5",
+      "earnings_status": "OK"
+    },
+    "GOOGL": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "65bd65694a20b01c3b7d4f915baf9b29bfec639e5deeb8bcbbe4af45aafa2856",
+      "earnings_status": "OK"
+    },
+    "AMZN": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "d1176057da7cce7ea775ace41c40221c191afd9466275fa78a71901d9606c668",
+      "earnings_status": "OK"
+    },
+    "MRNA": {
+      "rows": 1975,
+      "first": "2018-12-07",
+      "last": "2026-10-16",
+      "sha256": "f3cf9b9f59ae776177cb0b8f6988473a88dd1e897f5cf8042206b7ed04c2064e",
+      "earnings_status": "OK"
+    },
+    "JPM": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "9b34b5ceb51f095f1a9c83003c46a0a3afcbad7f4d6c8e8fc88d986f4ecf158b",
+      "earnings_status": "OK"
+    },
+    "XOM": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "bf3ea6f824bdbbbe46900f63d91d01ef58153ac3dec26247a8004eb6dea692de",
+      "earnings_status": "OK"
+    },
+    "WMT": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "b500a0b4a6d93a0b6727afed8822728b79abaa3b68c5a8df6351cf5865d9ed17",
+      "earnings_status": "OK"
+    },
+    "NBIS": {
+      "rows": 499,
+      "first": "2024-10-21",
+      "last": "2026-10-16",
+      "sha256": "58948ccd7fed61e027f828f3590cceb75113b7bc778f24043039d0ee10ea964d",
+      "earnings_status": "OK"
+    },
+    "ANET": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "3027d8e0b43167f4c1a9bd9a7a5ef004bb22af5cc5dee48c51aed73b535edbf7",
+      "earnings_status": "OK"
+    },
+    "CIEN": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "db2f62ab20674568df0857b0a51e13b8ac3ed1b109045ca139e554a6d2918788",
+      "earnings_status": "OK"
+    },
+    "DELL": {
+      "rows": 2556,
+      "first": "2016-08-17",
+      "last": "2026-10-16",
+      "sha256": "b536dc8ab2c3a9b8fdad61f445c2d3bbe9fdbdbb7150aca4bc20b34f20573a58",
+      "earnings_status": "OK"
+    },
+    "HPE": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "0d10ea7c5deb019282d934d925081ab34527fd00a2c7c685039b72c1f92eacca",
+      "earnings_status": "OK"
+    },
+    "NTAP": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "9730af0740036eceaa5462ff5ae2932cdf0cedffe1e2ee8c5cc905267ade86c3",
+      "earnings_status": "OK"
+    },
+    "VRT": {
+      "rows": 2063,
+      "first": "2018-08-02",
+      "last": "2026-10-16",
+      "sha256": "bb0474f6925918ad97edd6ef4648233303fa329552d27827b3673e571dea0188",
+      "earnings_status": "OK"
+    },
+    "ALNY": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "ec9767ef8c07c9cac1d1bd4411e1c18f832bcd102958359fbefd4fc0bdaeb9cf",
+      "earnings_status": "OK"
+    },
+    "ARWR": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "fc984a6a22aecb462a151d8f3755f2beec04e39412d84af8e167b4027f380671",
+      "earnings_status": "OK"
+    },
+    "BEAM": {
+      "rows": 1683,
+      "first": "2020-02-06",
+      "last": "2026-10-16",
+      "sha256": "29a3c729b6fb44e60e9e055f300ffa2e678bac8e5cb6de424525fc4ee76de350",
+      "earnings_status": "OK"
+    },
+    "BNTX": {
+      "rows": 1764,
+      "first": "2019-10-10",
+      "last": "2026-10-16",
+      "sha256": "2b8dcabd0336d65ec719935218dbada029ae5c08fbf3480b2e765fa529d3106b",
+      "earnings_status": "OK"
+    },
+    "CRSP": {
+      "rows": 2512,
+      "first": "2016-10-19",
+      "last": "2026-10-16",
+      "sha256": "90b7eb4c6c1b373e982218318aaf7aa9c1d0020d2124a9a0bde48f673e10bdce",
+      "earnings_status": "OK"
+    },
+    "DOCS": {
+      "rows": 1335,
+      "first": "2021-06-24",
+      "last": "2026-10-16",
+      "sha256": "449c0fc2ae1e730c5e9a0600f687155d1138e817aa181c32247b08f9a6538acc",
+      "earnings_status": "OK"
+    },
+    "DXCM": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "45871624e4b43ca0c737a85f69def29fc527948fa83fd1bd903ebf1264bdd9df",
+      "earnings_status": "OK"
+    },
+    "EXEL": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "697388254d4b4504a03beadde93daac3ee801a7f6192dbd86610c10fe0278c6d",
+      "earnings_status": "OK"
+    },
+    "GH": {
+      "rows": 2019,
+      "first": "2018-10-04",
+      "last": "2026-10-16",
+      "sha256": "165aa65c4082314948b06578b7fb014e4450e25b7f1d87bbffb6696a9140e8a8",
+      "earnings_status": "OK"
+    },
+    "HALO": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "b544b414faac4e5b45e02133b41d64928c30cefe7756162934b15f4c4edba71d",
+      "earnings_status": "OK"
+    },
+    "ILMN": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "b5179c0c376a2d458a77895da1c0aec401c80f5c6c1144f98f488cc74c856ad4",
+      "earnings_status": "OK"
+    },
+    "INCY": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "02789989959fd4c1d8933de410700ffc9a4052765569ba27738fe040170c23a3",
+      "earnings_status": "OK"
+    },
+    "IONS": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "6ff0d5e06053e118cabf6d4834b8b471db9d0688e03f3b89e3c94bfa5ba95fe4",
+      "earnings_status": "OK"
+    },
+    "ISRG": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "9e85db970ca16b2e08e0f00233f5995417c688c12370d82bd4fb1f1261c03d16",
+      "earnings_status": "OK"
+    },
+    "NBIX": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "346e25313d72462a044ca7a6dfcbc245102918531b0a23fb237a70193b299430",
+      "earnings_status": "OK"
+    },
+    "NTLA": {
+      "rows": 2627,
+      "first": "2016-05-06",
+      "last": "2026-10-16",
+      "sha256": "1aaad5c0fd4298ca706690225987a2b704d7e5bde835c71fd2b083ca0847f0b1",
+      "earnings_status": "OK"
+    },
+    "NTRA": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "05ee18ca4cde09835ffe8a17097ffae4a513b4f94a2ce1e5a66cfb7e1f481793",
+      "earnings_status": "OK"
+    },
+    "PODD": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "8765368ccb23ac9c19fcef6df99a9ef0b1d6232ae84697c4b772a13643f57c34",
+      "earnings_status": "OK"
+    },
+    "REGN": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "c4749a1faf0232e1534cf39787af1e885ce80e5d9866e6c1886e3fefd014603e",
+      "earnings_status": "OK"
+    },
+    "RXRX": {
+      "rows": 1383,
+      "first": "2021-04-16",
+      "last": "2026-10-16",
+      "sha256": "254a6d6280e6106f5164cf3fb0c171c75f40061b56e57d00cce0ede19cb5c34b",
+      "earnings_status": "OK"
+    },
+    "SRPT": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "c40411dc3dff8f2873d1c934bd9576e5e0a8eea8ed3c27453352a0f121bc1408",
+      "earnings_status": "OK"
+    },
+    "TDOC": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "f341406188e9a402ad9920bff59e62cde3e74d7a8f14774e7fc85a8f657e7d30",
+      "earnings_status": "OK"
+    },
+    "TEM": {
+      "rows": 587,
+      "first": "2024-06-14",
+      "last": "2026-10-16",
+      "sha256": "8eec87d0e958c2713f317eb1ef0a35e30e57294ecf97102a46208c07017fb94e",
+      "earnings_status": "OK"
+    },
+    "TMDX": {
+      "rows": 1876,
+      "first": "2019-05-02",
+      "last": "2026-10-16",
+      "sha256": "ebb57cb0b1a0f921763737c4a1e0286d1c7ce12bbd8b806e192ef22fa59023fe",
+      "earnings_status": "OK"
+    },
+    "TWST": {
+      "rows": 2000,
+      "first": "2018-10-31",
+      "last": "2026-10-16",
+      "sha256": "359eef881057586cf9b3b4356c15f8aed04aac1846a1dc56bc5d9b861c14e5ee",
+      "earnings_status": "OK"
+    },
+    "VKTX": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "2a2c3a09fab0ffc085d9749af2ebc75e02d78e8fecfdbeb6b528072763150514",
+      "earnings_status": "OK"
+    },
+    "VRTX": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "3d76b647007a30867d92b98ba5bc82707f494885acee0e1123e031ebdc1995d7",
+      "earnings_status": "OK"
+    },
+    "BABA": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "9d4bc96657bb14710473c1c2becb918ea85f869992702de7cf62f202544a48db",
+      "earnings_status": "OK"
+    },
+    "BIDU": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "fec328a1826b97aab34a7a2e966715d99a001b4d34d3b5592dd9a71b7ef3c242",
+      "earnings_status": "OK"
+    },
+    "BILI": {
+      "rows": 2151,
+      "first": "2018-03-28",
+      "last": "2026-10-16",
+      "sha256": "60e517b0780fc8b80f015fcb688d5b1fc64dd9a8dd21817de3235d90f65daf09",
+      "earnings_status": "OK"
+    },
+    "JD": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "ec07ef7f93a2f4d6e94c988596ca5cb197696b35133149b32bc32b8495a48fb9",
+      "earnings_status": "OK"
+    },
+    "PDD": {
+      "rows": 2068,
+      "first": "2018-07-26",
+      "last": "2026-10-16",
+      "sha256": "8b6143c26a26efa31c34d968cb77b5023eb221f772f3ef1152ef32104b2df8fc",
+      "earnings_status": "OK"
+    },
+    "TCOM": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "716e6dfc12f0e418fd7030ecbc11eeac47d0d2ed4ef4c9f4e5426c687ca2e88d",
+      "earnings_status": "OK"
+    },
+    "ALB": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "8a87886c40291f3fad849c499a895a96aff1797ebd1fabe854c5129513164128",
+      "earnings_status": "OK"
+    },
+    "ARRY": {
+      "rows": 1508,
+      "first": "2020-10-15",
+      "last": "2026-10-16",
+      "sha256": "38bb934527851a65f89320982490d80b1278c105b41eb4af8396027625e44b90",
+      "earnings_status": "OK"
+    },
+    "BWXT": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "e5169b65c4805254495cb3323f8fec3b0c03df2ca18ade694627aa3d2905174c",
+      "earnings_status": "OK"
+    },
+    "CCJ": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "a6f4ef77faef7406c7db1530bb778189835c64d7224c877291404d08d8bc3f08",
+      "earnings_status": "OK"
+    },
+    "CEG": {
+      "rows": 1191,
+      "first": "2022-01-19",
+      "last": "2026-10-16",
+      "sha256": "5fe1feb48197d65ebc6cb6c3cf1a5324945cd02937e5fd927d788bd0819fdbad",
+      "earnings_status": "OK"
+    },
+    "ENVX": {
+      "rows": 1453,
+      "first": "2021-01-05",
+      "last": "2026-10-16",
+      "sha256": "03465fc6390de05fbd709434252449bfdee79dd8f4e06929b0810acf74921d8c",
+      "earnings_status": "OK"
+    },
+    "FLNC": {
+      "rows": 1247,
+      "first": "2021-10-28",
+      "last": "2026-10-16",
+      "sha256": "5d8777e725049fb453fd56db2c06a781627bc1d3b672ef233dd6f2fed6b8e36b",
+      "earnings_status": "OK"
+    },
+    "FSLR": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "0f249b01ac4f6b2a50bda34b241c779726ecb42a0e6570acff418706f70fff21",
+      "earnings_status": "OK"
+    },
+    "GEV": {
+      "rows": 642,
+      "first": "2024-03-27",
+      "last": "2026-10-16",
+      "sha256": "376de0f67dccd4bdff1e14b6da255cbdbd65aee6a402bdc27a7b2ce32be9b954",
+      "earnings_status": "OK"
+    },
+    "LCID": {
+      "rows": 1527,
+      "first": "2020-09-18",
+      "last": "2026-10-16",
+      "sha256": "c7d46b06fdd9d77008698cff46dadf8af5639f8eabd523f54d57acfb9d1816f7",
+      "earnings_status": "OK"
+    },
+    "LEU": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "c9f2bcd4be0bbf55806ee370bc13c9194a4dc6c6e671ba4ebb44efdd3b2915fd",
+      "earnings_status": "OK"
+    },
+    "LI": {
+      "rows": 1562,
+      "first": "2020-07-30",
+      "last": "2026-10-16",
+      "sha256": "59d36706233a08a4914b9d07ab35d3eef0ac66c48080dc86001212ed0f16931a",
+      "earnings_status": "OK"
+    },
+    "MBLY": {
+      "rows": 997,
+      "first": "2022-10-26",
+      "last": "2026-10-16",
+      "sha256": "f5b40d007a598545660f50fb63690663aefd9b5c36848adaa0723a4fe8c42ebc",
+      "earnings_status": "OK"
+    },
+    "NIO": {
+      "rows": 2035,
+      "first": "2018-09-12",
+      "last": "2026-10-16",
+      "sha256": "317c8fc8f4d94cdd4f84da5ce6c1e23f40a79b23e80be9d99c7015f468e8cc0c",
+      "earnings_status": "OK"
+    },
+    "NRG": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "d4815fb52e29152c2b640a6ad08dcd64818411a11f77444e01e3042b7568c02e",
+      "earnings_status": "OK"
+    },
+    "NXT": {
+      "rows": 925,
+      "first": "2023-02-09",
+      "last": "2026-10-16",
+      "sha256": "3a2b1de75ebe20596d3480dd90f4423700a81322a0a8bddb0c85ce55eb290c78",
+      "earnings_status": "OK"
+    },
+    "OKLO": {
+      "rows": 1326,
+      "first": "2021-07-08",
+      "last": "2026-10-16",
+      "sha256": "6a4d0ab266f1a8074ce648557e8fbd4216b356bfd7e8e69fd6cbbf5721c87424",
+      "earnings_status": "OK"
+    },
+    "QS": {
+      "rows": 1550,
+      "first": "2020-08-17",
+      "last": "2026-10-16",
+      "sha256": "41b87d0785a8bf511f20a8ff8e85f6e091600ee2fce0328d11e55b90fc02ee2f",
+      "earnings_status": "OK"
+    },
+    "RUN": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "dd71b3bf2f6439e11b0fe2fa2a338d41a03bab0517f20abf83852af9223e9160",
+      "earnings_status": "OK"
+    },
+    "SEDG": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "5908528be9f99e3196420e9b1eb93f623ac737649595482591723aac69c11ec9",
+      "earnings_status": "OK"
+    },
+    "SMR": {
+      "rows": 1163,
+      "first": "2022-03-01",
+      "last": "2026-10-16",
+      "sha256": "e3704b8b1bb5a6338102d2e14095a3b574babbf4328b4bb271732c241f5f704a",
+      "earnings_status": "OK"
+    },
+    "TLN": {
+      "rows": 847,
+      "first": "2023-06-02",
+      "last": "2026-10-16",
+      "sha256": "b2906b251e76b4bac73d198f4987be75c66999ce4cbc5d0c475a6a0956bb3417",
+      "earnings_status": "OK"
+    },
+    "UEC": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "36935702c43a05cbe75b6ed3fdaef28e9d0b38c061a30fd764c09c196ea1e11a",
+      "earnings_status": "OK"
+    },
+    "VST": {
+      "rows": 2522,
+      "first": "2016-10-05",
+      "last": "2026-10-16",
+      "sha256": "7ee867a42ff16c3fddf17fc656074ade125e3f60f11f523f75f78c29089c2505",
+      "earnings_status": "OK"
+    },
+    "XPEV": {
+      "rows": 1542,
+      "first": "2020-08-27",
+      "last": "2026-10-16",
+      "sha256": "9618f2686b2489c91507978982551b286b97649d0aeab4e6068bb73cc427f2fc",
+      "earnings_status": "OK"
+    },
+    "AFRM": {
+      "rows": 1447,
+      "first": "2021-01-13",
+      "last": "2026-10-16",
+      "sha256": "a2a01238cd46132ba71fc69dadf3d2752c6f0ed10eff55a06690ed55ade23362",
+      "earnings_status": "OK"
+    },
+    "CIFR": {
+      "rows": 1505,
+      "first": "2020-10-20",
+      "last": "2026-10-16",
+      "sha256": "50c4c5f317246477afc0cd030db4ff8f7f759476daad7aa505db0666e8039371",
+      "earnings_status": "OK"
+    },
+    "CLSK": {
+      "rows": 2492,
+      "first": "2016-11-16",
+      "last": "2026-10-16",
+      "sha256": "3e6fc7b5ede9202af7eff8abc17857c8f9ac8a3f7813d26c9bf21d7904bf25ff",
+      "earnings_status": "OK"
+    },
+    "COIN": {
+      "rows": 1385,
+      "first": "2021-04-14",
+      "last": "2026-10-16",
+      "sha256": "b13b08ab532e688a4ed7ca942e91055e0e4249b7c47f6553fd5ccb67907064cc",
+      "earnings_status": "OK"
+    },
+    "FOUR": {
+      "rows": 1600,
+      "first": "2020-06-05",
+      "last": "2026-10-16",
+      "sha256": "0994b9e771edc73d07ac23c0e6b53fc38b559cad07af5a8bd5aea0210efbce8b",
+      "earnings_status": "OK"
+    },
+    "HOOD": {
+      "rows": 1311,
+      "first": "2021-07-29",
+      "last": "2026-10-16",
+      "sha256": "bfc6d141baa74749640bc9dd3b480d74ca0305f41df2c2a1a82a4485cb0c6685",
+      "earnings_status": "OK"
+    },
+    "HUT": {
+      "rows": 2165,
+      "first": "2018-03-08",
+      "last": "2026-10-16",
+      "sha256": "02f9ed374b6bcca733ded0d7a9dc16809886860b1a133453332e8ba823ea6673",
+      "earnings_status": "OK"
+    },
+    "IBKR": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "6c667f4a6739df879998b98c064aeb373f3f743fa22f298d963895bd5ab51645",
+      "earnings_status": "OK"
+    },
+    "IREN": {
+      "rows": 1233,
+      "first": "2021-11-17",
+      "last": "2026-10-16",
+      "sha256": "7e8f99fa77141eb9e41e7b1bd805a52e6670b12f2a86b26c8890ac0434eaa7be",
+      "earnings_status": "OK"
+    },
+    "LMND": {
+      "rows": 1581,
+      "first": "2020-07-02",
+      "last": "2026-10-16",
+      "sha256": "c7e584c13edae550929fc0f7a20e12e429c5419c0045cbcba4474f841e10c918",
+      "earnings_status": "OK"
+    },
+    "MA": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "e22f16cc1813567933a3382bdaa4865b2e2bd23ad21b28b98eed90aac4862fd4",
+      "earnings_status": "OK"
+    },
+    "MARA": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "e5575bd59c4ff056c501545dd6c09ba4d09d7c255d14e6f93e77c47e790b4cf0",
+      "earnings_status": "OK"
+    },
+    "MSTR": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "c607f28999239c6334af753189e783d8c4faaa512ad1e7f52b1a59d6fed53ef3",
+      "earnings_status": "OK"
+    },
+    "NU": {
+      "rows": 1218,
+      "first": "2021-12-09",
+      "last": "2026-10-16",
+      "sha256": "6709f1d814bfa7d0446e38b6872e6c15906ef8392b8fef7cee2786191bf0ded2",
+      "earnings_status": "OK"
+    },
+    "PYPL": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "745e69dc63bab9538a2998f451ebc271ba0d2a054c89ba0883d14cf53fec3fa7",
+      "earnings_status": "OK"
+    },
+    "RIOT": {
+      "rows": 2653,
+      "first": "2016-03-31",
+      "last": "2026-10-16",
+      "sha256": "b4ad78725e4a49e3c727ef852b6793181d1c5efdf3c7d6d0f385fac326ef58f0",
+      "earnings_status": "OK"
+    },
+    "RKT": {
+      "rows": 1557,
+      "first": "2020-08-06",
+      "last": "2026-10-16",
+      "sha256": "a532be1f51267c361c54e086924f359b2848c4d768857f703fd1b101601cbbba",
+      "earnings_status": "OK"
+    },
+    "V": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "ca85b57a6e8030c65a7cc00da6264f6f6174103a2d435ffb097190c77648767c",
+      "earnings_status": "OK"
+    },
+    "WULF": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "a8a2f16e1272df58c87d629a7283aebe42bcf7688f56330c45cef1d1047870fa",
+      "earnings_status": "OK"
+    },
+    "ABNB": {
+      "rows": 1469,
+      "first": "2020-12-10",
+      "last": "2026-10-16",
+      "sha256": "1736ab8078bbef347509b2833e340ba5e5be31d4312dfe1a39e5fa83dd7e8df1",
+      "earnings_status": "OK"
+    },
+    "BKNG": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "9db7d3943081e8091548cd0dcc82d5a35804b529a4f518c322582c26eb8c4c4d",
+      "earnings_status": "OK"
+    },
+    "CART": {
+      "rows": 773,
+      "first": "2023-09-19",
+      "last": "2026-10-16",
+      "sha256": "3ea7002a4f692ea3af1629a38209d6331ee652c90be2f7fbb8a5f5eebad34088",
+      "earnings_status": "OK"
+    },
+    "CHWY": {
+      "rows": 1846,
+      "first": "2019-06-14",
+      "last": "2026-10-16",
+      "sha256": "caf06eee184d0f3603b84c6c6f107bf026194bb2e2491fc5a9228a1b2ddfdae1",
+      "earnings_status": "OK"
+    },
+    "CPNG": {
+      "rows": 1408,
+      "first": "2021-03-11",
+      "last": "2026-10-16",
+      "sha256": "d5bf3b3166cd1c2aa5ca34cc4a0eafbd6ad911b6226a7e719afbe2723608de79",
+      "earnings_status": "OK"
+    },
+    "CVNA": {
+      "rows": 2381,
+      "first": "2017-04-28",
+      "last": "2026-10-16",
+      "sha256": "2243aec2788a9513eaa5b3e9c51084cf373634b2ea7b0ead78810f25173de395",
+      "earnings_status": "OK"
+    },
+    "DASH": {
+      "rows": 1470,
+      "first": "2020-12-09",
+      "last": "2026-10-16",
+      "sha256": "f4ff4c1497d038dd6a098cfeff227a1d8ff0450877cd2585f2dab822be287077",
+      "earnings_status": "OK"
+    },
+    "DKNG": {
+      "rows": 1818,
+      "first": "2019-07-25",
+      "last": "2026-10-16",
+      "sha256": "4ddb533a921132c669d1c970c753d9794f985c142fcb5528dba526b21a482a1d",
+      "earnings_status": "OK"
+    },
+    "EBAY": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "d6e0ad29426a4749ffc7a3096d05ef3d9e28b474a7bdb0a3b07f17cbc5593c2b",
+      "earnings_status": "OK"
+    },
+    "ETSY": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "1206aed578ce81ad37614865e8f4e9c57b4143b606fc686c4429a921121b84bb",
+      "earnings_status": "OK"
+    },
+    "EXPE": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "f4b558dfb79a70b3d983f61c1df48077bacd958d6c04558e8d22b7b7ed5562fa",
+      "earnings_status": "OK"
+    },
+    "GLBE": {
+      "rows": 1365,
+      "first": "2021-05-12",
+      "last": "2026-10-16",
+      "sha256": "f280b4316b0151c3034f90bac5e5231bc93f6e77e6922fc221d710127eca34a0",
+      "earnings_status": "OK"
+    },
+    "GRAB": {
+      "rows": 1476,
+      "first": "2020-12-01",
+      "last": "2026-10-16",
+      "sha256": "2a8a4b1257171802374832e799d3eb2f546b982cf20ed80511c66bb1fb6860ce",
+      "earnings_status": "OK"
+    },
+    "LYFT": {
+      "rows": 1899,
+      "first": "2019-03-29",
+      "last": "2026-10-16",
+      "sha256": "040ea6420f1b54071a42d55821b5d86e1674df6be2657278b939cf9c52f846bf",
+      "earnings_status": "OK"
+    },
+    "MELI": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "6b29079887eeb18713c012ee5abf813ea8b43057f3207a01d61fa3c675540091",
+      "earnings_status": "OK"
+    },
+    "META": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "177cf2cf1dd41771a039fe4f3fc966df006e5fe58b182e3af7c4bb17288b4119",
+      "earnings_status": "OK"
+    },
+    "MGNI": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "31eaad243ffa28e45e4a6c6b292359192a885af42107badee4adbc2114eef0cc",
+      "earnings_status": "OK"
+    },
+    "MTCH": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "d435c96f1ac5f7af74f282b158ec99c24e1bc8103ef422b60f834ccc96c8af35",
+      "earnings_status": "OK"
+    },
+    "NFLX": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "0f2fadb172945fe49804219a2759e596bb12ba60ce20157016767a576c9535b9",
+      "earnings_status": "OK"
+    },
+    "PINS": {
+      "rows": 1885,
+      "first": "2019-04-18",
+      "last": "2026-10-16",
+      "sha256": "d022ed0d6d4e101069325e19a0cca02a487d18b566be275c318f095153ed320c",
+      "earnings_status": "OK"
+    },
+    "RBLX": {
+      "rows": 1409,
+      "first": "2021-03-10",
+      "last": "2026-10-16",
+      "sha256": "c4e624ce5b7917dd3b22d4d812bce8aa18ba52b7cb05b70165ea74c303722c64",
+      "earnings_status": "OK"
+    },
+    "RDDT": {
+      "rows": 646,
+      "first": "2024-03-21",
+      "last": "2026-10-16",
+      "sha256": "3994cfbf3bf69ebe14980ebb695395e367d45d7aa9b33b453f22404c82257b7b",
+      "earnings_status": "OK"
+    },
+    "RVLV": {
+      "rows": 1851,
+      "first": "2019-06-07",
+      "last": "2026-10-16",
+      "sha256": "db6813c206dd1cc5a8072a4828686acb5531cb4dccd3fa01d525cc23a28e98a0",
+      "earnings_status": "OK"
+    },
+    "SE": {
+      "rows": 2259,
+      "first": "2017-10-20",
+      "last": "2026-10-16",
+      "sha256": "49a4ba6b28f6d80fd5486deaeabf8cf2a9be18a28ef074817a7d6a7293073330",
+      "earnings_status": "OK"
+    },
+    "SPOT": {
+      "rows": 2148,
+      "first": "2018-04-03",
+      "last": "2026-10-16",
+      "sha256": "8de738b9a713b9f6a70eb99f9afef42a1f5029dfbe346f22c8466eac90e6f8f3",
+      "earnings_status": "OK"
+    },
+    "TTD": {
+      "rows": 2532,
+      "first": "2016-09-21",
+      "last": "2026-10-16",
+      "sha256": "3f2348d1054261f01520bb65e3f42104be0b0a404be7904e94900f376edbf8a4",
+      "earnings_status": "OK"
+    },
+    "TTWO": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "de265fbb88be5f16e36df085ce7767652c309be786edc5a2ab67864b4c638880",
+      "earnings_status": "OK"
+    },
+    "UBER": {
+      "rows": 1870,
+      "first": "2019-05-10",
+      "last": "2026-10-16",
+      "sha256": "1a59d7d00e5e1c0ccd6d9bc9b078cfbc2191e991546d97ed1d262d238fedb1e6",
+      "earnings_status": "OK"
+    },
+    "W": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "74126223f6201e1ffdc0679d38adc1f4b46660b8040d885433f4564a0ada04e8",
+      "earnings_status": "OK"
+    },
+    "BROS": {
+      "rows": 1278,
+      "first": "2021-09-15",
+      "last": "2026-10-16",
+      "sha256": "9ae184384c77de2bee4afb58fcce483c9b115877435d891002ef366b6bd61ef1",
+      "earnings_status": "OK"
+    },
+    "CAVA": {
+      "rows": 838,
+      "first": "2023-06-15",
+      "last": "2026-10-16",
+      "sha256": "a873e1be6ddbeabb89d6c6bb59b29714b1adbdc4927f21034298a9ae754042a4",
+      "earnings_status": "OK"
+    },
+    "CELH": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "8be8eeb756e9e80f5f87b9b719004e2698a399091089b3f8357309a42cac6616",
+      "earnings_status": "OK"
+    },
+    "CMG": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "8ab381c1ba4ccc90f4bfaea31fa0d659d24a55a5fd71fa50f47cb69cf4bda757",
+      "earnings_status": "OK"
+    },
+    "CROX": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "c63c9691d530d77ec573d0d2e7a99321fcb916a8b88c0cc8b60897f938f98356",
+      "earnings_status": "OK"
+    },
+    "DECK": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "9a281571975a2f32dd8837e89810225703313d234b58a7b897966a80450b93ba",
+      "earnings_status": "OK"
+    },
+    "ELF": {
+      "rows": 2531,
+      "first": "2016-09-22",
+      "last": "2026-10-16",
+      "sha256": "810f95a9c460a07f972c01e1ac030bad8704f49af71e49dd40e39292e805019a",
+      "earnings_status": "OK"
+    },
+    "GME": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "f9174fc8eb977ae16ecf23ce42012c42588927b71d964fd0e63b6e113a76f1d6",
+      "earnings_status": "OK"
+    },
+    "LULU": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "388bdbe06ef3b93f6e0c77eaf88514b923fbf1bacd721036c9fe12ff08c93a7c",
+      "earnings_status": "OK"
+    },
+    "MNST": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "d05480209a7dea9359c4a85fd3f38c7dc3bb49ede2cf348a15149382668bde7a",
+      "earnings_status": "OK"
+    },
+    "ONON": {
+      "rows": 1278,
+      "first": "2021-09-15",
+      "last": "2026-10-16",
+      "sha256": "c6b00eab369169378fb395d9e7b3d7f5c31918a0a35e719186e159d45a083921",
+      "earnings_status": "OK"
+    },
+    "SYM": {
+      "rows": 1410,
+      "first": "2021-03-09",
+      "last": "2026-10-16",
+      "sha256": "0977c16ae6ce4ecc7a76f47083f8dcba30f695db714f2d6c71db5e7f7ecee43b",
+      "earnings_status": "OK"
+    },
+    "WING": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "c8aafcf1a193019e995117709633889cba0b194cdab16a7994c086fab827b1ab",
+      "earnings_status": "OK"
+    },
+    "ACHR": {
+      "rows": 1463,
+      "first": "2020-12-18",
+      "last": "2026-10-16",
+      "sha256": "7130bd9e7e497787116e216920d1a5bc334a4443c8d01460621d020937363b82",
+      "earnings_status": "OK"
+    },
+    "ASTS": {
+      "rows": 1748,
+      "first": "2019-11-01",
+      "last": "2026-10-16",
+      "sha256": "3dd3c218f312de1bcf5843c529b6198729c2e19620000a586fb6807e7b9ee817",
+      "earnings_status": "OK"
+    },
+    "AVAV": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "06d2eead4bfc12f2c3ee959d9b0397f101ec20f06f1d0ed3f3d0a8304e9fe21e",
+      "earnings_status": "OK"
+    },
+    "AXON": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "7884d975b0600cb45e22004442ed22035c871d5e0af00d5a0c58688e326b6a9f",
+      "earnings_status": "OK"
+    },
+    "IONQ": {
+      "rows": 1454,
+      "first": "2021-01-04",
+      "last": "2026-10-16",
+      "sha256": "5fab68542ce8f7db3e1b9a35284ba7b6a5359f00008d4c155851f9ae789a7036",
+      "earnings_status": "OK"
+    },
+    "JOBY": {
+      "rows": 1491,
+      "first": "2020-11-09",
+      "last": "2026-10-16",
+      "sha256": "a82f0efc0f46bf00ba0c421f0af02f6f9ef159e89096f3b6496701826e17541d",
+      "earnings_status": "OK"
+    },
+    "KTOS": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "36dd79e7a59cfd569d48430eee2f156b81b98f961add82333c3a2206f73d9fa0",
+      "earnings_status": "OK"
+    },
+    "LUNR": {
+      "rows": 1233,
+      "first": "2021-11-17",
+      "last": "2026-10-16",
+      "sha256": "d91bf2f50135ef51c28394c06a180539da3a1de6623bf6b3ec0bb38d163579df",
+      "earnings_status": "OK"
+    },
+    "PL": {
+      "rows": 1377,
+      "first": "2021-04-26",
+      "last": "2026-10-16",
+      "sha256": "6c3c2c9d80554fa211452afef080f88c0dbbfeb7262303bc69f0b7fd7429a049",
+      "earnings_status": "OK"
+    },
+    "QBTS": {
+      "rows": 1468,
+      "first": "2020-12-11",
+      "last": "2026-10-16",
+      "sha256": "17d10ad8473d52bb822c05410950d45ad8d2971b390a0557744838b8567a3da6",
+      "earnings_status": "OK"
+    },
+    "QUBT": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "f0441ee9d7d5d1deb0c4de374d5710ea514486edf282b9818bc9583e41e1bc98",
+      "earnings_status": "OK"
+    },
+    "RDW": {
+      "rows": 1446,
+      "first": "2021-01-14",
+      "last": "2026-10-16",
+      "sha256": "f15511527360870fa976cc94fda424c18da6ed341335fa1f7003a0fcc03c809e",
+      "earnings_status": "OK"
+    },
+    "RGTI": {
+      "rows": 1379,
+      "first": "2021-04-22",
+      "last": "2026-10-16",
+      "sha256": "64f1df62ef1850630c3e70619ae6598e9998384bab70b05d4d2ce26431eec063",
+      "earnings_status": "OK"
+    },
+    "AAOI": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "a8a6cd1e9494f254f354b0c7e8f80c9924d7275cc39a306a07832140595007f7",
+      "earnings_status": "OK"
+    },
+    "ACLS": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "164fd4bbaa77fe69ca9e80d8987f8a82e53e1032f4dc58d3e38891b19d885bdb",
+      "earnings_status": "OK"
+    },
+    "ACMR": {
+      "rows": 2250,
+      "first": "2017-11-02",
+      "last": "2026-10-16",
+      "sha256": "b2cf37275892399bc4aea5b1edbe39634b1ed70b421e61d6626098d09ddf730a",
+      "earnings_status": "OK"
+    },
+    "ADI": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "f933c6d8b1455bb3fd6c727ea6e9ad8ce96686da73be772400e03f8fa86e1708",
+      "earnings_status": "OK"
+    },
+    "AEHR": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "da6525b3f7509616cfd5a9187e0eb338fd23d42c49968cd47a094d19450ab674",
+      "earnings_status": "OK"
+    },
+    "ALAB": {
+      "rows": 647,
+      "first": "2024-03-20",
+      "last": "2026-10-16",
+      "sha256": "84f09424876818db696d9d6559fe7fab5050e09f5962a5c03e66da3cc8a5008a",
+      "earnings_status": "OK"
+    },
+    "ALGM": {
+      "rows": 1498,
+      "first": "2020-10-29",
+      "last": "2026-10-16",
+      "sha256": "a173ad77b3aad9b8b85fc16ed7979fd199dc22d8d3d9aa4e058e0dc5009f56eb",
+      "earnings_status": "OK"
+    },
+    "AMAT": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "a71179f7f2e267dcfef8601ecf3f696c53c15dfb555f35546f4c1265db91c348",
+      "earnings_status": "OK"
+    },
+    "AMBA": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "b4f10d5f26b52a878e9d52b6d19799658fc2d47e8fc3d121ddbcb59d012978d2",
+      "earnings_status": "OK"
+    },
+    "APH": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "b4d3950ef02a79c167aa7d7e0879e0f75d31ac84ac7e4ed38b4ac925cbd43e11",
+      "earnings_status": "OK"
+    },
+    "ARM": {
+      "rows": 776,
+      "first": "2023-09-14",
+      "last": "2026-10-16",
+      "sha256": "a5729450507b9ac7321c568ea22897644a25ce6fa19f323b556b9dc70d269b99",
+      "earnings_status": "OK"
+    },
+    "ASML": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "6c69c04df8fa718b06ced46f655b15f48ac6a6656cb0737a000273777d1bbcda",
+      "earnings_status": "OK"
+    },
+    "AVGO": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "9a388dba9761931a357107aceadf114a72bcf09444304d9a01b7ed1a2b974fbb",
+      "earnings_status": "OK"
+    },
+    "CAMT": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "c19042dbe3b92f3b9c25df4767d3d8da429168d6b5217914dcfc0b74175df4c3",
+      "earnings_status": "OK"
+    },
+    "CLS": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "9f4e720485b58a73d88e3698e536d5e2a409c1d486829ff01718fb499ea07321",
+      "earnings_status": "OK"
+    },
+    "COHR": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "7088759ed4cec9201bf689abb84df2ccd3dc28d290e39ccfb619d649df335fc5",
+      "earnings_status": "OK"
+    },
+    "CRDO": {
+      "rows": 1185,
+      "first": "2022-01-27",
+      "last": "2026-10-16",
+      "sha256": "0c59c99e9e92a9e616337b0bc0680c027d566a6964efb7434852d7ae946e56e1",
+      "earnings_status": "OK"
+    },
+    "ENTG": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "609a3833aa69b9842e9d8fc8d3d1bb00381bbd98fbd407d55164b25e8da5068c",
+      "earnings_status": "OK"
+    },
+    "FLEX": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "3125518f3ac6aa5866b2af5f3502c608b1f59cb71b3a13f2ac697de57e8579d8",
+      "earnings_status": "OK"
+    },
+    "FN": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "b16b6f8b7a46a9102ffa6e81d41ac2c55164575a747712e8e34c50667b5cb01d",
+      "earnings_status": "OK"
+    },
+    "FORM": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "9286680fdff45b7434abad32992641e3f2e843097dfd03cb07fc877e28594a27",
+      "earnings_status": "OK"
+    },
+    "GFS": {
+      "rows": 1247,
+      "first": "2021-10-28",
+      "last": "2026-10-16",
+      "sha256": "26b60d152a409b040b93b1de281ef017273e4404ac817b86b536052bf3c7a20a",
+      "earnings_status": "OK"
+    },
+    "INTC": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "625f684bcb0e1cc13db46b357c290115a483d6d14502cdda339929440ae91d73",
+      "earnings_status": "OK"
+    },
+    "JBL": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "82169e7fc30914bfa21ed631efa16befbfe0c226e5710567893eaf7cbfb557f6",
+      "earnings_status": "OK"
+    },
+    "KLAC": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "8b3ba6677c145157bf4a966e09f9abd2a1c3ffa289bbad01c50c52e42b8ea6c5",
+      "earnings_status": "OK"
+    },
+    "LITE": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "a06f66175db4ef40a6bb4a0c9bbb6b8d7bc22d091d46dd1b4c8aaa1ab5dda2bd",
+      "earnings_status": "OK"
+    },
+    "LRCX": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "f2fc53ef651a88eb6e590136936669d0f2f0513ebaa8df1521e55be796af40a2",
+      "earnings_status": "OK"
+    },
+    "LSCC": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "29426303c07053faa66bfae56b0593fdee056cf09868d3f2391de05c76da3140",
+      "earnings_status": "OK"
+    },
+    "MCHP": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "b8a1cdb0414c76f770a84829ddd61fe0da3a832c9f7ae9f60cf2afb9833d385d",
+      "earnings_status": "OK"
+    },
+    "MPWR": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "edecf5a5bb3ba4b06ec575a4fc7e1967b2a03e08da39f79bc61a68ec579f9456",
+      "earnings_status": "OK"
+    },
+    "MTSI": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "4886506725e0a54e8df9c4c885e2bc8b040631c3a954327e22751b3d31b11811",
+      "earnings_status": "OK"
+    },
+    "NVMI": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "95cf1132feb8359c7f39427e7783ada8aa29cd387389172fa83c3bbd74c8964f",
+      "earnings_status": "OK"
+    },
+    "NXPI": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "c279f792a8c6643a5777407be99b22fbdff8694bc2f06a7938e1a52013dedaa6",
+      "earnings_status": "OK"
+    },
+    "ON": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "d6f14122e601b5542ab38b3e9d25fe270afb9c1360ec742be324efc6428d4ceb",
+      "earnings_status": "OK"
+    },
+    "ONTO": {
+      "rows": 1752,
+      "first": "2019-10-28",
+      "last": "2026-10-16",
+      "sha256": "ed57fdabfaab0a5d740fa84e8038cb31de473b19f49f635997dea74a7a591fc5",
+      "earnings_status": "OK"
+    },
+    "POWI": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "fed1470bb986bdc63a24ee70d16d9ff251d5f6631bd47364224450b2832647b7",
+      "earnings_status": "OK"
+    },
+    "QCOM": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "0cf5647ffa7de9efd5bd832d791c6073b3614c1f3a142db05c959d99cf55d0b7",
+      "earnings_status": "OK"
+    },
+    "RMBS": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "2b757f3e88d9fb106dba468ceeee2e7c76e39da4b20e9d39e58d3c839a3d12f3",
+      "earnings_status": "OK"
+    },
+    "SITM": {
+      "rows": 1735,
+      "first": "2019-11-20",
+      "last": "2026-10-16",
+      "sha256": "3c5c8e7b3d4c88ec85477d785e1931fd9514d0a4b5eb5f607596819e32ccecb3",
+      "earnings_status": "OK"
+    },
+    "STX": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "2ab353b7afaed106d1b3f4d102bf88979300a002e37d4be259075dadf447a641",
+      "earnings_status": "OK"
+    },
+    "SWKS": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "6c1cb104043f07e406b18772fa2c1119c2f2182c7bdadd6ee62f8f09be17a340",
+      "earnings_status": "OK"
+    },
+    "TER": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "a9e1a9f6a7cbf9b2d985bfe3ac6c80d403b605cd272aa0192a2ed43cece21bea",
+      "earnings_status": "OK"
+    },
+    "TSM": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "a33b1f75518bca6efaaf485839c2df37de2680d5d786cd5ec646f445e2a074a3",
+      "earnings_status": "OK"
+    },
+    "TXN": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "3158bfb4a0caee9393bf73a972208b7b1691561949038222d98fe92eb72acb11",
+      "earnings_status": "OK"
+    },
+    "UCTT": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "3df6de61123781700ae4ab9416f6be236aa6010af8eb2122d0573570f679f0f3",
+      "earnings_status": "OK"
+    },
+    "WDC": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "43ccc330d8a26d577122181d90a0d72cf52d446e0819ded83bc7f875457f1c7f",
+      "earnings_status": "OK"
+    },
+    "ADBE": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "aac8b9d3c57ae11aa5a485627ae184b358c692aed9a6d10dee300c7296ba6ea0",
+      "earnings_status": "OK"
+    },
+    "ADSK": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "7c4997d47e1570965a95fdbfd0ba16aae9d2e7eb600835fbaab6aaedef5a41b3",
+      "earnings_status": "OK"
+    },
+    "AI": {
+      "rows": 1470,
+      "first": "2020-12-09",
+      "last": "2026-10-16",
+      "sha256": "b0a1b5566a34ad385e724b929ba5a3719649e542c991839055f10695d877ba77",
+      "earnings_status": "OK"
+    },
+    "APP": {
+      "rows": 1384,
+      "first": "2021-04-15",
+      "last": "2026-10-16",
+      "sha256": "90cb1f5ca9bc5979a2f1be3580e1b139c9a0d83450a0000fcf59cb8e7f13cfdb",
+      "earnings_status": "OK"
+    },
+    "APPF": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "5442e2e38eda27f910a32db8477d2d5771035d6b556cfe4506ac791d86635705",
+      "earnings_status": "OK"
+    },
+    "APPN": {
+      "rows": 2362,
+      "first": "2017-05-25",
+      "last": "2026-10-16",
+      "sha256": "388dc1dc4b5238f42df9f806a9a9f01275d532bcabc0d8f9b5ee564ab1345485",
+      "earnings_status": "OK"
+    },
+    "ASAN": {
+      "rows": 1519,
+      "first": "2020-09-30",
+      "last": "2026-10-16",
+      "sha256": "51641138c00324de9aea4d2b78cda507a2c0b0d433664a9bb9267c0848c3bca1",
+      "earnings_status": "OK"
+    },
+    "BBAI": {
+      "rows": 1392,
+      "first": "2021-04-05",
+      "last": "2026-10-16",
+      "sha256": "218e58d5092665849ab4efb12af836e3ce3610e8fc6e4682b38fa41bc1d43f65",
+      "earnings_status": "OK"
+    },
+    "BILL": {
+      "rows": 1720,
+      "first": "2019-12-12",
+      "last": "2026-10-16",
+      "sha256": "4f8b528f17bcf1226148c5ebb4ecfc58bf3bcacc96ff9fa73963c8ab11fb4f57",
+      "earnings_status": "OK"
+    },
+    "BOX": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "22945d0a831b1b74b686930a2084ad236d5a2d9859caccedbfb91e7e76d390fa",
+      "earnings_status": "OK"
+    },
+    "BRZE": {
+      "rows": 1233,
+      "first": "2021-11-17",
+      "last": "2026-10-16",
+      "sha256": "f54902b20ec422b128c24e2eb6f0405ff829d46de4e817adba76e513390d8ec2",
+      "earnings_status": "OK"
+    },
+    "CDNS": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "8f0ddf9c7d4a42bf88776c00a6ba6e241052ab78a2d9c9d9e11e7eb9618fe372",
+      "earnings_status": "OK"
+    },
+    "CHKP": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "37607c8ee26f31aeb7b30c72a085c7e173cf1e08e0b22a3b93445c7287ea3825",
+      "earnings_status": "OK"
+    },
+    "CRM": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "f452ba29c30b9e94ea340879d8cbe76681790ed1e9155802d37c073503f9afee",
+      "earnings_status": "OK"
+    },
+    "CRWD": {
+      "rows": 1848,
+      "first": "2019-06-12",
+      "last": "2026-10-16",
+      "sha256": "73e7dcdb5667b25d258321d59d0c7d949874f8c60bcd38737caf2230b07252cf",
+      "earnings_status": "OK"
+    },
+    "DBX": {
+      "rows": 2154,
+      "first": "2018-03-23",
+      "last": "2026-10-16",
+      "sha256": "68bf6fcee4b606f72874f12368d886a3493b70064d37e8e2996e777857146944",
+      "earnings_status": "OK"
+    },
+    "DDOG": {
+      "rows": 1779,
+      "first": "2019-09-19",
+      "last": "2026-10-16",
+      "sha256": "23f3805d33605c6f9144ccc67d5504e99dde0e847d465a088b187ac2d5605563",
+      "earnings_status": "OK"
+    },
+    "DOCN": {
+      "rows": 1399,
+      "first": "2021-03-24",
+      "last": "2026-10-16",
+      "sha256": "9b446b5f3d6e3fc94bc645a563653a7e9f166b03997962f4ca78a4c36cd60766",
+      "earnings_status": "OK"
+    },
+    "DOCU": {
+      "rows": 2130,
+      "first": "2018-04-27",
+      "last": "2026-10-16",
+      "sha256": "0651627c6cc5109ed178bbc49ddd3a66780766ba692ce9d8847a3d4ed75630b0",
+      "earnings_status": "OK"
+    },
+    "DT": {
+      "rows": 1813,
+      "first": "2019-08-01",
+      "last": "2026-10-16",
+      "sha256": "fcaa1a80b0c95e74bf0deb7571795aad5ae4b18fc3170b7d81e05a5715413d28",
+      "earnings_status": "OK"
+    },
+    "DUOL": {
+      "rows": 1312,
+      "first": "2021-07-28",
+      "last": "2026-10-16",
+      "sha256": "ff51581d828e4c835b35fe1799e69e70d8791a76150f0a1c1fd3a1cf2731ffcf",
+      "earnings_status": "OK"
+    },
+    "EPAM": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "342cbfd073073a45cd91f88f52f4f79ad4b6bafdb2f9df88c89ca5f44b16d8d2",
+      "earnings_status": "OK"
+    },
+    "ESTC": {
+      "rows": 2018,
+      "first": "2018-10-05",
+      "last": "2026-10-16",
+      "sha256": "bb40567612c81ec6482d71ea2081cc78daa729732cb6d526c309f9cda6e56ec3",
+      "earnings_status": "OK"
+    },
+    "FROG": {
+      "rows": 1529,
+      "first": "2020-09-16",
+      "last": "2026-10-16",
+      "sha256": "fa227547089dfcaafb16b5ce71183101ee381218b3a001a77a50745788368110",
+      "earnings_status": "OK"
+    },
+    "FSLY": {
+      "rows": 1865,
+      "first": "2019-05-17",
+      "last": "2026-10-16",
+      "sha256": "a8a2cf682e71427519adbb229dcdbddc09491612582df59b301a2ba418294b90",
+      "earnings_status": "OK"
+    },
+    "FTNT": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "9d186f76fbb0aef15db2ce154d1f9f66700aef1e61949dbbbbe9bb8c88a8b5e4",
+      "earnings_status": "OK"
+    },
+    "GLOB": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "b07a8d654b5d82b97779de10eb83ef2c58b27ea2509db9ad72d0f8d6925386d0",
+      "earnings_status": "OK"
+    },
+    "GTLB": {
+      "rows": 1257,
+      "first": "2021-10-14",
+      "last": "2026-10-16",
+      "sha256": "7ca1581f8b7ab0891b13c13d7469d7dabfe86c3a38547eed96f951f6349d9bca",
+      "earnings_status": "OK"
+    },
+    "HUBS": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "266c74267bfd3bf7ff8ebf9aed0bcf81e543861a3c069279c7a47b2278e0aadf",
+      "earnings_status": "OK"
+    },
+    "INTU": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "99cabcad4d78c6adbb5ae1d734b948eff7569e7ea1b1f03dd44b09ed6241299d",
+      "earnings_status": "OK"
+    },
+    "IOT": {
+      "rows": 1214,
+      "first": "2021-12-15",
+      "last": "2026-10-16",
+      "sha256": "9382bd654cfc224585aca6ee7ca5c5ac318c199f23df205e2dce5f69da54bc10",
+      "earnings_status": "OK"
+    },
+    "KVYO": {
+      "rows": 772,
+      "first": "2023-09-20",
+      "last": "2026-10-16",
+      "sha256": "df6fa9cda75601cf3795b9b8921fbe71346d8ec7605cee6bcdebe8363a4bbf9f",
+      "earnings_status": "OK"
+    },
+    "MANH": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "466cb86e361540d4223328a6470924da526e4c591ce8de57634cef1a5f46429d",
+      "earnings_status": "OK"
+    },
+    "MDB": {
+      "rows": 2260,
+      "first": "2017-10-19",
+      "last": "2026-10-16",
+      "sha256": "1329e85e80c392eebc7f52e5689917b298cd915f06fe28a60e5a74d04b2419ea",
+      "earnings_status": "OK"
+    },
+    "MNDY": {
+      "rows": 1345,
+      "first": "2021-06-10",
+      "last": "2026-10-16",
+      "sha256": "839822e31fbd1a238869b98cb7733b351378aef0d4678911d88b6c424e7e396a",
+      "earnings_status": "OK"
+    },
+    "NCNO": {
+      "rows": 1574,
+      "first": "2020-07-14",
+      "last": "2026-10-16",
+      "sha256": "37ecfc632fcae95e498aef0b3e22ea702facbd08ec1ac1899b7998137b383615",
+      "earnings_status": "OK"
+    },
+    "NET": {
+      "rows": 1783,
+      "first": "2019-09-13",
+      "last": "2026-10-16",
+      "sha256": "a65d87d1f7ebfd58ad6b582b4452cb68b21ad49fb08ab6c48f8e4e98a302534f",
+      "earnings_status": "OK"
+    },
+    "NOW": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "22acb8d0325a64918b28acd3a9f6b878e8513f2c6878af0260973d7a5230729c",
+      "earnings_status": "OK"
+    },
+    "OKTA": {
+      "rows": 2395,
+      "first": "2017-04-07",
+      "last": "2026-10-16",
+      "sha256": "4ae7bdd64d8e4d712eee56024698efe37951887ec667a3dfe84fa70d48c69135",
+      "earnings_status": "OK"
+    },
+    "ORCL": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "7f7db48e5d63ade027dd3bd042bbe60d667c7766218698215bf75ef1e1f72b89",
+      "earnings_status": "OK"
+    },
+    "PANW": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "b17012c29924a930ee6610cca32b80268944fd97a5caf32729c821ff2d7ff6d8",
+      "earnings_status": "OK"
+    },
+    "PATH": {
+      "rows": 1380,
+      "first": "2021-04-21",
+      "last": "2026-10-16",
+      "sha256": "dc6352126b7c53f5874d095eb216f0c8272e029f201a365c378b636862562219",
+      "earnings_status": "OK"
+    },
+    "PAYC": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "dabb4f5318b371fc9649642cf4e95e3bb5eb323c98893a9a3950ce55f5e249dc",
+      "earnings_status": "OK"
+    },
+    "PCOR": {
+      "rows": 1359,
+      "first": "2021-05-20",
+      "last": "2026-10-16",
+      "sha256": "ed21ba527a6cf6505d32a2fd8a9f1febc159013c9a4a693f26713ebcb808efbb",
+      "earnings_status": "OK"
+    },
+    "PCTY": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "48034d0cb211b96d2f60978c9d29fc3a59bcd0bf071f2e7195584e599c8ad04f",
+      "earnings_status": "OK"
+    },
+    "PD": {
+      "rows": 1890,
+      "first": "2019-04-11",
+      "last": "2026-10-16",
+      "sha256": "5330d8f91d0a61e59ae0a5572f9e0246d5ae5d78955c9970b8e2a58305824c81",
+      "earnings_status": "OK"
+    },
+    "PTC": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "bf22a648a16a918bfd6a5e9a81256c37342a54aa2b7ed626c0798dea86ecbcd8",
+      "earnings_status": "OK"
+    },
+    "QLYS": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "bc2775e5323951947bd22683477314a4adf18899e763379787b8b0d21f7a530f",
+      "earnings_status": "OK"
+    },
+    "QTWO": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "0f1109c841fde379e60a10b516b2db272a277456644ebdc712ca36501beee2d9",
+      "earnings_status": "OK"
+    },
+    "RBRK": {
+      "rows": 622,
+      "first": "2024-04-25",
+      "last": "2026-10-16",
+      "sha256": "afe49197322fb29a043c90cfb7a9ee4940baa5df7d12cc4229b20fe48d0cc1cd",
+      "earnings_status": "OK"
+    },
+    "RNG": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "e0c1d849c6476c06314885f0c8d3a4228d956ac82154d15fe43d07b720a25764",
+      "earnings_status": "OK"
+    },
+    "S": {
+      "rows": 1331,
+      "first": "2021-06-30",
+      "last": "2026-10-16",
+      "sha256": "3afec81ba148338cc2aeb09f755e172e4d5e60a5d428e79edb1391d5e6123170",
+      "earnings_status": "OK"
+    },
+    "SNOW": {
+      "rows": 1529,
+      "first": "2020-09-16",
+      "last": "2026-10-16",
+      "sha256": "246ac337c6a4de0556f139412b7d3d52a3e9115ff0196a2027f2f2f691abdfcb",
+      "earnings_status": "OK"
+    },
+    "SNPS": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "8322e6489ae13b69b2a9526fb75fc1d62644f96bf77284cbfdff8230f8bfa413",
+      "earnings_status": "OK"
+    },
+    "SOUN": {
+      "rows": 1122,
+      "first": "2022-04-28",
+      "last": "2026-10-16",
+      "sha256": "1bcf9ddcf0ac782884f93b699f1e7a90334063a067ec5cb9c41334304ab42de1",
+      "earnings_status": "OK"
+    },
+    "TEAM": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "c1170d2530c532bfb65f27c3896fc25e7e00824347b6ddfde6e537313c05ab94",
+      "earnings_status": "OK"
+    },
+    "TENB": {
+      "rows": 2068,
+      "first": "2018-07-26",
+      "last": "2026-10-16",
+      "sha256": "34d2459ce7dfbc8a8099966a43884505908767872813858e0566635651b6d9b3",
+      "earnings_status": "OK"
+    },
+    "TOST": {
+      "rows": 1273,
+      "first": "2021-09-22",
+      "last": "2026-10-16",
+      "sha256": "92a827094085ff148d15e8e00d62bc667e53ee6099cedb0bff287f2e1bcc0c06",
+      "earnings_status": "OK"
+    },
+    "TWLO": {
+      "rows": 2594,
+      "first": "2016-06-23",
+      "last": "2026-10-16",
+      "sha256": "19d5276812c8009484dbef9eafda9cb048ecade69a992aa38f9fbf02b64caca4",
+      "earnings_status": "OK"
+    },
+    "TYL": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "f43b4237cfc3575ddf8e0e509856b09d1d8d894706094b2500f78186fe71a2b5",
+      "earnings_status": "OK"
+    },
+    "U": {
+      "rows": 1527,
+      "first": "2020-09-18",
+      "last": "2026-10-16",
+      "sha256": "7f7ff7e2ab4cf7b2f51fb37fe5c07e7868f090bf959ad299478ea8662761b23e",
+      "earnings_status": "OK"
+    },
+    "VEEV": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "319138701f6dc8280f4ef07fc3998560510afca3a0260050402dbe55e66f75c7",
+      "earnings_status": "OK"
+    },
+    "VRNS": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "c4efc8c27889ff6db68e31959e1da487881a0b5291d21fd82306747178e7bd38",
+      "earnings_status": "OK"
+    },
+    "WDAY": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "8d72eb72b1d11862c0c1c493e6f353516cbab646c537d838c09890d374818be4",
+      "earnings_status": "OK"
+    },
+    "WIX": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "ef2271863c21cc7b303ad0489f330565bbdda4185e8f1d843bc42bf09e92115d",
+      "earnings_status": "OK"
+    },
+    "ZETA": {
+      "rows": 1345,
+      "first": "2021-06-10",
+      "last": "2026-10-16",
+      "sha256": "00e57c3e17d78bd8874d23e6c174aaf9f7122e7a2515e4f6b5d879443fc1a79e",
+      "earnings_status": "OK"
+    },
+    "ZM": {
+      "rows": 1885,
+      "first": "2019-04-18",
+      "last": "2026-10-16",
+      "sha256": "a1fe4175a71187fb289815f05926e41d6f43e5a51fa94c176c69245750460651",
+      "earnings_status": "OK"
+    },
+    "ZS": {
+      "rows": 2159,
+      "first": "2018-03-16",
+      "last": "2026-10-16",
+      "sha256": "eeea05c3f7b75907dc130728a18bbe2c48db383d27ea3f3dee43062ad7bcb5d9",
+      "earnings_status": "OK"
+    },
+    "SPY": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "19cb39abee07354b94d866349c1ab5fddeb5793be675827beec9ca6b368584c6"
+    },
+    "QQQ": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "bfbae2b0ce7f3fe9824d3b8f5d7d73a728a680bc5136e9708316542363ebd7b8"
+    },
+    "IWM": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "dc3f95d3b7be1ee6f8cea9bcc9fa5388934ad3c7be487d5616e296c6826d7e0a"
+    },
+    "^VIX": {
+      "rows": 2715,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "3af813f14734ba69d1fd529b7f1a0b57fea954e1db6fcec82e899ab854d197a8"
+    },
+    "^TNX": {
+      "rows": 2712,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "edcac9696c2eaf0c743c4e4dabd3d102aa34bf56197795718f54c7203fa18bb8"
+    },
+    "XLK": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "a54830b3b69bc543b6a08bcbc745d9289ffea901038e985b897e1b987facda80"
+    },
+    "SMH": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "da6867d90cbf8a8953428fcf7d714518c5a7d8409fa4752092f6e9a886df0a53"
+    },
+    "IGV": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "09f732743aadbca2a757ba2740367445eb387aac7fc7fd1aa57c2ad44ea1fec7"
+    },
+    "XLC": {
+      "rows": 2094,
+      "first": "2018-06-19",
+      "last": "2026-10-16",
+      "sha256": "a14974370a802190b33abb638a781d76b15c4c6b8bda08d669654efc3e008168"
+    },
+    "XLY": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "9f27854a9124fa9b9c31e534361caea5b51459a7891a6e9b2c6e76dee374b425"
+    },
+    "XLF": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "4db46407d8e916dbd70863e1b0f7973dd845730202a7f172ed0d6120a2cd93ff"
+    },
+    "XLE": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "29f9d6d88e31cb5a50fd45cb21c8afd49833c24e3070ecbb29e2b7abb6f85f79"
+    },
+    "XLV": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "5c1fcfef04714456d07f949789f9bd47a9b1b8f16305e028e7863e065d8b6cfd"
+    },
+    "XLP": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "88bc20497aa9a87bedea65c8e222964f44823f4eebe3f66035427c021b820632"
+    },
+    "XLI": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "e13119896a3fa723ff7b1d79ed5409e07356fa17c77bf0af8617dada9924d155"
+    },
+    "ITA": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "fc99024ea90560d774820199b26620d89dcaaad08995176e4aafcf1faade60b1"
+    },
+    "ICLN": {
+      "rows": 2713,
+      "first": "2016-01-04",
+      "last": "2026-10-16",
+      "sha256": "20cef90af8c350b50b4df8f53c4adf907480cf72b98b45bd825eb8045b52ba8c"
+    },
+    "UFO": {
+      "rows": 1890,
+      "first": "2019-04-11",
+      "last": "2026-10-16",
+      "sha256": "a66ad3c2dd5b6b15203d0fb475756a33e04bb5a14feec334b64fbe2762bd0725"
+    }
+  },
+  "auxiliary_files": [
+    {
+      "file": "raw/earnings/RKLB.parquet",
+      "sha256": "262080dafa648f7ac88b3f629a56f09b342298d5f54bfe3e1893b4e6f8f8826f"
+    },
+    {
+      "file": "raw/earnings/HIMS.parquet",
+      "sha256": "27bd5f65ad6393f6599a5467b3b57a8a1ada405d1e39434b37d73e24cd0d9c11"
+    },
+    {
+      "file": "raw/earnings/SOFI.parquet",
+      "sha256": "34cccf945c51788bf3dfdef96692f55af0e60e4e099c151a51b74095e92aded0"
+    },
+    {
+      "file": "raw/earnings/PLTR.parquet",
+      "sha256": "e38e74ac73fa810e2561343ae6b3069906262002a61305290e2a9ca354e9be77"
+    },
+    {
+      "file": "raw/earnings/MU.parquet",
+      "sha256": "a6ab3f656ea35b95f7baa45761bf7b2de31c18dae2d46add902dbd4bd2ef7015"
+    },
+    {
+      "file": "raw/earnings/MRVL.parquet",
+      "sha256": "8ecf43568dd4f26bc122d907a4a51de45f007c565493d1a308e7bbe04f996424"
+    },
+    {
+      "file": "raw/earnings/BE.parquet",
+      "sha256": "3d17f2de10d43561277f7677874cd6b6fca4a7f8ea43147a344d082ad21590f0"
+    },
+    {
+      "file": "raw/earnings/TSLA.parquet",
+      "sha256": "cf8b66099fb7d4595fb6cd8df838286e654c7ed1a4e37f2f06b2be3b34eb5fbc"
+    },
+    {
+      "file": "raw/earnings/AMD.parquet",
+      "sha256": "12ee8978fc3a5e845806342e354bacb57701acf84fc099e8c5aa6cfc8a7b45e3"
+    },
+    {
+      "file": "raw/earnings/NVDA.parquet",
+      "sha256": "2ffd2a9b6c20c93681dfa943f0b8d09513f82cfda5e5701bb039649b5390f2f5"
+    },
+    {
+      "file": "raw/earnings/ENPH.parquet",
+      "sha256": "c33337ceb8b89dcd64b2ee851f0f3915ec09eea2ced1639c1d277b9defa78a06"
+    },
+    {
+      "file": "raw/earnings/SHOP.parquet",
+      "sha256": "a4bcb89157a88d25735f8d5c3f90649dff56efc82fefcbaa32aaec2b9292d799"
+    },
+    {
+      "file": "raw/earnings/ROKU.parquet",
+      "sha256": "6250c434cc575f6430bf7b0a440e41951639a64699a10fd41febb404f8f02cb0"
+    },
+    {
+      "file": "raw/earnings/XYZ.parquet",
+      "sha256": "cb242345800e5806d5b362d9f55fe233faa34075a1ab97b81779c2b44e680c9f"
+    },
+    {
+      "file": "raw/earnings/SNAP.parquet",
+      "sha256": "c3cb3ad8b6a504ac2bbe9e2a98d09a7a9abf5b131843ef9a956037d0953a663a"
+    },
+    {
+      "file": "raw/earnings/UPST.parquet",
+      "sha256": "f4bc118488c120ab3b66ccac48e6206d93768a579ba92f3a8942801d5dbca851"
+    },
+    {
+      "file": "raw/earnings/SMCI.parquet",
+      "sha256": "afbc5a04a81e3a35ffc1c6c5a710e534a00330332d8634574c13c8faa46ccacb"
+    },
+    {
+      "file": "raw/earnings/PLUG.parquet",
+      "sha256": "90c99e3579862e0ced15494256c4abaedc8b5927df724cc453c37c2fe43ca28b"
+    },
+    {
+      "file": "raw/earnings/PTON.parquet",
+      "sha256": "60df6d8d4b6e8772c2ea5610777584377e7d4705332fd3bbffae29e2c4ddbeee"
+    },
+    {
+      "file": "raw/earnings/RIVN.parquet",
+      "sha256": "c55dcfb65dbc39e423d9118d6bca257e7b9ae087adbc58635e758c0944e53751"
+    },
+    {
+      "file": "raw/earnings/AAPL.parquet",
+      "sha256": "63e2c6080e5f2004999519dbec98470291485833b6958cf9548037ef34aac936"
+    },
+    {
+      "file": "raw/earnings/MSFT.parquet",
+      "sha256": "f670990a335807d714ecc30c34a7b271f7adde10bceca3d104d784d24fa5c873"
+    },
+    {
+      "file": "raw/earnings/GOOGL.parquet",
+      "sha256": "38cb5ea3e8f905570fff58bfdda33e3d540fcefc626c447078cf74ade23fb3ad"
+    },
+    {
+      "file": "raw/earnings/AMZN.parquet",
+      "sha256": "69f33ee9d43a671742e6926e9cfa4194f629101fcf05c3a1e4a8ff63c7711ae3"
+    },
+    {
+      "file": "raw/earnings/MRNA.parquet",
+      "sha256": "8dbd0648efdfef40e1edf863bf8c523246c016ffe0b811577c8d3f2ede78afa1"
+    },
+    {
+      "file": "raw/earnings/JPM.parquet",
+      "sha256": "2b3f5fbf1838bcc788f42095cea9eff633d932ba75841ebf58e3aac9477ac2c9"
+    },
+    {
+      "file": "raw/earnings/XOM.parquet",
+      "sha256": "bc6d45b22171fd62a2979351f05c2edb91ef6e4515b0ab2765cb7f3661394646"
+    },
+    {
+      "file": "raw/earnings/WMT.parquet",
+      "sha256": "9a992ccf493c3ed9d7138805f4427fae671e08a44b610c0c86acdc9887b800df"
+    },
+    {
+      "file": "raw/earnings/NBIS.parquet",
+      "sha256": "64c5c3b428c41a6b9b6fd8a44d9a93a2b0390ed51c724df1427263669316f774"
+    },
+    {
+      "file": "raw/earnings/ANET.parquet",
+      "sha256": "2474df53dfac880741e657797e55a9422427b4ed6398fc26ad21139adc1741ba"
+    },
+    {
+      "file": "raw/earnings/CIEN.parquet",
+      "sha256": "e238bab9bb8f8aebd4d3731c0af7f4b699eae0527cd61e97ec15ff4ed1de62ae"
+    },
+    {
+      "file": "raw/earnings/DELL.parquet",
+      "sha256": "b243992229a781af526d8b0743ee14f1b25d1c78192b70286546f25cb2971aba"
+    },
+    {
+      "file": "raw/earnings/HPE.parquet",
+      "sha256": "17b80cccb140a11ac974f351d628a614b89fa3852b9140ff98155aeaf7e87033"
+    },
+    {
+      "file": "raw/earnings/NTAP.parquet",
+      "sha256": "d18ac0a653639bf9c4596637aea8fdfe639d45f549e1edea3b03aba2b6a5cd65"
+    },
+    {
+      "file": "raw/earnings/VRT.parquet",
+      "sha256": "a572a035307735efe4fe61f44795cb75b60006e53f13bb55c6ed1a8d4cc70fdc"
+    },
+    {
+      "file": "raw/earnings/ALNY.parquet",
+      "sha256": "800beacd819abc19c1ff31d07b764514b566d6bab42fc0f11b502461c205d2a1"
+    },
+    {
+      "file": "raw/earnings/ARWR.parquet",
+      "sha256": "e8aef27cf2a1d12f68381284a3df3f9d6699163e62a20db568ed2a643b688f63"
+    },
+    {
+      "file": "raw/earnings/BEAM.parquet",
+      "sha256": "b2bebb71bb79524e9d363f2bc3d342a08bdfdca511202352f66534a39b1a68b2"
+    },
+    {
+      "file": "raw/earnings/BNTX.parquet",
+      "sha256": "5da9227ab202b47a6146c1655bfd62267e38934a5bb1040b3fa0e383fd109861"
+    },
+    {
+      "file": "raw/earnings/CRSP.parquet",
+      "sha256": "cba6aec73584f1226594deb4010ccfbcfda101e3ec14744dbcf937f9bf70bf2f"
+    },
+    {
+      "file": "raw/earnings/DOCS.parquet",
+      "sha256": "10197efc16f323777da2a3b5472da87be8e64b6f94e17780fb8970f89eaeb6bc"
+    },
+    {
+      "file": "raw/earnings/DXCM.parquet",
+      "sha256": "58979b2fc9066539e9ed59b7ee09bb9271b77f43dd60c086729490883f835b9a"
+    },
+    {
+      "file": "raw/earnings/EXEL.parquet",
+      "sha256": "599681d12a669d988d1a7f1cf324fe0a138cc7fbfca949a7822ebff6c948981f"
+    },
+    {
+      "file": "raw/earnings/GH.parquet",
+      "sha256": "f2e8dfe5c0b5d3b3114116ed73cf51f08593246f59424eed8074698870b8e188"
+    },
+    {
+      "file": "raw/earnings/HALO.parquet",
+      "sha256": "e77a79da95c898788c0d3e053ba32f8de8c8f03bbcb66488a85c6f4f28d32a4b"
+    },
+    {
+      "file": "raw/earnings/ILMN.parquet",
+      "sha256": "fcf6817384dbb04bdd67620a95fceabd59e7c885dafcb627945a70456fb08f72"
+    },
+    {
+      "file": "raw/earnings/INCY.parquet",
+      "sha256": "b62c826f229acb5a81803a6ec0397def0fe560ac59abaeb4bcb286867898f273"
+    },
+    {
+      "file": "raw/earnings/IONS.parquet",
+      "sha256": "c6de3f2638892a28a90a08a12d430b882ce58fe54ca90b7a5135406b6b61f0c9"
+    },
+    {
+      "file": "raw/earnings/ISRG.parquet",
+      "sha256": "95cc5edce691262bb847b31a9a0443a9ed16ed0904812c0cdc5ab0795488d112"
+    },
+    {
+      "file": "raw/earnings/NBIX.parquet",
+      "sha256": "85ae9c8e29a47f6806e9051bbfa7b71be76262c98ef4f2217aba6358eefac36f"
+    },
+    {
+      "file": "raw/earnings/NTLA.parquet",
+      "sha256": "011eb66ba45194db13ae022fbb699caffaa060cb38a8272259fbbb5c6e9a6278"
+    },
+    {
+      "file": "raw/earnings/NTRA.parquet",
+      "sha256": "2390d5a32a05fc4d46266b5478836ac480ce4d7f6d04fd29657d303f8ca08955"
+    },
+    {
+      "file": "raw/earnings/PODD.parquet",
+      "sha256": "6e9617ec66e50902889ee94560664c67c60249a1f7d878b22a13d2cf464e3a81"
+    },
+    {
+      "file": "raw/earnings/REGN.parquet",
+      "sha256": "cd11b28b19982480e595b281f6d619b629e2c6e4f8285ceca89b6f62a104068a"
+    },
+    {
+      "file": "raw/earnings/RXRX.parquet",
+      "sha256": "21ce7fb28d47e42a15ab89eaf07cd3196eb043479e48ed82c686c63ba22fd5a1"
+    },
+    {
+      "file": "raw/earnings/SRPT.parquet",
+      "sha256": "b272ad7e2df1f788c1cea8d524120c016d3bb12d3c0d983f7838189ca60c1c16"
+    },
+    {
+      "file": "raw/earnings/TDOC.parquet",
+      "sha256": "c0ec5bde2f120ae96f921f7d7c881608bf63b0f147d22044c83338c8be88812e"
+    },
+    {
+      "file": "raw/earnings/TEM.parquet",
+      "sha256": "22f26c21bc658e0529bba6b5592fa20dbf98e75e01fa79b52321ce33f4ef45e0"
+    },
+    {
+      "file": "raw/earnings/TMDX.parquet",
+      "sha256": "93f24cc46b0eeb350fe816d50ed9a685ba370525bc879c03e32679c322f1ef60"
+    },
+    {
+      "file": "raw/earnings/TWST.parquet",
+      "sha256": "fb4e095bf09bfe1d8a2f03cc04f54e9ec99ba429be2322277e481bb39bdf3d15"
+    },
+    {
+      "file": "raw/earnings/VKTX.parquet",
+      "sha256": "753afa9bd5f023594a53a3332a64f4b780cbe65be84ada19048cb834ec5b74ec"
+    },
+    {
+      "file": "raw/earnings/VRTX.parquet",
+      "sha256": "22de54d27e3f532a6ed25765459042db85c768ee54973008a96be1d4a4911a80"
+    },
+    {
+      "file": "raw/earnings/BABA.parquet",
+      "sha256": "3d8180502202c1cc9727e47165741a02e16763da757e9d68b0ed8fa67039bc59"
+    },
+    {
+      "file": "raw/earnings/BIDU.parquet",
+      "sha256": "9edbe1f8fe4eb61789b43dde1f7eef362924a65138d4eea185df7f8b1468006c"
+    },
+    {
+      "file": "raw/earnings/BILI.parquet",
+      "sha256": "3414692a837c04468579ecfab2a7868c694ecaab8791dcf368e985391d6d3769"
+    },
+    {
+      "file": "raw/earnings/JD.parquet",
+      "sha256": "2f932a4c2a18c7c3029a2d3f4f2641552cab8a992f3a9804cbbefed2c6f663c6"
+    },
+    {
+      "file": "raw/earnings/PDD.parquet",
+      "sha256": "0ce9a18a76470339735473bebe2b8e3ac33265cf1fb055781c00fabd6cda7cec"
+    },
+    {
+      "file": "raw/earnings/TCOM.parquet",
+      "sha256": "482b2280ce1a1d1d134b5d01671b6aa69937a9f9eb6f54f59a201895a01b4585"
+    },
+    {
+      "file": "raw/earnings/ALB.parquet",
+      "sha256": "41a84644270ee45d7bfcf588b3f62a9bf25eb074c8982db2ee56577ca18494b6"
+    },
+    {
+      "file": "raw/earnings/ARRY.parquet",
+      "sha256": "c95e403e909c0de051ca10125048d49e2c0d634a59c5e3ca3d6983101fa1ce64"
+    },
+    {
+      "file": "raw/earnings/BWXT.parquet",
+      "sha256": "2a30b05110b84ee89b83323ca72c795c7a183bbab740a03ff32f21fc78ace5e6"
+    },
+    {
+      "file": "raw/earnings/CCJ.parquet",
+      "sha256": "387314691f2494b079e3608b2c40f820aa40fd2678c372f2d2f6c06c2f527f5e"
+    },
+    {
+      "file": "raw/earnings/CEG.parquet",
+      "sha256": "ad8bf61f85675c4562243bf85354cf0c6aa973745830ceab94e3709d0af00b10"
+    },
+    {
+      "file": "raw/earnings/ENVX.parquet",
+      "sha256": "b9d533d40ebb67c7e24dafcb1fa76643ecf4a6aeb0df133230ff47a9138c6338"
+    },
+    {
+      "file": "raw/earnings/FLNC.parquet",
+      "sha256": "407dee2a778fd2bfabdfc22353549e859cd7c311b329ee801cb29a6d7a6bd31d"
+    },
+    {
+      "file": "raw/earnings/FSLR.parquet",
+      "sha256": "3abe2358f5316a032037b50b8c2a76dedc2f672521dbe19630de4fb8dcf981e7"
+    },
+    {
+      "file": "raw/earnings/GEV.parquet",
+      "sha256": "0fd77d89174c9ed61fd3cfbba98f8de9e1062e11573511b80f8e65fb2eaa13aa"
+    },
+    {
+      "file": "raw/earnings/LCID.parquet",
+      "sha256": "2c942d3b234db0dea145e9d0025d283ce613794c793b50fcdbd13de3d45c3765"
+    },
+    {
+      "file": "raw/earnings/LEU.parquet",
+      "sha256": "48dc790d5588f64ee44854a1d292bf82f8159b94a4b02368fe3c760b95c42ff7"
+    },
+    {
+      "file": "raw/earnings/LI.parquet",
+      "sha256": "ed9a245cb8a844388833b78e9b7645f27b0962f217536765a778778ff5723688"
+    },
+    {
+      "file": "raw/earnings/MBLY.parquet",
+      "sha256": "2e878802abd87f4d0fe60c7e474c2fd6d32b68c0e4dfdfd5f45a3b63d230fb87"
+    },
+    {
+      "file": "raw/earnings/NIO.parquet",
+      "sha256": "34c1c6f259917bb2003df860a973e94aa3c5ae7dd1a2433525a1e2ff3b0b7c3a"
+    },
+    {
+      "file": "raw/earnings/NRG.parquet",
+      "sha256": "44b51177f444378c23bce5d7f6fb2c8de5ed13c1bc59e852758a532960fee06d"
+    },
+    {
+      "file": "raw/earnings/NXT.parquet",
+      "sha256": "63010d5b9c286e08ca39705e21de1fa7724e9486da8664b9947575ee053f0834"
+    },
+    {
+      "file": "raw/earnings/OKLO.parquet",
+      "sha256": "904ae872bb56bf318e4d4c010fc584ec0ef1d53213ddfc77f3909fe8434b4720"
+    },
+    {
+      "file": "raw/earnings/QS.parquet",
+      "sha256": "90ff2c6665ca25cf1d6ef85fa596775c0c717726b05238f41dc22906520bf02c"
+    },
+    {
+      "file": "raw/earnings/RUN.parquet",
+      "sha256": "79ebb7a4503a9ce6b7fb749b69af32ad0e0e6d152fe889ab9da78a5adc491fd7"
+    },
+    {
+      "file": "raw/earnings/SEDG.parquet",
+      "sha256": "11d9c32b9593c87a3528225ac2b6af2e5cda47ca88da3fa4694a59414c0df7fc"
+    },
+    {
+      "file": "raw/earnings/SMR.parquet",
+      "sha256": "795b6ec2da0a9e0e7c18917655214bd30899ea9f430257e94bb2c65b23dad6e9"
+    },
+    {
+      "file": "raw/earnings/TLN.parquet",
+      "sha256": "35ea76daaad12317384f9d2743c944262cf9253a01ed0c1e06fc6dc1de757421"
+    },
+    {
+      "file": "raw/earnings/UEC.parquet",
+      "sha256": "7d25770af83047ebfbaaf40ba6ab018a3176941d7f4adb5d84bff7d85123a0a0"
+    },
+    {
+      "file": "raw/earnings/VST.parquet",
+      "sha256": "5b4bd116f779dd2391f5d4fd27ff9f8cbbda80a184c8b939a19c664e76c5b40e"
+    },
+    {
+      "file": "raw/earnings/XPEV.parquet",
+      "sha256": "c3676e754c643ed2837ced7b27f81c8f4d6953d1feac6cd99ed273f44f8bf71a"
+    },
+    {
+      "file": "raw/earnings/AFRM.parquet",
+      "sha256": "4e9d6eb8ddfcc7fd293f08a6a92678786b4f11eca6e819444cce40b8f770b17d"
+    },
+    {
+      "file": "raw/earnings/CIFR.parquet",
+      "sha256": "a4a3a26698607a587f6e8fc3dc28da1b5aa585db08943bdc5d9b76e16fbb330e"
+    },
+    {
+      "file": "raw/earnings/CLSK.parquet",
+      "sha256": "db9085a02e49e56f2fd86fa9fa9fb43f57327593ab5b9570fc1d4e10d1898a61"
+    },
+    {
+      "file": "raw/earnings/COIN.parquet",
+      "sha256": "9cd05022ff682f1a12a4616c2f0025ab361cd7a6fb2c30d4d20e10c0261f36b3"
+    },
+    {
+      "file": "raw/earnings/FOUR.parquet",
+      "sha256": "0d1774bc416687268be1cc5fc75a0fd981894c70110735b4b08177f079bc789e"
+    },
+    {
+      "file": "raw/earnings/HOOD.parquet",
+      "sha256": "a526070d887de3ed4a11ce872a3affc40ff285bf80cead9672b48cd429529985"
+    },
+    {
+      "file": "raw/earnings/HUT.parquet",
+      "sha256": "6bf0bb59fa71e033bdf7f21e43468963fdaee9d8eb2b27b44af211a5dc841e70"
+    },
+    {
+      "file": "raw/earnings/IBKR.parquet",
+      "sha256": "3ed347134db1e2c1f08fa482f7137fcbe3c50713e0e166ab73a599921458c71b"
+    },
+    {
+      "file": "raw/earnings/IREN.parquet",
+      "sha256": "91f4d46a6e9237b0e0d08d6b3732cab1cd4cae9829d83fb82cf735e0da8af464"
+    },
+    {
+      "file": "raw/earnings/LMND.parquet",
+      "sha256": "123fcbc2711bee2698b26024e5356c26d78ae6e018d3d4f568cc253351e92701"
+    },
+    {
+      "file": "raw/earnings/MA.parquet",
+      "sha256": "2bacbfbc50924ca9b9296f1a57e40ffcf7c1f998910c27ff4ba5a6b1bf3bc5b2"
+    },
+    {
+      "file": "raw/earnings/MARA.parquet",
+      "sha256": "39640ea781bde802b5b0ecb6dc20bd32a9ee5a807c5d2cd226ab936ac2ef94a8"
+    },
+    {
+      "file": "raw/earnings/MSTR.parquet",
+      "sha256": "4cf9a2810de97c43755f8494600f96a532de3a325a143887c48d73935cc19e26"
+    },
+    {
+      "file": "raw/earnings/NU.parquet",
+      "sha256": "49e43e36c0535195be8255e958ee7b571b94b1f4743fc0dd167cf96d7919a75b"
+    },
+    {
+      "file": "raw/earnings/PYPL.parquet",
+      "sha256": "bc648f773d188540aeab3e503ac9752c90ee6cd4d64293b1540aff8eefb2ca32"
+    },
+    {
+      "file": "raw/earnings/RIOT.parquet",
+      "sha256": "b4d5d3a4507ac0f190a3d79de3fe2fb1cec422da901a7173c3bed6468eba7599"
+    },
+    {
+      "file": "raw/earnings/RKT.parquet",
+      "sha256": "b2cc4b41dc823a4b41de8030ec206289c401f674cca34a2b660ada507855c020"
+    },
+    {
+      "file": "raw/earnings/V.parquet",
+      "sha256": "059b9d436bd6e6b439500a2b21465973f31a556b3e756705913ec6f3b800c0c3"
+    },
+    {
+      "file": "raw/earnings/WULF.parquet",
+      "sha256": "061e8383cc9d249ed7313825cb9376ff28472a02e839327d62a8166d3cb03b1c"
+    },
+    {
+      "file": "raw/earnings/ABNB.parquet",
+      "sha256": "04bd87b2049dc34c4a4f37bf6c56b3d45bb6fe149f81d9dff9f637f3f4706782"
+    },
+    {
+      "file": "raw/earnings/BKNG.parquet",
+      "sha256": "fce0a2c51f7591cfd7d4e9ed04489e6a8cd5d4970a536807853eb1cf621a6b05"
+    },
+    {
+      "file": "raw/earnings/CART.parquet",
+      "sha256": "441c834622fb61d1fc6223d7c4d9a40820177a04e2590774db0a165e4649e1d5"
+    },
+    {
+      "file": "raw/earnings/CHWY.parquet",
+      "sha256": "3c4a7b5d7122e6c00c86948cad4f537f6fc4999c34a9a61ed25ed645ab023609"
+    },
+    {
+      "file": "raw/earnings/CPNG.parquet",
+      "sha256": "8ef036d0d7972cb18bbf23e0bc5bb88c89f5c92ab78cc9c42494e4553847aa6b"
+    },
+    {
+      "file": "raw/earnings/CVNA.parquet",
+      "sha256": "a285e7149efe4f477fcaa90f2576c9a281270a383f268c79035f50f9bdabd07a"
+    },
+    {
+      "file": "raw/earnings/DASH.parquet",
+      "sha256": "b61647968e3de0e544ce2ee0edc1ece5045332ef3ae2417d133a275dc1c491da"
+    },
+    {
+      "file": "raw/earnings/DKNG.parquet",
+      "sha256": "2d4d65d15cd4289734e087d2da5dc404859640b65c21bb3c9948c5dc26705c82"
+    },
+    {
+      "file": "raw/earnings/EBAY.parquet",
+      "sha256": "d62538a7bfb377b83ae6cd5702d046100fc9b97a39dc7beb31fa68625e319c76"
+    },
+    {
+      "file": "raw/earnings/ETSY.parquet",
+      "sha256": "bf3cead6e14eda86c00cdd86c2fdad6b7fa2ebc52f1c16ad4464f87c72f48b07"
+    },
+    {
+      "file": "raw/earnings/EXPE.parquet",
+      "sha256": "9b1f9389787c6da87591244c3064918573cb4e129e668922cc190d3837194eae"
+    },
+    {
+      "file": "raw/earnings/GLBE.parquet",
+      "sha256": "8d2b81f9a75680a1079270fddc2f457431110bea5d6cc9b7c81ff395a8909847"
+    },
+    {
+      "file": "raw/earnings/GRAB.parquet",
+      "sha256": "ffa10d3b0284d85ac58daaca3614e298d437adc092b3a333f2cd5eb571b010d7"
+    },
+    {
+      "file": "raw/earnings/LYFT.parquet",
+      "sha256": "5171350e592f9d6ee9421565389c1ee1d4466e941c62526c2dcc69a2b65758b3"
+    },
+    {
+      "file": "raw/earnings/MELI.parquet",
+      "sha256": "086f2968b41f977bee3c8ddb5114ecd6ddf699e427176d0cf7dbd0d5e43e1ee7"
+    },
+    {
+      "file": "raw/earnings/META.parquet",
+      "sha256": "9bcd297976ebaa8ab1923f78a39ab058446c8a13969b370dfea15c914be3bbfb"
+    },
+    {
+      "file": "raw/earnings/MGNI.parquet",
+      "sha256": "1d2e2b73b52fda93bb60f79ba19c969193bbeca7f6fb91c4d9db59f322626449"
+    },
+    {
+      "file": "raw/earnings/MTCH.parquet",
+      "sha256": "4795572097bc983f48bfb8fd873d88f9918081726396a159c7a02250ef23ca63"
+    },
+    {
+      "file": "raw/earnings/NFLX.parquet",
+      "sha256": "f70a5f083ad9d5d3fc2a51e814e3fad10ce0dbd66b48db688ea1bcf08c6f07f8"
+    },
+    {
+      "file": "raw/earnings/PINS.parquet",
+      "sha256": "80c1f6fe9ccd0b07b6df1335c393bc6505582c72786d737163f5673951c1de15"
+    },
+    {
+      "file": "raw/earnings/RBLX.parquet",
+      "sha256": "c5547d39466efcb26ec389ce40b7eb0f3514f6c6500fe4310a32c6d5fc9a55db"
+    },
+    {
+      "file": "raw/earnings/RDDT.parquet",
+      "sha256": "1a995908337ceb195b0b5e756774a4271c457fe8784e9074c637a6f4661cef3a"
+    },
+    {
+      "file": "raw/earnings/RVLV.parquet",
+      "sha256": "cd9d1ba6368cba2a123256cc17839551c41bb4fb756bd5a6c2e76eb2cd338f04"
+    },
+    {
+      "file": "raw/earnings/SE.parquet",
+      "sha256": "3d25e8c15f96cdeeb79ffd50788981722ee01bcbd778b4482835fbca064445af"
+    },
+    {
+      "file": "raw/earnings/SPOT.parquet",
+      "sha256": "2d8cc76e9dc93782d143b71eefd8fd4cb9c08c5581fdda5d74f948a1f4b0743f"
+    },
+    {
+      "file": "raw/earnings/TTD.parquet",
+      "sha256": "95226ab2f7027512ed3c1228296de5dab61e10541b2fecdd3bfa5ed293876346"
+    },
+    {
+      "file": "raw/earnings/TTWO.parquet",
+      "sha256": "1e4ddd971328b6b3f8d16d2a8922d37218e0eecae439545f5f4f9ac4f7a377e6"
+    },
+    {
+      "file": "raw/earnings/UBER.parquet",
+      "sha256": "fc0270b416c7c6f49fc34de1d14d8ce58012d4f8ad408e5efd1defeaa854b602"
+    },
+    {
+      "file": "raw/earnings/W.parquet",
+      "sha256": "1706bc7d41e1f00bd99ba50792851c5a94adfa279ec7f0f9ef9499e5edf28440"
+    },
+    {
+      "file": "raw/earnings/BROS.parquet",
+      "sha256": "1d9ec1e79f1fe70c4120ee6663278935a863c10416f5be6c3039418064d434fa"
+    },
+    {
+      "file": "raw/earnings/CAVA.parquet",
+      "sha256": "64eec5b03a571b8e9c204abd435406551ef5e5d55c00c4bcba2cd9426847e791"
+    },
+    {
+      "file": "raw/earnings/CELH.parquet",
+      "sha256": "d2dadb4d8cce8bd5e74320cea4c505421e261b6fcd486cf5347a9983fefffeb0"
+    },
+    {
+      "file": "raw/earnings/CMG.parquet",
+      "sha256": "40f224e3daff7a51ab4053cae03755d33d437140e8aed6570658c61a20754122"
+    },
+    {
+      "file": "raw/earnings/CROX.parquet",
+      "sha256": "ba46652ab8adc91945d23ce5ca4492c013406fbb7e24dec7152c8389d704cbb1"
+    },
+    {
+      "file": "raw/earnings/DECK.parquet",
+      "sha256": "84297159fd3a019d0b90ab0b4cc29a2e2b8eb24221ae6d297d6b2e7b8ebf137e"
+    },
+    {
+      "file": "raw/earnings/ELF.parquet",
+      "sha256": "273343edb66638b9be634536c6a3a70633cb4b549333ac415c983f83514cb1e2"
+    },
+    {
+      "file": "raw/earnings/GME.parquet",
+      "sha256": "d32f64ccdcaa8518e5c02666a4bbdb9e91804fec3aa085a4b5d8f89d529dc653"
+    },
+    {
+      "file": "raw/earnings/LULU.parquet",
+      "sha256": "748bf719a1a05bfe8f9bc691a1513c43327a8d787dc2e49835ae4b19213e8845"
+    },
+    {
+      "file": "raw/earnings/MNST.parquet",
+      "sha256": "ce0a3934eeec518d6cd6cee7c0b00fbeb46be7093c17f541423f0e094c3d03a5"
+    },
+    {
+      "file": "raw/earnings/ONON.parquet",
+      "sha256": "779ec852a86169b77a78f12da813d6459e06249cef40ca115c0ac70bbdadef7c"
+    },
+    {
+      "file": "raw/earnings/SYM.parquet",
+      "sha256": "0ad43254f90c8946ccaacc7e6895fe26f07274250a909691592f84bfe391fea3"
+    },
+    {
+      "file": "raw/earnings/WING.parquet",
+      "sha256": "338495947ec375c544583e523dc9fab7c086d6ab5de0e0cce87fdecffa3d0926"
+    },
+    {
+      "file": "raw/earnings/ACHR.parquet",
+      "sha256": "4bb4611fd3791793677b2ed3ef48e9f32ab7db31a89695cf597ba688c1fec062"
+    },
+    {
+      "file": "raw/earnings/ASTS.parquet",
+      "sha256": "ce22d68d1180ea33bb73b687717842d509fbc538b679302a067e02788d0b6bfc"
+    },
+    {
+      "file": "raw/earnings/AVAV.parquet",
+      "sha256": "f4435e25809d2d4e579307fd22fac0f32b8f9bfcbb03de35f552d5211343bb7e"
+    },
+    {
+      "file": "raw/earnings/AXON.parquet",
+      "sha256": "87497b1c4ea18051733c086fe9d0cb29dab080f316470e5ac4985d8ab0038253"
+    },
+    {
+      "file": "raw/earnings/IONQ.parquet",
+      "sha256": "eed8e6e5680f871f3b80f5147f900f89d8f8a76dc88083956f1debe1c395bef8"
+    },
+    {
+      "file": "raw/earnings/JOBY.parquet",
+      "sha256": "bcb25dcd35bfdb61d200354ff560765fe89f39aaedafc18f3b40805a10c3600b"
+    },
+    {
+      "file": "raw/earnings/KTOS.parquet",
+      "sha256": "618198135bcb74d3a320327e2e75143522c07bda9f8a767f29013ec0c8186411"
+    },
+    {
+      "file": "raw/earnings/LUNR.parquet",
+      "sha256": "76f5421ee747e50ab0ffca1aed9f6738a460aa542ee02cadce5c243b155bd5da"
+    },
+    {
+      "file": "raw/earnings/PL.parquet",
+      "sha256": "4302639337e4ff39391b18cda145a7f93a5701191aaf8ec9793d348272968516"
+    },
+    {
+      "file": "raw/earnings/QBTS.parquet",
+      "sha256": "7d195158f9ceef0f46d7e32f56791061cb5bb84148db9f0a8f553093d7088c89"
+    },
+    {
+      "file": "raw/earnings/QUBT.parquet",
+      "sha256": "b21b14131a0d1b290ee4433f2d8d071f4aaac1dd5b306d39e2af868314d2fe6b"
+    },
+    {
+      "file": "raw/earnings/RDW.parquet",
+      "sha256": "63e64979cd652afd5891384555c3574cfd94b4be5c64b31cff881ea66e6cf01b"
+    },
+    {
+      "file": "raw/earnings/RGTI.parquet",
+      "sha256": "bb21aa927e9933bb61dfaef784cbef66565770cd3e97addffc90a870e6b048eb"
+    },
+    {
+      "file": "raw/earnings/AAOI.parquet",
+      "sha256": "3fcf0e268986477f9ac1cb4112cd121e236a52eb254f57ba63a42b441e13fea5"
+    },
+    {
+      "file": "raw/earnings/ACLS.parquet",
+      "sha256": "a02bdf9ec422a035d792af3c2647e4953690a2bab7bbf92ddad9fefed0181d34"
+    },
+    {
+      "file": "raw/earnings/ACMR.parquet",
+      "sha256": "40428df524050a187a0977171eb686ea077283d68b3a9cc8494199334f9a44f0"
+    },
+    {
+      "file": "raw/earnings/ADI.parquet",
+      "sha256": "5243841d2b339c2cabc9ba5846553dfee8d7b444255ddda0cb5df7864ab29ac3"
+    },
+    {
+      "file": "raw/earnings/AEHR.parquet",
+      "sha256": "926244a79e1c6b8a3cabccd338998716926837297e48ddf9c136dcf51464c350"
+    },
+    {
+      "file": "raw/earnings/ALAB.parquet",
+      "sha256": "200049a887fc4d8b0b780aa6531a8be4150e08410655b2477edc5f5df035fb93"
+    },
+    {
+      "file": "raw/earnings/ALGM.parquet",
+      "sha256": "27895d9f8f3a1c121f6b3762a32d2fa180f704c4ef0d54092a4918da8df454db"
+    },
+    {
+      "file": "raw/earnings/AMAT.parquet",
+      "sha256": "bbd84e4d237f064cb523c4c8eb7c985745615080e9651f07fd07580869ee1317"
+    },
+    {
+      "file": "raw/earnings/AMBA.parquet",
+      "sha256": "b2306c6c2fa1dd5d7dec74a9bf04ca7c32b7b3e50918820c5111377cf1edfc40"
+    },
+    {
+      "file": "raw/earnings/APH.parquet",
+      "sha256": "7f38c80ff913c8daaf1865955421084ba7c160a3ffff4ce1821182b6dd8f34d8"
+    },
+    {
+      "file": "raw/earnings/ARM.parquet",
+      "sha256": "f783a1bb641be095952ea0d69bc580009b59b98713517c4fb341db17f18b3ebb"
+    },
+    {
+      "file": "raw/earnings/ASML.parquet",
+      "sha256": "4ac3ad7eb49514040e7399b86225c4cffe146fa7d3ae7d3f5bc0f1e0a972fe4b"
+    },
+    {
+      "file": "raw/earnings/AVGO.parquet",
+      "sha256": "86777feca8041848a907c913a8e6bce55e35ed84ad14b5798c6ce4ba6f5a252a"
+    },
+    {
+      "file": "raw/earnings/CAMT.parquet",
+      "sha256": "97fdabacdbe893aeb46caddf67668c3fd5b0684a8eca59f5b1a04d8e4c78f535"
+    },
+    {
+      "file": "raw/earnings/CLS.parquet",
+      "sha256": "9f379a26824cdeac85f654ff5a8d22de03c535d2440c3be18585a45e855b71f9"
+    },
+    {
+      "file": "raw/earnings/COHR.parquet",
+      "sha256": "b9956d2a1d5d77c5bd4fc22e1db731e6a54e66d0a357dc023eb559757401c4e3"
+    },
+    {
+      "file": "raw/earnings/CRDO.parquet",
+      "sha256": "8e1df4fdd17f234697178e1d1283fc90490d424810d109a1beea9d4be8660d50"
+    },
+    {
+      "file": "raw/earnings/ENTG.parquet",
+      "sha256": "68a607c04553cc7ef44abefab41ca10a577a0f1bb6afd7b77ff558189059c493"
+    },
+    {
+      "file": "raw/earnings/FLEX.parquet",
+      "sha256": "bf9d3afcb7a435170ea4b347e145c073fa0b63f8c3493c0fa66914d76195113b"
+    },
+    {
+      "file": "raw/earnings/FN.parquet",
+      "sha256": "0193d619a7bc2c1a230783bcbb4a468dc5f9970470707e2720d52883c380046b"
+    },
+    {
+      "file": "raw/earnings/FORM.parquet",
+      "sha256": "7d1f792bcdd3a8ac8d369d471151b4e3009e8cb51012d620a13e7af862a20e0f"
+    },
+    {
+      "file": "raw/earnings/GFS.parquet",
+      "sha256": "d489be0a81b8adfead9cbbc0993d02535e191eab4577db040638032478c03095"
+    },
+    {
+      "file": "raw/earnings/INTC.parquet",
+      "sha256": "c56ecbe44d570367429733298b8259f0e5cfaf8dde03f3d768cad8904bb0efde"
+    },
+    {
+      "file": "raw/earnings/JBL.parquet",
+      "sha256": "6b3f7a96e45c41f116be5e95e2f963078f376de09a1e32d7a0006708592ddf77"
+    },
+    {
+      "file": "raw/earnings/KLAC.parquet",
+      "sha256": "c3cbef237fe8d00fa512b5dbfce4994a1a01c7b415a514bbd1433a3ae7145f26"
+    },
+    {
+      "file": "raw/earnings/LITE.parquet",
+      "sha256": "b8ae8092eb893faa8405ee36cb2ed2a00df434f36d853ea5a13f342d168c8868"
+    },
+    {
+      "file": "raw/earnings/LRCX.parquet",
+      "sha256": "d518f01c2a5a523fa8ebd2fe57dbe4ad30f2b90747e0308f0fd01d2ae3f00b0d"
+    },
+    {
+      "file": "raw/earnings/LSCC.parquet",
+      "sha256": "4c343820366bb1916308b5e8a0e2b57ac55d32915be76c6f9cb7a9c7ab0df032"
+    },
+    {
+      "file": "raw/earnings/MCHP.parquet",
+      "sha256": "4c964935c189c02bab0ff5598b84aee91d4198b1bf91818df244dbc736b7612b"
+    },
+    {
+      "file": "raw/earnings/MPWR.parquet",
+      "sha256": "9f0e01277c7f5442d685544874706ff5ead13bfa4ac0455ca6c5984ae42ed7a2"
+    },
+    {
+      "file": "raw/earnings/MTSI.parquet",
+      "sha256": "ad9ee5f956eb99fbbcce3f820dd920daa9daf01d3d5fe6f7b8a5620b8d74aa94"
+    },
+    {
+      "file": "raw/earnings/NVMI.parquet",
+      "sha256": "b4aff24954acd8102c66b19b004e658007f6cf0c1d3dfe9db76ae16e266b404d"
+    },
+    {
+      "file": "raw/earnings/NXPI.parquet",
+      "sha256": "5e7340abab855998cf0034dcb41452e2f027481c31e9c8adc8a96703dfa0103b"
+    },
+    {
+      "file": "raw/earnings/ON.parquet",
+      "sha256": "5a6f34bfb20c93999a1876778217306cd51679e49759c21ab3a6d1b990389b86"
+    },
+    {
+      "file": "raw/earnings/ONTO.parquet",
+      "sha256": "4fc3912716f1143972429fb4b66780bbe8c080f12f9aa41acce413d80ef1d16f"
+    },
+    {
+      "file": "raw/earnings/POWI.parquet",
+      "sha256": "4e96dcac33f5afd5fb26755fd577666196e9a5da127e26686dd3b5cfaadce9c4"
+    },
+    {
+      "file": "raw/earnings/QCOM.parquet",
+      "sha256": "277b886330f7d94d85e1166a4695344af8f0911be65de375a3dc9c41c5868396"
+    },
+    {
+      "file": "raw/earnings/RMBS.parquet",
+      "sha256": "4326b4f5012fcf930b69aff0a2cdc384111504f093a46b43de1c252889d63099"
+    },
+    {
+      "file": "raw/earnings/SITM.parquet",
+      "sha256": "8d60a57f0fa5439ecd1f16fabc3ca968d48edeac985e7775eba8df789a45a1c2"
+    },
+    {
+      "file": "raw/earnings/STX.parquet",
+      "sha256": "54161fcb42630e345a86829930447503b30a86b23bf099ba1ea3de5fd2db4d13"
+    },
+    {
+      "file": "raw/earnings/SWKS.parquet",
+      "sha256": "c8859cf1ce13d322d5032f64a8a859beefda41bf2a44c5e720b1397ebd153798"
+    },
+    {
+      "file": "raw/earnings/TER.parquet",
+      "sha256": "ce8afccc118b7996f759299f14d8ee96306a94f2881346decb19e973abe5d5eb"
+    },
+    {
+      "file": "raw/earnings/TSM.parquet",
+      "sha256": "39b20f75a400f3f6d5510574d2949d757968a4d77d99938eb469875c8256fbcc"
+    },
+    {
+      "file": "raw/earnings/TXN.parquet",
+      "sha256": "ee87535b2c26e4bfa008997f7a00040c8915b3a1b5610d7d407200efd89657bc"
+    },
+    {
+      "file": "raw/earnings/UCTT.parquet",
+      "sha256": "9386ac11f68987234737ffa2bb5dae6e5a4e233256b04d41fd60394e6df9e34f"
+    },
+    {
+      "file": "raw/earnings/WDC.parquet",
+      "sha256": "978bfe128a9506c370c5d0564996e14a334af33458fcefdc0a3ce125beb1c408"
+    },
+    {
+      "file": "raw/earnings/ADBE.parquet",
+      "sha256": "b16188cd6d25554dd14c42beaf56263df613f7037b028bed78a6fbbc4ad89b77"
+    },
+    {
+      "file": "raw/earnings/ADSK.parquet",
+      "sha256": "38aeb7c0880fcf864e935069248f979a75a378c85262c0eddaf9279252d55f41"
+    },
+    {
+      "file": "raw/earnings/AI.parquet",
+      "sha256": "bd9feaf1c66c2ca374365b65624be76eb8ec3173ce48640c6d759d7bd75e6a06"
+    },
+    {
+      "file": "raw/earnings/APP.parquet",
+      "sha256": "e1f4c8207a03857f6989dec97053cf6163838f79560919024c7ba1dd4081f605"
+    },
+    {
+      "file": "raw/earnings/APPF.parquet",
+      "sha256": "065c4441b32cd2db3fdf11f4e5af780bfd7c6880f096c04576386988f60c3729"
+    },
+    {
+      "file": "raw/earnings/APPN.parquet",
+      "sha256": "0076b8ed926ea2ebf6530d3a3e4e0c839503c6795d1396474fc01aaf94b8ab90"
+    },
+    {
+      "file": "raw/earnings/ASAN.parquet",
+      "sha256": "11d3e25f62bb00fc8a775d64e8a68e69e7ea45d40ae71431214046565502d9bc"
+    },
+    {
+      "file": "raw/earnings/BBAI.parquet",
+      "sha256": "0ab9ba5402cf907c316e3b88a49389a5a501a41387200ba6dd90d48cbf929420"
+    },
+    {
+      "file": "raw/earnings/BILL.parquet",
+      "sha256": "2d5586e112be133427235185c2be4207accd445ded599b69e9ca6bb15a73fabb"
+    },
+    {
+      "file": "raw/earnings/BOX.parquet",
+      "sha256": "443a46b9a371b02caf619eef2cf180c31e63f81063ae328a402e05e07b2d6494"
+    },
+    {
+      "file": "raw/earnings/BRZE.parquet",
+      "sha256": "b1e0a992b90e9b268ba8f180f0bc2e315d9bfdbec39143734412e4d48f7c42fd"
+    },
+    {
+      "file": "raw/earnings/CDNS.parquet",
+      "sha256": "490db90bcb64d539a58929a80a2555d623861dab3181ff96e4e2edd1faf22a5a"
+    },
+    {
+      "file": "raw/earnings/CHKP.parquet",
+      "sha256": "dab822e9bc13f00085e34d8cd3e892c83bb0e9bcd50335e8829e8a67aa11fc6b"
+    },
+    {
+      "file": "raw/earnings/CRM.parquet",
+      "sha256": "1f4fa98e3a219219c8c3467d74775729a58443bb99c524a65bf9d393ffa3f7e0"
+    },
+    {
+      "file": "raw/earnings/CRWD.parquet",
+      "sha256": "d9d61ee5a4878f81740d1fba3df064b06b2de762b13d1706aa0dafd9641daa18"
+    },
+    {
+      "file": "raw/earnings/DBX.parquet",
+      "sha256": "729794ef13bde017b714d7c0575ba2b7c17cd4e4bbf49dd2390b20af08c9d6f8"
+    },
+    {
+      "file": "raw/earnings/DDOG.parquet",
+      "sha256": "61b8d411235231297ba9d77a15496157c08dfe3b5a5aba9aa2f85c597daa3566"
+    },
+    {
+      "file": "raw/earnings/DOCN.parquet",
+      "sha256": "86dd3e67e9f3c53f472ffc0c506afd80b7c757ce3d33d61b69fe3d3803f57388"
+    },
+    {
+      "file": "raw/earnings/DOCU.parquet",
+      "sha256": "30361a8aabf57d3992a6146a513152e9f7009584832e069b28f8d59d4b08d0c1"
+    },
+    {
+      "file": "raw/earnings/DT.parquet",
+      "sha256": "891572fecfca324c8e2f51bf80076e5719888865ac14a1cb559a1a0f5de4ea16"
+    },
+    {
+      "file": "raw/earnings/DUOL.parquet",
+      "sha256": "7c6f3f48e072f1452c9be3a7805567dcf3bfc8d22ef5470f1ad7aedc9d8d46ef"
+    },
+    {
+      "file": "raw/earnings/EPAM.parquet",
+      "sha256": "17e9330d065221f48c7a017e76fcb7f354470f3893b624b8355fcdc264eb473c"
+    },
+    {
+      "file": "raw/earnings/ESTC.parquet",
+      "sha256": "db1b53bf7336fb8c04f26f9f4abc73df1a08aea07f9bd028be9fd8e82894369f"
+    },
+    {
+      "file": "raw/earnings/FROG.parquet",
+      "sha256": "a212e5a4a7a91de0beea05f8e2dcaaff620c449a968e1ab605efaca106771425"
+    },
+    {
+      "file": "raw/earnings/FSLY.parquet",
+      "sha256": "6a914c2af45781a4e8f88027a019add7951dac9a65be3d651f285b3afde373c1"
+    },
+    {
+      "file": "raw/earnings/FTNT.parquet",
+      "sha256": "39f200d4800eb910ec7159d82b08900b96688311cd386e84f44e12b712acb7d3"
+    },
+    {
+      "file": "raw/earnings/GLOB.parquet",
+      "sha256": "2f5ad3fc40ac62240c6b764f910d932daf35da3c00308a1044e227cbdd9751e0"
+    },
+    {
+      "file": "raw/earnings/GTLB.parquet",
+      "sha256": "f32b2e9d20596088670a54cfa72b860e2c1b973d78c05e86cbba92cef25ff7c6"
+    },
+    {
+      "file": "raw/earnings/HUBS.parquet",
+      "sha256": "655b0072ffa41c6e46a49190f4c1fbe26079774cacb8e9a1808aa1fd5574b33c"
+    },
+    {
+      "file": "raw/earnings/INTU.parquet",
+      "sha256": "65d38b66dbdefcb648c0aac90047bdbd555a637ebd55abbb27750ea8aaca8de5"
+    },
+    {
+      "file": "raw/earnings/IOT.parquet",
+      "sha256": "6907274edd27fb4a19df72f4eeb9da2978a8eca7c64b9714c2c5e77f8b7d8561"
+    },
+    {
+      "file": "raw/earnings/KVYO.parquet",
+      "sha256": "fec55b4668155b59b585ce04cfb0f26b65acc831153b46c4d8d998c606056a7e"
+    },
+    {
+      "file": "raw/earnings/MANH.parquet",
+      "sha256": "c66261d81bc84282fe7392f159177fa882010b378e43ff329e2704cfdf0b587b"
+    },
+    {
+      "file": "raw/earnings/MDB.parquet",
+      "sha256": "c35fcad86c653941dac192d731035cd6b514901492e82ccce4415ff2209a28c8"
+    },
+    {
+      "file": "raw/earnings/MNDY.parquet",
+      "sha256": "0c7d801e25de8809246b0a07c2bc134c5f1a5b5a26dfa9d7e9d678e8a1621411"
+    },
+    {
+      "file": "raw/earnings/NCNO.parquet",
+      "sha256": "3a1c956a87970149cae311659c2a46ff394a5424f64a04c4b5b99d620ba51dbb"
+    },
+    {
+      "file": "raw/earnings/NET.parquet",
+      "sha256": "8b72c1b6ec0b45a708f8ebe0c6c594861d9798ba62c3e539368115075f920343"
+    },
+    {
+      "file": "raw/earnings/NOW.parquet",
+      "sha256": "74642cc161061dc6cbd7418bf3196e819727eed4d79a2100b2478d52f2f6592e"
+    },
+    {
+      "file": "raw/earnings/OKTA.parquet",
+      "sha256": "94fbdff1761bd40de4cc3d8ac695b7abd9ec588b8bd1c8844052609c42232874"
+    },
+    {
+      "file": "raw/earnings/ORCL.parquet",
+      "sha256": "dd35478215a5b4df1e3d088ee2d646182fb072093229304fa8204b5d838486b0"
+    },
+    {
+      "file": "raw/earnings/PANW.parquet",
+      "sha256": "228240a587b87abd735a0256cbb3ae64a1cab3218549381128359c3ced8836ee"
+    },
+    {
+      "file": "raw/earnings/PATH.parquet",
+      "sha256": "a3677feb030b871df5e26dbb29980fa92435351eb5ff4bf9bc0b2243cf3faf93"
+    },
+    {
+      "file": "raw/earnings/PAYC.parquet",
+      "sha256": "5bb2481c16b7ce0004e1da02fdc8119a05c3ec5dedf1e23e082273ddf8a95529"
+    },
+    {
+      "file": "raw/earnings/PCOR.parquet",
+      "sha256": "dd6736704522be1bb924fc50dbd949a25f9b778cae522bf43e8b7982dbf4df01"
+    },
+    {
+      "file": "raw/earnings/PCTY.parquet",
+      "sha256": "693a26c1c3e3841af0fd4497e49d36c41a5a33b1c115f9e055e1c57a47164c01"
+    },
+    {
+      "file": "raw/earnings/PD.parquet",
+      "sha256": "f39ec332eddb5a878e8ffd5af511e0cadf15eae6fcd471fa92685edbfccfc065"
+    },
+    {
+      "file": "raw/earnings/PTC.parquet",
+      "sha256": "ab211b9e83de7fa9f1efda261689e51580da6e596eab616f7bb9502ef55a95cb"
+    },
+    {
+      "file": "raw/earnings/QLYS.parquet",
+      "sha256": "853b6e563b4ab429ace0ac7cb99ceecff871803f32c255fee71a00e6ba614b09"
+    },
+    {
+      "file": "raw/earnings/QTWO.parquet",
+      "sha256": "f1981161f9788064385b48d2c5739913496b555939b012c5c676a9061ede5ef4"
+    },
+    {
+      "file": "raw/earnings/RBRK.parquet",
+      "sha256": "ba54af4eb8564173bfdcb3ed636ff4c1e58c6c3b2812b28489bbe74a98ac44b0"
+    },
+    {
+      "file": "raw/earnings/RNG.parquet",
+      "sha256": "1a6af8a05cb57b6abcc231ebf49f94f3025256d3cdbab139d5c832010ed7328c"
+    },
+    {
+      "file": "raw/earnings/S.parquet",
+      "sha256": "ebf04e2ed08f79d0ca80641935c319d5079bb108ea1962856b261be9c6435b36"
+    },
+    {
+      "file": "raw/earnings/SNOW.parquet",
+      "sha256": "44be9b40ae1cf961aa541c3401ae3b1f57dac1e61c8f37b3bf11fcb51312c0a3"
+    },
+    {
+      "file": "raw/earnings/SNPS.parquet",
+      "sha256": "5c8ec42e91be531686bb31504b6b723e7faae30f1dc50de1c0da59804aa5e528"
+    },
+    {
+      "file": "raw/earnings/SOUN.parquet",
+      "sha256": "de09bc41a258781f23a105f1366387ca25e5c1bcf1b57f028ba65b22976306ba"
+    },
+    {
+      "file": "raw/earnings/TEAM.parquet",
+      "sha256": "2cfc595e439c89329bb4fee09ce39b5fab37d8548bc6e059fa3eb0b6d7a34ff8"
+    },
+    {
+      "file": "raw/earnings/TENB.parquet",
+      "sha256": "8af22a2bd202b56f3fcd3e9726a06cafa0dd1e90a2ed35db16951488cf4f33e8"
+    },
+    {
+      "file": "raw/earnings/TOST.parquet",
+      "sha256": "6cdc8dee9a64ff4a34e2292608374f316b707c502871d1bd48424e9d1aa62f91"
+    },
+    {
+      "file": "raw/earnings/TWLO.parquet",
+      "sha256": "adbb18a2fddc60f8083db3b3c7e6868a31d4eb36197f069f10a36807b3de903d"
+    },
+    {
+      "file": "raw/earnings/TYL.parquet",
+      "sha256": "18b4120e4b8b9f2ab1ea7996a072ad8195c5e72a17b156dcb816b33a1b156efb"
+    },
+    {
+      "file": "raw/earnings/U.parquet",
+      "sha256": "bbb3011d55041b05d215adc76c0bc5fdf131bb0dba4bf691e78fbb6a44c232a6"
+    },
+    {
+      "file": "raw/earnings/VEEV.parquet",
+      "sha256": "beabb6d3d6368e476e8fe682ebac72656b11ac24f514e18c9a2488ff89c8912d"
+    },
+    {
+      "file": "raw/earnings/VRNS.parquet",
+      "sha256": "56d35394cd9b1796bca8c56bf50cadc25ee6f749b22ce9bd40b52342cd48e2ff"
+    },
+    {
+      "file": "raw/earnings/WDAY.parquet",
+      "sha256": "342daddec989e1226da6ad2fbb4dd99413f6ae68fd35f4f76616480ac4a5229d"
+    },
+    {
+      "file": "raw/earnings/WIX.parquet",
+      "sha256": "a2c69eddac77a81ac70148bc490798c37379a184d1f66c7ab0e8779756f0e632"
+    },
+    {
+      "file": "raw/earnings/ZETA.parquet",
+      "sha256": "24636f080632ec40924d72723e0144bb7cb9f956361d03ad9a309ac7eced3a43"
+    },
+    {
+      "file": "raw/earnings/ZM.parquet",
+      "sha256": "ae539336691c3c826bb7d96a8ad25ff1c685c72184521d40b923349bb1edd40e"
+    },
+    {
+      "file": "raw/earnings/ZS.parquet",
+      "sha256": "b3a1a3a7734752dc851f1eca95d6936312bbad7f0e09b5d66f28bc6bbca9597e"
+    }
+  ],
+  "universe": {
+    "file": "universe.json",
+    "source": "universe_genis.json",
+    "version": "Geni\u015f evren (16 Ekim 2026) \u2014 29 \u015firket (eski kay\u0131t) + 252 'genis' roll\u00fc \u015firket + 18 ba\u011flam; universe.json'dan t\u00fcretildi",
+    "sha256": "8c3dc6c5762d3792c9283d68718c89c690cc08cc112269f71fb465dcea2cef59"
+  }
+}

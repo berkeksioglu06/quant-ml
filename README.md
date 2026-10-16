@@ -36,6 +36,28 @@ Kaydın klasör/manifest biçimi güncel `market_data.py` ve `viz.py` ile uyumlu
 getirildi. Ham ve temiz Parquet içerikleri değiştirilmedi. İlk üretimin kaynak,
 ayarlama ve kalite kayıtları `provenance/` altında korunur.
 
+## Geniş evren (281 şirket)
+
+```bash
+uv run python market_data.py all --universe universe_genis.json
+uv run python build_dataset.py --project . --snapshot yahoo_20261016T185837Z --output output/yahoo_20261016T185837Z_dataset_v1_1
+```
+
+`universe_genis.json`: eski 29 şirket + 252 "genis" rollü büyüme/teknoloji hissesi
+(yarı iletken, yazılım/bulut, internet, fintech/kripto, EV/enerji, uzay/savunma, biyotek,
+tüketici büyüme, Çin ADR) + aynı 18 bağlam serisi. Evren dosyası indirmede snapshot'a
+`universe.json` olarak kopyalanır; build ve veri seti üretimi o kopyayı okur, eski kayıtlar
+repo kökündeki `universe.json` ile çalışmaya devam eder.
+
+`data/yahoo_20261016T185837Z/` 16 Ekim 2026 indirmesidir (299 seri, HATA yok). Veri seti
+`output/yahoo_20261016T185837Z_dataset_v1_1/` altındadır; `dataset.parquet` ve `features.parquet`
+boyut nedeniyle Git'e girmez, yukarıdaki ikinci komutla snapshot'tan aynı şekilde üretilir.
+
+Seçim yanlılığı: evren bugün işlem gören hisselerden kuruldu; 2016–2024 arasında borsadan
+çıkanlar yok (survivorship). 2016'dan sonra listelenen şirketlerin beklenen ilk seansı
+sağlayıcının ilk çubuğundan alındı (`first_date_source: yahoo_first_bar`), resmi halka arz
+tarihi değildir. Ayrıntı ve elenen adaylar `universe_genis.json` içindedir.
+
 ## Özellik ve etiket üreticisi v1.1
 
 ```bash

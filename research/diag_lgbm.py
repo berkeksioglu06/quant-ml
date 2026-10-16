@@ -36,7 +36,7 @@ from .data import load_panel
 from .metrics import daily_rank_ic, error_metrics
 from .models import LGBM_PARAMS, LGBM_SEED, clipped_target, purged_inner_split
 
-DEFAULT_DATASET = Path("output/yahoo_20261016T121656Z_dataset_v1_1")
+DEFAULT_DATASET = Path("output/yahoo_20261016T185837Z_dataset_v1_1")
 CURVE = (1, 5, 10, 25, 50, 100, 200, 400, 1000)
 GRID = {
     "min_child_samples": (20, 200, 1000),

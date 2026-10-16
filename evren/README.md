@@ -8,10 +8,11 @@ Kural ([kural.json](kural.json)): her gün, yalnız o güne kadarki veriyle, ger
 
 | Dosya | Satır | İçerik |
 |---|---:|---|
-| `aday_havuzu.csv` | 5.600 | Bugünkü Nasdaq sembol dizininden adi hisseler; indirildi mi, evrene girdi mi, bugün evrende mi |
 | `evrene_girenler.csv` | 2.957 | 2016'dan beri en az bir gün evrene girenler; ilk/son giriş tarihi ve evrende gün sayısı |
-| `hic_girmeyenler.csv` | 2.642 | İndirilen ama hiçbir gün kuralı geçemeyenler |
 | `bugun_evren_20261015.csv` | 2.278 | Son gün evrendekiler; fiyat, medyan dolar hacmi, oynaklık (bilgi) |
+
+Aday havuzu 5.600 hisseydi; hiçbir gün kuralı geçemeyen ~2.640 hisse listelenmedi
+(`genis_evren.py symbols` havuzu yeniden üretir).
 | `EVREN.md` | | Özet rapor: yıllara göre evren büyüklüğü, mevcut 29 hissenin durumu |
 
 İndirilemeyen: CTY (Yahoo boş tablo). Temizlik sonrası boş kalan: TCXB.

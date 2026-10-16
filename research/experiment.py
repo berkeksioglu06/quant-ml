@@ -3,6 +3,8 @@
 Deney 1: ham özellikler, hissenin kendi getirisi ve QQQ'ya göre getiri.
 Deney 2: gün içi sıraya çevrilmiş özellikler, gün içi ortalamadan arındırılmış getiri;
 Deney 1 Ridge'i referans satır olarak aynı tablolarda gösterilir.
+Deney 3: Deney 2 ile aynı; tek fark hedef: hisse − beta_t × QQQ, gün içi arındırılmış.
+Yalnız betası olan satırlar; Ridge skorunun beta-nötrlenmiş hali ek satırdır.
 """
 
 from __future__ import annotations
@@ -19,10 +21,12 @@ import pandas as pd
 
 from dataset_builder.common import sha256
 
-from .data import BETA_WINDOW, REGIME_THRESHOLD, REGIMES, Panel
+from .data import BETA_MIN_OBS, BETA_WINDOW, REGIME_THRESHOLD, REGIMES, Panel
 from .metrics import (
     daily_rank_ic,
     error_metrics,
+    neutralize,
+    newey_west_tstat,
     summarize_ic,
     top_k_mean,
     top_minus_all,
@@ -36,6 +40,7 @@ ERROR_BASELINES = ("sifir", "egitim_ortalamasi")
 RANK_BASELINES = ("momentum_20", "geri_donus_5")
 RISK_BASELINES = ("en_oynak_20", "yuksek_beta")
 EVAL_COLUMNS = ["date", "symbol", "beta_252", "volatility_20", "beta_adj_return", "regime"]
+NEUTRAL_MODEL = "ridge_beta_notr"
 REGISTRY_FIELDS = [
     "run_id",
     "created_at_utc",
@@ -62,6 +67,9 @@ class Experiment:
     targets: tuple[str, ...]
     feature_set: str
     reference: bool = False
+    universe: str = "all"
+    beta_neutral_row: bool = False
+    criteria: str | None = None
 
 
 EXPERIMENTS = {
@@ -81,6 +89,18 @@ EXPERIMENTS = {
         targets=("xs",),
         feature_set="xs_rank",
         reference=True,
+    ),
+    "3": Experiment(
+        key="3",
+        name="asama1_deney3_ridge_resid",
+        slug="ridge_resid",
+        title="Deney 3 — Risk-nötr sıralama: betadan arındırılmış hedefle Ridge",
+        targets=("resid",),
+        feature_set="xs_rank",
+        reference=True,
+        universe="beta",
+        beta_neutral_row=True,
+        criteria="risk_notr",
     ),
 }
 
@@ -104,12 +124,15 @@ def _git(*args):
 
 
 def _daily_diagnostics(frame):
-    """Günlük rank IC, beta-düzeltmeli IC, ilk k hissenin getirisi/riski ve rejim."""
-    beta_rows = frame.dropna(subset=["beta_adj_return"])
+    """Günlük rank IC'ler, skorun risk maruziyeti, ilk k hissenin getirisi/riski ve rejim."""
+    beta_rows = frame.dropna(subset=["beta_252"])
     return pd.concat(
         [
             daily_rank_ic(frame),
+            daily_rank_ic(frame, target_col="y_raw").rename("rank_ic_raw"),
             daily_rank_ic(beta_rows, target_col="beta_adj_return").rename("rank_ic_beta"),
+            daily_rank_ic(beta_rows, target_col="beta_252").rename("corr_beta"),
+            daily_rank_ic(frame, target_col="volatility_20").rename("corr_vol"),
             top_minus_all(frame, TOP_K),
             top_k_mean(frame, "beta_252", TOP_K).rename("top_beta"),
             top_k_mean(frame, "volatility_20", TOP_K).rename("top_vol"),
@@ -119,10 +142,49 @@ def _daily_diagnostics(frame):
     ).rename_axis("date")
 
 
+def _score(val, pred, target, raw, lags, meta):
+    """Bir skorun validation ölçüleri; eksik skorlu satırlar değerlendirmeden düşer."""
+    ok = np.isfinite(pred)
+    frame = val.loc[ok, EVAL_COLUMNS].assign(
+        pred=pred[ok],
+        y=val.loc[ok, target].to_numpy(),
+        y_raw=val.loc[ok, raw].to_numpy(),
+    )
+    row = meta | {
+        "n_val": len(val),
+        "coverage": float(ok.mean()),
+        "val_days": int(val["date"].nunique()),
+    }
+    if meta["kind"] == "forecast":
+        row |= error_metrics(frame["y"], frame["pred"])
+    days = None
+    if np.ptp(frame["pred"].to_numpy()) > 0:
+        d = _daily_diagnostics(frame)
+        row |= summarize_ic(d["rank_ic"], lags)
+        row["ic_raw_mean"] = float(d["rank_ic_raw"].mean())
+        row["ic_beta_mean"] = float(d["rank_ic_beta"].mean())
+        row["top5_minus_all"] = float(d["top_minus_all"].mean())
+        days = d.reset_index().assign(target=meta["target"], fold=meta["fold"], model=meta["model"])
+    scored = frame[["date", "symbol", "pred", "y"]].assign(
+        target=meta["target"], fold=meta["fold"], model=meta["model"]
+    )
+    return row, days, scored
+
+
+def beta_neutral(val, pred):
+    """Eğitim değişmez; yalnız değerlendirmede skor her gün betaya karşı nötrlenir."""
+    has_beta = val["beta_252"].notna().to_numpy()
+    out = np.full(len(val), np.nan)
+    frame = val.loc[has_beta, ["date", "beta_252"]].assign(pred=pred[has_beta])
+    out[has_beta] = neutralize(frame, "beta_252").to_numpy()
+    return out
+
+
 def evaluate(panel: Panel, experiment: Experiment):
     """Deneyin bütün hedef × dönem × model kombinasyonlarını eğitir ve değerlendirir."""
     lags = panel.horizon - 1
     fold_rows, daily, preds, coefs, alphas, exposures = [], [], [], [], [], []
+    raw = panel.targets["raw"]
     for target_key in experiment.targets:
         target = panel.targets[target_key]
         for fold in panel.folds:
@@ -132,62 +194,48 @@ def evaluate(panel: Panel, experiment: Experiment):
                 fit_target = panel.targets[getattr(model, "target_key", None) or target_key]
                 model.fit(train, fit_target)
                 pred = model.predict(val)
-                ok = np.isfinite(pred)
-                frame = val.loc[ok, EVAL_COLUMNS].assign(
-                    pred=pred[ok], y=val.loc[ok, target].to_numpy()
+                scores = [(model.name, model.kind, pred)]
+                if model.name == MAIN_MODEL and experiment.beta_neutral_row:
+                    scores.append((NEUTRAL_MODEL, "score", beta_neutral(val, pred)))
+                for model_name, kind, values in scores:
+                    meta = {
+                        "target": target_key,
+                        "fold": name,
+                        "model": model_name,
+                        "kind": kind,
+                        "n_train": len(train),
+                    }
+                    row, days, scored = _score(val, values, target, raw, lags, meta)
+                    fold_rows.append(row)
+                    preds.append(scored)
+                    if days is not None:
+                        daily.append(days)
+                if model.name != MAIN_MODEL:
+                    continue
+                coefs.append(
+                    model.coefficients()
+                    .rename("coef")
+                    .rename_axis("feature")
+                    .reset_index()
+                    .assign(target=target_key, fold=name)
                 )
-                row = {
-                    "target": target_key,
-                    "fold": name,
-                    "model": model.name,
-                    "kind": model.kind,
-                    "n_train": len(train),
-                    "n_val": len(val),
-                    "coverage": float(ok.mean()),
-                    "val_days": int(val["date"].nunique()),
-                }
-                if model.kind == "forecast":
-                    row |= error_metrics(frame["y"], frame["pred"])
-                if np.ptp(frame["pred"].to_numpy()) > 0:
-                    d = _daily_diagnostics(frame)
-                    row |= summarize_ic(d["rank_ic"], lags)
-                    row["ic_beta_mean"] = float(d["rank_ic_beta"].mean())
-                    row["top5_minus_all"] = float(d["top_minus_all"].mean())
-                    daily.append(
-                        d.reset_index().assign(target=target_key, fold=name, model=model.name)
-                    )
-                fold_rows.append(row)
-                preds.append(
-                    frame[["date", "symbol", "pred", "y"]].assign(
-                        target=target_key, fold=name, model=model.name
-                    )
+                alphas.append(
+                    {
+                        "target": target_key,
+                        "fold": name,
+                        "alpha": model.alpha_,
+                        "alpha_at_grid_edge": model.alpha_ in (min(ALPHA_GRID), max(ALPHA_GRID)),
+                        **{f"inner_mse_{a:g}": m for a, m in model.inner_mse_.items()},
+                    }
                 )
-                if model.name == MAIN_MODEL:
-                    coefs.append(
-                        model.coefficients()
-                        .rename("coef")
-                        .rename_axis("feature")
-                        .reset_index()
-                        .assign(target=target_key, fold=name)
-                    )
-                    alphas.append(
-                        {
-                            "target": target_key,
-                            "fold": name,
-                            "alpha": model.alpha_,
-                            "alpha_at_grid_edge": model.alpha_
-                            in (min(ALPHA_GRID), max(ALPHA_GRID)),
-                            **{f"inner_mse_{a:g}": m for a, m in model.inner_mse_.items()},
-                        }
-                    )
-                    exposures.append(
-                        val[model.features]
-                        .corrwith(pd.Series(pred, index=val.index))
-                        .rename("corr")
-                        .rename_axis("feature")
-                        .reset_index()
-                        .assign(target=target_key, fold=name)
-                    )
+                exposures.append(
+                    val[model.features]
+                    .corrwith(pd.Series(pred, index=val.index))
+                    .rename("corr")
+                    .rename_axis("feature")
+                    .reset_index()
+                    .assign(target=target_key, fold=name)
+                )
     return {
         "folds": pd.DataFrame(fold_rows),
         "daily": pd.concat(daily, ignore_index=True),
@@ -239,8 +287,13 @@ def pooled(result, panel: Panel, experiment: Experiment):
             row |= summarize_ic(d.set_index("date")["rank_ic"], lags)
             by_regime = d.groupby("regime")["rank_ic"].mean()
             row |= {f"ic_{r}": float(by_regime.get(r, np.nan)) for r in REGIMES}
+            down = d.loc[d["regime"].eq("asagi")].set_index("date")["rank_ic"]
+            row["ic_asagi_t_nw"] = newey_west_tstat(down, lags)
+            row["ic_raw_mean"] = float(d["rank_ic_raw"].mean())
             row["ic_beta_mean"] = float(d["rank_ic_beta"].mean())
             row["ic_beta_t_nw"] = summarize_ic(d.set_index("date")["rank_ic_beta"], lags)["ic_t_nw"]
+            row["corr_beta"] = float(d["corr_beta"].mean())
+            row["corr_vol"] = float(d["corr_vol"].mean())
             row["top5_minus_all"] = float(d["top_minus_all"].mean())
             row["top5_beta"] = float(d["top_beta"].mean())
             row["top5_vol"] = float(d["top_vol"].mean())
@@ -274,6 +327,9 @@ def pooled(result, panel: Panel, experiment: Experiment):
     context = context.join(regimes.reindex(columns=list(REGIMES), fill_value=0).add_prefix("days_"))
     universe = val.groupby(["fold", "date"])[["beta_252", "volatility_20"]].mean()
     context = context.join(universe.groupby("fold").mean().add_prefix("universe_"))
+    if panel.excluded is not None:
+        excluded = panel.excluded.pivot_table(index="fold", columns="partition", values="excluded")
+        context = context.join(excluded.add_prefix("excluded_"))
     return summary, pd.DataFrame(consistency), context.reset_index()
 
 
@@ -281,6 +337,8 @@ def run(panel: Panel, output: Path, experiment: Experiment = EXPERIMENTS["1"]):
     output = Path(output)
     if output.exists():
         raise ValueError(f"Çıktı klasörü zaten var: {output}")
+    if experiment.universe == "beta":
+        panel = panel.with_beta()
     result = evaluate(panel, experiment)
     summary, consistency, context = pooled(result, panel, experiment)
 
@@ -320,6 +378,12 @@ def run(panel: Panel, output: Path, experiment: Experiment = EXPERIMENTS["1"]):
         "test_period_read": False,
         "models": [m.name for m in models],
         "reference_model": "ridge_deney1" if experiment.reference else None,
+        "universe": experiment.universe,
+        "excluded_rows": (
+            panel.excluded.to_dict("records") if panel.excluded is not None else None
+        ),
+        "beta_neutral_row": NEUTRAL_MODEL if experiment.beta_neutral_row else None,
+        "criteria": experiment.criteria,
         "ridge": {
             "alpha_grid": list(ALPHA_GRID),
             "alpha_selection": "eğitimin son 252 seansı iç validation, purge'lü, MSE",
@@ -328,7 +392,10 @@ def run(panel: Panel, output: Path, experiment: Experiment = EXPERIMENTS["1"]):
         },
         "rank_ic": {"method": "günlük Spearman", "min_names": 5, "nw_lags": panel.horizon - 1},
         "diagnostics": {
-            "beta": f"QQQ'ya karşı günlük getirilerle {BETA_WINDOW} seans, yalnız t'ye kadar",
+            "beta": (
+                f"QQQ'ya karşı günlük getirilerle {BETA_WINDOW} seans (en az {BETA_MIN_OBS} "
+                "gözlem), yalnız t'ye kadar"
+            ),
             "regime_threshold": REGIME_THRESHOLD,
         },
         "top_k": TOP_K,

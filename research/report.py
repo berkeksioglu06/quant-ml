@@ -5,12 +5,19 @@ from __future__ import annotations
 import math
 
 from .data import REGIMES
-from .experiment import ERROR_BASELINES, MAIN_MODEL, RANK_BASELINES, RISK_BASELINES
+from .experiment import (
+    ERROR_BASELINES,
+    MAIN_MODEL,
+    NEUTRAL_MODEL,
+    RANK_BASELINES,
+    RISK_BASELINES,
+)
 
 TARGET_NAMES = {
     "raw": "Hissenin kendi getirisi",
     "vs_qqq": "QQQ'ya göre getiri",
     "xs": "Gün içi ortalamadan arındırılmış getiri",
+    "resid": "Betadan arındırılmış artık getiri",
 }
 MODEL_NAMES = {
     "sifir": "Sıfır",
@@ -20,6 +27,7 @@ MODEL_NAMES = {
     "en_oynak_20": "En oynak (volatility_20)",
     "yuksek_beta": "Yüksek beta (beta_252)",
     "ridge": "**Ridge**",
+    "ridge_beta_notr": "Ridge · beta-nötrlenmiş skor",
     "ridge_deney1": "Ridge · Deney 1 (referans)",
 }
 REGIME_NAMES = {"yukari": "QQQ ↑", "yatay": "Yatay", "asagi": "QQQ ↓"}
@@ -54,7 +62,7 @@ def table(header, rows, left=1):
 
 def _rank_models(summary):
     present = set(summary["model"])
-    order = (*RANK_BASELINES, *RISK_BASELINES, MAIN_MODEL, "ridge_deney1")
+    order = (*RANK_BASELINES, *RISK_BASELINES, MAIN_MODEL, NEUTRAL_MODEL, "ridge_deney1")
     return [m for m in order if m in present]
 
 
@@ -65,6 +73,73 @@ def _universe(context):
         "vol": float((context["universe_volatility_20"] * days).sum() / days.sum()),
         "days": {r: int(context[f"days_{r}"].sum()) for r in REGIMES},
     }
+
+
+def risk_neutral_criteria(model, target, folds, summary, universe):
+    """Deney 3 için önceden yazılı başarı kriterleri; her satır (ad, eşik, değer, geçti)."""
+    s = summary.loc[summary["target"].eq(target)].set_index("model")
+    f = folds.loc[folds["target"].eq(target) & folds["model"].eq(model)]
+    m = s.loc[model]
+    momentum = s.loc["momentum_20", "ic_mean"]
+    positive = int((f["ic_mean"] > 0).sum())
+    gap = m["top5_beta"] - universe["beta"]
+    return [
+        (
+            "1a. Artık IC > momentum",
+            "birleşik",
+            f"{num(m['ic_mean'])} vs {num(momentum)}",
+            m["ic_mean"] > momentum,
+        ),
+        ("1b. Pozitif IC'li dönem", "≥ 3/4", f"{positive}/{len(f)}", positive >= 3),
+        (
+            "2a. Skor–beta sıra korelasyonu",
+            "−0.20 < r < 0.20",
+            num(m["corr_beta"], 2),
+            abs(m["corr_beta"]) < 0.2,
+        ),
+        (
+            "2b. İlk 5 beta − evren",
+            "±0.20",
+            f"{num(gap, 2)} ({plain(m['top5_beta'])})",
+            abs(gap) <= 0.2,
+        ),
+        (
+            "3. QQQ ↓ rejiminde IC",
+            "NW t > −2",
+            f"{num(m['ic_asagi'])} (t {num(m['ic_asagi_t_nw'], 2)})",
+            m["ic_asagi_t_nw"] > -2,
+        ),
+    ]
+
+
+def _criteria_lines(config, folds, summary, context):
+    universe = _universe(context)
+    lines = []
+    for target in config["targets"]:
+        main = risk_neutral_criteria(MAIN_MODEL, target, folds, summary, universe)
+        neutral = risk_neutral_criteria(NEUTRAL_MODEL, target, folds, summary, universe)
+        rows = [
+            [a[0], a[1], f"{'✅' if a[3] else '❌'} {a[2]}", f"{'✅' if b[3] else '❌'} {b[2]}"]
+            for a, b in zip(main, neutral, strict=True)
+        ]
+        passed = all(c[3] for c in main)
+        lines += [
+            para(
+                f"**Önceden yazılı başarı kriteri: {'karşılandı' if passed else 'karşılanmadı'}.** ",
+                "Karar Ridge satırına göre verilir; beta-nötrlenmiş skor bilgi içindir.",
+                "" if passed else " Sıradaki adım: Deney 4 (uzun momentum: 60/120/250 seans).",
+            ),
+            "",
+            table(["Kriter", "Eşik", "Ridge", "Beta-nötrlenmiş Ridge (bilgi)"], rows, left=2),
+            "",
+            para(
+                '"Düşen piyasada belirgin negatif değil" ölçüsü: QQQ ↓ rejimindeki günlük IC\'lerin ',
+                "Newey-West t-istatistiği −2'den büyük. Evren betası: ",
+                f"{plain(universe['beta'])}.",
+            ),
+            "",
+        ]
+    return lines
 
 
 def verdict(target, folds, summary, consistency):
@@ -129,7 +204,7 @@ def verdict(target, folds, summary, consistency):
 def _short_answer(config, folds, summary, consistency, context, exposures):
     names = [f["name"] for f in config["folds"]]
     universe = _universe(context)
-    lines = []
+    lines = _criteria_lines(config, folds, summary, context) if config.get("criteria") else []
     for target in config["targets"]:
         v = verdict(target, folds, summary, consistency)
         s = summary.loc[summary["target"].eq(target)].set_index("model")
@@ -151,7 +226,9 @@ def _short_answer(config, folds, summary, consistency, context, exposures):
             para(
                 "- Rejim ve risk: rank IC QQQ ↑ / yatay / QQQ ↓ = ",
                 " / ".join(num(s.loc[MAIN_MODEL, f"ic_{r}"]) for r in REGIMES),
-                f"; beta-düzeltmeli IC {num(s.loc[MAIN_MODEL, 'ic_beta_mean'])}. ",
+                f"; ham getiriye göre IC {num(s.loc[MAIN_MODEL, 'ic_raw_mean'])}, ",
+                f"beta-düzeltmeli IC {num(s.loc[MAIN_MODEL, 'ic_beta_mean'])}; ",
+                f"skor–beta sıra korelasyonu {num(s.loc[MAIN_MODEL, 'corr_beta'], 2)}. ",
                 f"Seçilen ilk {config['top_k']} hissenin ortalama betası ",
                 f"{plain(s.loc[MAIN_MODEL, 'top5_beta'])}, volatilitesi ",
                 f"{plain(s.loc[MAIN_MODEL, 'top5_vol'])} ",
@@ -250,15 +327,21 @@ def _rank_section(config, folds, summary):
         ]
         header = ["Model", *names, "K1–K4", "NW t", "IC>0 gün", f"Top{k_top}−tümü"]
         lines += [f"**{TARGET_NAMES[target]}**", "", table(header, rows), ""]
-    lines += [
-        para(
-            "Not: Günlük rank IC, hedefe aynı gün bütün hisselerde aynı olan bir sabit ",
-            "eklenmesinden etkilenmez (QQQ getirisi, gün ortalaması). Bu yüzden skor kıyaslarının ",
-            "değerleri bütün hedeflerde ve deneylerde aynıdır; Ridge farklı hedefe eğitildiği ",
-            "için farklıdır.",
-        ),
-        "",
+    note = [
+        "Not: Günlük rank IC, hedefe aynı gün bütün hisselerde aynı olan bir sabit ",
+        "eklenmesinden etkilenmez (QQQ getirisi, gün ortalaması). ",
     ]
+    if "resid" in config["targets"]:
+        note += [
+            "Artık hedefte çıkarılan beta × QQQ hisseden hisseye değiştiği için skor ",
+            "kıyaslarının değerleri ham getiri hedefindekinden farklıdır.",
+        ]
+    else:
+        note += [
+            "Bu yüzden skor kıyaslarının değerleri ham, QQQ'ya göre ve gün içi hedeflerde ",
+            "aynıdır; Ridge farklı hedefe eğitildiği için farklıdır.",
+        ]
+    lines += [para(*note), ""]
     return lines
 
 
@@ -266,61 +349,76 @@ def _regime_section(config, summary, context):
     universe = _universe(context)
     k_top = config["top_k"]
     days = universe["days"]
-    header = [
+    regime_header = [
         "Model",
-        "Tümü",
-        *[f"{REGIME_NAMES[r]} ({days[r]} g)" for r in REGIMES],
+        "Hedefe göre IC",
+        "Ham getiriye göre IC",
         "Beta-düz. IC",
-        "NW t",
+        *[f"{REGIME_NAMES[r]} ({days[r]} g)" for r in REGIMES],
+        "NW t (↓)",
+    ]
+    risk_header = [
+        "Model",
+        "Skor–beta sıra kor.",
+        "Skor–vol. sıra kor.",
         f"İlk {k_top} beta",
         f"İlk {k_top} vol.",
         "Kapsam",
     ]
+    threshold = 100 * config["diagnostics"]["regime_threshold"]
     lines = [
         "## 3. Rejim ve risk",
         "",
         para(
-            "Rejim, etiket penceresinde gerçekleşen QQQ getirisine göre: > +",
-            f"{100 * config['diagnostics']['regime_threshold']:.0f}% ↑, < −",
-            f"{100 * config['diagnostics']['regime_threshold']:.0f}% ↓, arası yatay. ",
-            "Gerçekleşmiş getiriye dayandığı için yalnız tanıdır, sinyal olarak kullanılamaz. ",
-            "Beta-düzeltmeli IC'de hedef = hisse getirisi − beta × QQQ getirisi; ",
-            f"beta {config['diagnostics']['beta']}. Betası olmayan satırlar yalnız bu ",
-            "sütunlardan ve yüksek beta kıyasından düşer. İlk k sütunları: her gün en yüksek ",
-            "skorlu hisselerin ortalama beta ve yıllık volatilitesi.",
+            f"Rejim, etiket penceresinde gerçekleşen QQQ getirisine göre: > +{threshold:.0f}% ↑, ",
+            f"< −{threshold:.0f}% ↓, arası yatay. Gerçekleşmiş getiriye dayandığı için yalnız ",
+            "tanıdır, sinyal olarak kullanılamaz. Ham getiriye göre IC'de hedef hissenin kendi ",
+            "getirisidir; beta-düzeltmeli IC'de hisse getirisi − beta × QQQ getirisi. ",
+            f"Beta {config['diagnostics']['beta']}; betası olmayan satır bu sütunlardan ve ",
+            "yüksek beta kıyasından düşer. Sıra korelasyonları: her gün skor ile beta / ",
+            "volatility_20 arasındaki Spearman korelasyonunun ortalaması. İlk k sütunları: her gün ",
+            "en yüksek skorlu hisselerin ortalama beta ve yıllık volatilitesi.",
         ),
         "",
     ]
     for target in config["targets"]:
         s = summary.loc[summary["target"].eq(target)].set_index("model")
-        rows = [
+        models = _rank_models(s.reset_index())
+        regime_rows = [
             [
                 MODEL_NAMES[m],
                 num(s.loc[m, "ic_mean"]),
-                *[num(s.loc[m, f"ic_{r}"]) for r in REGIMES],
+                num(s.loc[m, "ic_raw_mean"]),
                 num(s.loc[m, "ic_beta_mean"]),
-                num(s.loc[m, "ic_beta_t_nw"], 2),
+                *[num(s.loc[m, f"ic_{r}"]) for r in REGIMES],
+                num(s.loc[m, "ic_asagi_t_nw"], 2),
+            ]
+            for m in models
+        ]
+        risk_rows = [
+            [
+                MODEL_NAMES[m],
+                num(s.loc[m, "corr_beta"], 2),
+                num(s.loc[m, "corr_vol"], 2),
                 plain(s.loc[m, "top5_beta"]),
                 plain(s.loc[m, "top5_vol"]),
                 f"{100 * s.loc[m, 'coverage']:.1f}%",
             ]
-            for m in _rank_models(s.reset_index())
+            for m in models
         ]
-        rows.append(
-            [
-                "Evren (bütün hisseler)",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                plain(universe["beta"]),
-                plain(universe["vol"]),
-                "",
-            ]
+        risk_rows.append(
+            ["Evren (bütün hisseler)", "", "", plain(universe["beta"]), plain(universe["vol"]), ""]
         )
-        lines += [f"**{TARGET_NAMES[target]}**", "", table(header, rows), ""]
+        lines += [
+            f"**{TARGET_NAMES[target]}** — rejim",
+            "",
+            table(regime_header, regime_rows),
+            "",
+            f"**{TARGET_NAMES[target]}** — risk maruziyeti",
+            "",
+            table(risk_header, risk_rows),
+            "",
+        ]
     return lines
 
 
@@ -360,11 +458,18 @@ def _context_section(config, context, alphas):
             " / ".join(str(c[f"days_{r}"]) for r in REGIMES),
             f"{100 * c['beta_coverage']:.0f}%",
             *[f"{alphas.loc[(t, c['fold']), 'alpha']:.3g}" for t in targets],
+            *(
+                [f"{int(c['excluded_train'])} / {int(c['excluded_validation'])}"]
+                if "excluded_train" in c
+                else []
+            ),
         ]
         for _, c in context.iterrows()
     ]
     header = ["Dönem", "Sinyal günleri", "Hisse", f"QQQ {h}g ort.", f"Hisse {h}g ort."]
     header += ["Gün ↑/yatay/↓", "Beta kapsamı", *[f"α {TARGET_NAMES[t]}" for t in targets]]
+    if "excluded_train" in context:
+        header.append("Betasız dışarıda (eğitim / val.)")
     return [
         "## 5. Dönem bağlamı",
         "",
@@ -457,6 +562,10 @@ TARGET_SETUP = {
     "raw": "`{col}`: hissenin t+1 açılış → t+H kapanış getirisi.",
     "vs_qqq": "`{col}`: hisse getirisi − aynı pencerede QQQ getirisi.",
     "xs": "`{col}`: hisse getirisi − aynı gün aynı bölmedeki hisselerin ortalama getirisi.",
+    "resid": para(
+        "`{col}`: hisse getirisi − beta_t × aynı pencerede ve aynı kuralla QQQ getirisi; ",
+        "ardından aynı gün aynı bölmedeki hisselerin ortalamasından arındırılmış.",
+    ),
 }
 FEATURE_SETUP = {
     "raw": "manifestteki 24 `feature_columns`, ham değerleriyle.",
@@ -489,6 +598,24 @@ def _setup_section(config):
             "−`return_5`, en oynak = `volatility_20`, yüksek beta = `beta_252`.",
         ),
     ]
+    if config.get("universe") == "beta":
+        excluded = config["excluded_rows"]
+        n_train = sum(r["excluded"] for r in excluded if r["partition"] == "train")
+        n_val = sum(r["excluded"] for r in excluded if r["partition"] == "validation")
+        lines.append(
+            para(
+                "- Evren: yalnız beta_t'si olan satırlar; dışarıda kalan ",
+                f"{n_train} eğitim / {n_val} validation satırı (dönem toplamı). Gün içi sıralar ",
+                "ve hedef bu evrende hesaplandı.",
+            )
+        )
+    if config.get("beta_neutral_row"):
+        lines.append(
+            para(
+                "- Ek satır: Ridge skoru her gün beta_t'ye kesitsel OLS (sabitli) ile çekilip ",
+                "kalıntısı alındı. Eğitim değişmez; yalnız değerlendirme.",
+            )
+        )
     if config.get("reference_model"):
         lines.append(
             "- Referans: Deney 1 Ridge'i (ham 24 girdi, hissenin kendi getirisine eğitilmiş)."

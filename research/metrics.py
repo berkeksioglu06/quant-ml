@@ -6,6 +6,15 @@ import numpy as np
 import pandas as pd
 
 
+def neutralize(frame, by, pred_col="pred"):
+    """Her gün skoru ``by`` kolonuna kesitsel OLS (sabitli) ile çekip kalıntıyı döndürür."""
+    day = frame["date"]
+    x = frame[by] - frame.groupby(day)[by].transform("mean")
+    y = frame[pred_col] - frame.groupby(day)[pred_col].transform("mean")
+    slope = (x * y).groupby(day).transform("sum") / (x * x).groupby(day).transform("sum")
+    return y - slope.fillna(0) * x
+
+
 def error_metrics(y, pred):
     """MSE ve sıfır tahminine göre R² (1 − SSE / Σy²)."""
     y = np.asarray(y, dtype=float)

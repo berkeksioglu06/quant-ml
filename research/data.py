@@ -4,9 +4,12 @@ Hedefler:
 - ``target_return_H``: hissenin t+1 açılışından t+H kapanışına getirisi (veri setinden).
 - ``target_vs_qqq_H``: aynı pencerede hisse getirisi − QQQ getirisi.
 - ``target_xs_H``: hisse getirisi − aynı gün aynı bölmedeki hisselerin ortalaması.
+- ``target_resid_H``: hisse getirisi − beta_t × aynı penceredeki QQQ getirisi, ardından
+  aynı gün aynı bölmedeki (betası olan) hisselerin ortalamasından arındırılmış.
 
 Tanı kolonları (model girdisi değildir):
-- ``beta_252``: QQQ'ya karşı günlük getirilerle son 252 seanslık beta; yalnız t'ye kadar veri.
+- ``beta_252``: QQQ'ya karşı günlük getirilerle son 252 seanslık beta (en az 200 gözlem);
+  yalnız t'ye kadar veri.
 - ``beta_adj_return``: hisse getirisi − beta × aynı penceredeki QQQ getirisi.
 - ``regime``: etiket penceresinde gerçekleşen QQQ getirisi ±%2 eşiğine göre.
   Gerçekleşmiş getiriye dayandığı için yalnız değerlendirmeyi bölmek içindir.
@@ -19,7 +22,7 @@ Fiyatlar ve veri seti satırları test başlangıcından önce kesilir; 2025+ ok
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 import numpy as np
@@ -30,6 +33,7 @@ from dataset_builder.source import discover
 
 BENCHMARK = "QQQ"
 BETA_WINDOW = 252
+BETA_MIN_OBS = 200
 REGIME_THRESHOLD = 0.02
 REGIMES = ("yukari", "yatay", "asagi")
 DAY_KEYS = ["fold", "partition", "date"]
@@ -47,6 +51,7 @@ class Panel:
     snapshot: str
     dataset_dir: Path
     dataset_manifest: dict
+    excluded: pd.DataFrame | None = None
 
     def split(self, fold: str) -> tuple[pd.DataFrame, pd.DataFrame]:
         part = self.rows.loc[self.rows["fold"].eq(fold)]
@@ -55,6 +60,21 @@ class Panel:
         if train.empty or val.empty:
             raise ValueError(f"{fold}: boş eğitim veya validation")
         return train, val
+
+    def with_beta(self) -> Panel:
+        """Yalnız betası olan satırlar; gün içi sıralar ve hedefler bu evrende yeniden kurulur."""
+        has_beta = self.rows["beta_252"].notna()
+        excluded = (
+            self.rows.assign(excluded=~has_beta)
+            .groupby(["fold", "partition"])["excluded"]
+            .agg(rows="size", excluded="sum")
+            .reset_index()
+        )
+        rows = self.rows.loc[has_beta].copy()
+        base = [f.removeprefix("xs_") for f in self.xs_features]
+        add_cross_sectional(rows, base, self.targets)
+        rows = rows.reset_index(drop=True)
+        return replace(self, rows=rows, excluded=excluded)
 
 
 def benchmark_returns(source, horizon, as_of, symbol=BENCHMARK):
@@ -76,13 +96,21 @@ def daily_returns(frame, sessions):
     return close.pct_change(fill_method=None)
 
 
-def rolling_beta(stock, bench, window=BETA_WINDOW):
-    """t günü dahil son ``window`` seansın tamamı geçerliyse beta; aksi halde NaN."""
+def rolling_beta(stock, bench, window=BETA_WINDOW, min_obs=BETA_MIN_OBS):
+    """t günü dahil son ``window`` seansta en az ``min_obs`` ortak gözlem varsa beta.
+
+    Pencere yalnız geriye bakar; t sonrası fiyatlar beta_t'yi etkilemez.
+    """
     both = stock.notna() & bench.notna()
     stock, bench = stock.where(both), bench.where(both)
-    cov = stock.rolling(window, min_periods=window).cov(bench)
-    var = bench.rolling(window, min_periods=window).var()
+    cov = stock.rolling(window, min_periods=min_obs).cov(bench)
+    var = bench.rolling(window, min_periods=min_obs).var()
     return cov / var
+
+
+def residual_return(stock_return, beta, bench_return):
+    """Betasından beklenenin ötesindeki getiri: hisse − beta × benchmark (aynı pencere)."""
+    return stock_return - beta * bench_return
 
 
 def cross_sectional_rank(rows, columns):
@@ -91,6 +119,20 @@ def cross_sectional_rank(rows, columns):
     ranks = grouped[columns].rank(method="average")
     n = grouped[columns[0]].transform("size")
     return (ranks - 1).div(n - 1, axis=0) - 0.5
+
+
+def add_cross_sectional(rows, base_features, targets):
+    """Gün içi sıralı özellikleri ve gün ortalamasından arındırılmış hedefleri yazar.
+
+    Hesap ``rows`` içindeki evrene göredir; satır kümesi değişince yeniden çağrılır.
+    """
+    rows[[f"xs_{f}" for f in base_features]] = cross_sectional_rank(
+        rows, list(base_features)
+    ).to_numpy()
+    raw = rows[targets["raw"]]
+    rows[targets["xs"]] = raw - raw.groupby([rows[k] for k in DAY_KEYS]).transform("mean")
+    resid = residual_return(raw, rows["beta_252"], rows["benchmark_return"])
+    rows[targets["resid"]] = resid - resid.groupby([rows[k] for k in DAY_KEYS]).transform("mean")
 
 
 def load_panel(dataset_dir, project, horizon=20) -> Panel:
@@ -130,10 +172,13 @@ def load_panel(dataset_dir, project, horizon=20) -> Panel:
         raise ValueError(f"{BENCHMARK} getirisi eksik tarihler: {list(missing)}")
     if not rows["benchmark_label_end"].eq(rows["label_end"]).all():
         raise ValueError(f"{BENCHMARK} ve hisse etiket pencereleri uyuşmuyor")
-    excess_target = f"target_vs_qqq_{horizon}"
-    rows[excess_target] = rows[raw_target] - rows["benchmark_return"]
-    xs_target = f"target_xs_{horizon}"
-    rows[xs_target] = rows[raw_target] - rows.groupby(DAY_KEYS)[raw_target].transform("mean")
+    targets = {
+        "raw": raw_target,
+        "vs_qqq": f"target_vs_qqq_{horizon}",
+        "xs": f"target_xs_{horizon}",
+        "resid": f"target_resid_{horizon}",
+    }
+    rows[targets["vs_qqq"]] = rows[raw_target] - rows["benchmark_return"]
 
     bench_frame = source.load(BENCHMARK, as_of)
     sessions = bench_frame.index
@@ -143,7 +188,9 @@ def load_panel(dataset_dir, project, horizon=20) -> Panel:
         beta = rolling_beta(daily_returns(source.load(symbol, as_of), sessions), bench_ret)
         betas.append(pd.DataFrame({"date": sessions, "symbol": symbol, "beta_252": beta.values}))
     rows = rows.merge(pd.concat(betas), on=["date", "symbol"], how="left", validate="many_to_one")
-    rows["beta_adj_return"] = rows[raw_target] - rows["beta_252"] * rows["benchmark_return"]
+    rows["beta_adj_return"] = residual_return(
+        rows[raw_target], rows["beta_252"], rows["benchmark_return"]
+    )
     rows["regime"] = np.select(
         [
             rows["benchmark_return"] > REGIME_THRESHOLD,
@@ -156,19 +203,18 @@ def load_panel(dataset_dir, project, horizon=20) -> Panel:
     # Aynı gün bütün hisselerde aynı olan özellikler sıraya çevrilince bilgi taşımaz.
     constant = rows.groupby(DAY_KEYS)[features].nunique().le(1).all()
     xs_base = [f for f in features if not constant[f]]
+    add_cross_sectional(rows, xs_base, targets)
     xs_features = [f"xs_{f}" for f in xs_base]
-    rows[xs_features] = cross_sectional_rank(rows, xs_base).to_numpy()
 
     keep = ["date", "symbol", "fold", "partition", "label_end", *features, *xs_features]
-    keep += [raw_target, excess_target, xs_target, "benchmark_return"]
-    keep += ["beta_252", "beta_adj_return", "regime"]
+    keep += [*targets.values(), "benchmark_return", "beta_252", "beta_adj_return", "regime"]
     rows = rows[keep].sort_values(["fold", "partition", "date", "symbol"]).reset_index(drop=True)
     folds = [f for f in manifest["folds"] if f["name"] in set(rows["fold"])]
     return Panel(
         rows=rows,
         features=features,
         xs_features=xs_features,
-        targets={"raw": raw_target, "vs_qqq": excess_target, "xs": xs_target},
+        targets=targets,
         folds=folds,
         horizon=horizon,
         test_start=test_start,

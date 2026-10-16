@@ -5,10 +5,25 @@ import numpy as np
 import pandas as pd
 import pytest
 
+import research.data as research_data
+from dataset_builder.labels import make_labels
 from dataset_builder.source import Source
-from research.data import DAY_KEYS, cross_sectional_rank, daily_returns, load_panel, rolling_beta
+from research.data import (
+    DAY_KEYS,
+    cross_sectional_rank,
+    daily_returns,
+    load_panel,
+    residual_return,
+    rolling_beta,
+)
 from research.experiment import EXPERIMENTS, run
-from research.metrics import daily_rank_ic, newey_west_tstat, top_k_mean, top_minus_all
+from research.metrics import (
+    daily_rank_ic,
+    neutralize,
+    newey_west_tstat,
+    top_k_mean,
+    top_minus_all,
+)
 from research.models import RidgeModel, Winsorizer
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -149,15 +164,106 @@ def test_rolling_beta_recovers_multiplier_and_uses_only_past():
     index = pd.bdate_range("2020-01-01", periods=400)
     bench = pd.Series(rng.normal(0, 0.01, len(index)), index=index)
     stock = 2 * bench + rng.normal(0, 0.001, len(index))
-    beta = rolling_beta(stock, bench, window=252)
-    assert beta.iloc[:251].isna().all()
+    beta = rolling_beta(stock, bench, window=252, min_obs=200)
+    assert beta.iloc[:199].isna().all()
+    assert beta.iloc[199:].notna().all()
     assert beta.iloc[300] == pytest.approx(2, abs=0.05)
     changed = stock.copy()
     changed.iloc[301:] = -changed.iloc[301:]
-    assert rolling_beta(changed, bench, window=252).iloc[300] == beta.iloc[300]
+    assert rolling_beta(changed, bench, window=252, min_obs=200).iloc[300] == beta.iloc[300]
+    # Pencerede 200'den az ortak gözlem kalırsa beta boş kalır.
     gap = stock.copy()
-    gap.iloc[280] = np.nan
-    assert rolling_beta(gap, bench, window=252).iloc[280:532].isna().all()
+    gap.iloc[250:310] = np.nan
+    gapped = rolling_beta(gap, bench, window=252, min_obs=200)
+    assert np.isnan(gapped.iloc[309])
+    assert gapped.iloc[249] == beta.iloc[249]
+
+
+def price_frame(close, index, eligible=True):
+    close = np.asarray(close, dtype=float)
+    return pd.DataFrame(
+        {
+            "open": np.r_[close[0], close[:-1]],
+            "high": close * 1.01,
+            "low": close * 0.99,
+            "close": close,
+            "adj_close": close,
+            "eligible": eligible,
+            "is_session": True,
+        },
+        index=index,
+    )
+
+
+def test_beta_from_prices_ignores_later_prices_and_ineligible_days():
+    import exchange_calendars as xc
+
+    index = xc.get_calendar("XNYS").sessions_in_range("2020-01-02", "2022-06-30")
+    rng = np.random.default_rng(7)
+    q = 100 * np.cumprod(1 + rng.normal(0, 0.01, len(index)))
+    s = 50 * np.cumprod(1 + 1.5 * np.r_[0, np.diff(q) / q[:-1]] + rng.normal(0, 0.002, len(index)))
+    t = 400
+    beta = rolling_beta(
+        daily_returns(price_frame(s, index), index), daily_returns(price_frame(q, index), index)
+    )
+    later = s.copy()
+    later[t + 1 :] *= np.linspace(1, 3, len(index) - t - 1)
+    moved = rolling_beta(
+        daily_returns(price_frame(later, index), index), daily_returns(price_frame(q, index), index)
+    )
+    assert moved.iloc[t] == beta.iloc[t]
+    assert beta.iloc[t] == pytest.approx(1.5, abs=0.05)
+    # Eligible olmayan dönem (ör. SPAC öncesi) hesaba girmez: ilk 300 gün yok sayılır.
+    eligible = np.arange(len(index)) >= 300
+    spac = rolling_beta(
+        daily_returns(price_frame(s, index, eligible), index),
+        daily_returns(price_frame(q, index), index),
+    )
+    assert spac.iloc[:500].isna().all()
+    assert spac.iloc[501] == pytest.approx(beta.iloc[501], abs=0.2)
+
+
+def test_residual_target_is_zero_for_a_pure_beta_stock():
+    import exchange_calendars as xc
+
+    index = xc.get_calendar("XNYS").sessions_in_range("2020-01-02", "2021-12-31")
+    rng = np.random.default_rng(8)
+    qr = rng.normal(0, 0.0005, len(index))
+    qr[0] = 0
+    q = 100 * np.cumprod(1 + qr)
+    s = 50 * np.cumprod(1 + 1.5 * qr)
+    qqq, stock = price_frame(q, index), price_frame(s, index)
+    labels_q = make_labels(qqq, "QQQ", (20,)).set_index("date")
+    labels_s = make_labels(stock, "S", (20,)).set_index("date")
+    beta = rolling_beta(daily_returns(stock, index), daily_returns(qqq, index))
+    resid = residual_return(labels_s["target_return_20"], beta, labels_q["target_return_20"])
+    assert labels_s["label_end_20"].equals(labels_q["label_end_20"])
+    assert beta.dropna().between(1.5 - 1e-9, 1.5 + 1e-9).all()
+    assert resid.dropna().abs().max() < 1e-4
+    assert resid.notna().sum() > 200
+
+
+def test_neutralize_removes_daily_linear_exposure():
+    frame = panel_frame(days=30, names=8)
+    frame["beta"] = np.random.default_rng(9).normal(1, 0.5, len(frame))
+    frame["pred"] = 2 * frame["beta"] + frame["pred"]
+    out = frame.assign(n=neutralize(frame, "beta"))
+    corr = out.groupby("date")[["n", "beta"]].corr().xs("n", level=1)["beta"]
+    assert corr.abs().max() < 1e-12
+    assert out.groupby("date")["n"].mean().abs().max() < 1e-12
+
+
+def test_load_panel_rejects_benchmark_window_mismatch(monkeypatch):
+    original = research_data.benchmark_returns
+
+    def shifted(*args, **kwargs):
+        bench = original(*args, **kwargs)
+        bench["benchmark_label_end"] += pd.Timedelta(days=1)
+        return bench
+
+    monkeypatch.setattr(research_data, "benchmark_returns", shifted)
+    with pytest.raises(ValueError, match="pencereleri uyuşmuyor"):
+        load_panel(DATASET, ROOT, 20)
 
 
 def test_cross_sectional_rank_is_centered_per_day():
@@ -214,7 +320,7 @@ def test_panel_never_loads_prices_from_test_period(monkeypatch):
 @pytest.fixture(scope="module")
 def runs(panel, tmp_path_factory):
     root = tmp_path_factory.mktemp("experiments")
-    return root, {key: run(panel, root / f"deney{key}", EXPERIMENTS[key]) for key in "12"}
+    return root, {key: run(panel, root / f"deney{key}", EXPERIMENTS[key]) for key in "123"}
 
 
 def test_experiment_writes_report_and_registry(panel, runs):
@@ -239,8 +345,8 @@ def test_experiment_writes_report_and_registry(panel, runs):
     assert "## 3. Rejim ve risk" in report
     assert json.loads((out / "config.json").read_text(encoding="utf-8"))["horizon"] == 20
     registry = pd.read_csv(root / "runs.csv")
-    assert registry["run_id"].tolist() == ["deney1", "deney1", "deney2"]
-    assert registry["target"].tolist() == ["raw", "vs_qqq", "xs"]
+    assert registry["run_id"].tolist() == ["deney1", "deney1", "deney2", "deney3"]
+    assert registry["target"].tolist() == ["raw", "vs_qqq", "xs", "resid"]
     with pytest.raises(ValueError, match="zaten var"):
         run(panel, out)
 
@@ -258,3 +364,24 @@ def test_deney2_uses_xs_inputs_and_matches_deney1_reference(runs):
     assert np.isnan(ref.get("r2_oos", np.nan))
     coefs = pd.read_csv(root / "deney2" / "ridge_coefficients.csv")
     assert coefs["feature"].str.startswith("xs_").all()
+
+
+def test_deney3_residual_target_neutral_row_and_criteria(panel, runs):
+    root, results = runs
+    config, summary, _ = results["3"]
+    assert config["targets"] == {"resid": "target_resid_20"}
+    assert config["features"] == results["2"][0]["features"]
+    assert config["universe"] == "beta"
+    assert {r["excluded"] for r in config["excluded_rows"]} == {0}
+    s = summary.set_index("model")
+    assert abs(s.loc["ridge_beta_notr", "corr_beta"]) < 0.05
+    assert s.loc["yuksek_beta", "corr_beta"] == pytest.approx(1.0)
+    report = (root / "deney3" / "RAPOR.md").read_text(encoding="utf-8")
+    assert "Önceden yazılı başarı kriteri" in report
+    assert "Ridge · beta-nötrlenmiş skor" in report
+    # Hedef: hisse − beta × QQQ, gün içi arındırılmış; Deney 2 satırlarıyla aynı evren.
+    rows = panel.with_beta().rows
+    resid = rows["target_return_20"] - rows["beta_252"] * rows["benchmark_return"]
+    resid -= resid.groupby([rows[k] for k in DAY_KEYS]).transform("mean")
+    assert np.allclose(rows["target_resid_20"], resid)
+    assert len(rows) == len(panel.rows)

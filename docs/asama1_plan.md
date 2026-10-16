@@ -8,6 +8,7 @@ test dönemi yalnız bir kez açılır (Aşama 3).
 ```bash
 uv run python train_baseline.py --deney 1
 uv run python train_baseline.py --deney 2
+uv run python train_baseline.py --deney 3
 ```
 
 Çıktı `output/experiments/<zaman>_<deney>_h20/RAPOR.md` ve yanındaki CSV/Parquet
@@ -27,9 +28,10 @@ kaydına eklenir; denenen hiçbir kombinasyon silinmez. Bu klasör Git takibinde
 | Ölçüler | MSE ve R²_oos; günlük Spearman rank IC, Newey-West t (19 gecikme); dönem tutarlılığı |
 | Tanılar | QQQ ↑/yatay/↓ rejim IC'si (±%2), beta-düzeltmeli IC, ilk 5 hissenin beta/volatilitesi |
 
-Beta: QQQ'ya karşı günlük getirilerle 252 seans, yalnız t'ye kadarki veriyle; pencerede
-eksik gün varsa boş kalır. Rejim, etiket penceresinde gerçekleşen QQQ getirisine dayanır;
-yalnız değerlendirmeyi bölmek içindir, sinyal değildir.
+Beta: QQQ'ya karşı günlük getirilerle son 252 seans, en az 200 ortak gözlem, yalnız t'ye
+kadarki veriyle; eligible olmayan günler hesaba girmez. (Deney 1–2'nin ilk raporları 252
+gözlemin tamamını istiyordu; Ridge sonuçları bundan etkilenmez.) Rejim, etiket penceresinde
+gerçekleşen QQQ getirisine dayanır; yalnız değerlendirmeyi bölmek içindir, sinyal değildir.
 
 Hüküm kuralı: K1–K4 birleşik ölçüde en iyi kıyastan iyi ve en az 3/4 dönemde iki kıyası
 da geçiyorsa *geçiyor*; birleşik ölçüde kötü ve en fazla 1 dönemde geçiyorsa *geçmiyor*;
@@ -56,6 +58,25 @@ arası *karışık*.
   değiştirmez. Volatilite ve betanın beta-düzeltmeli IC'si eğitimde sıfıra yakın/pozitif,
   validation yıllarında belirgin negatif. Yani dönemler arası fark yalnız piyasa yönü değil.
 
+## Deney 3 — risk-nötr sıralama (betadan arındırılmış hedef)
+
+- Deney 2'ye göre tek değişiklik hedefte: `target_resid_20` = hisse getirisi − beta_t ×
+  aynı pencerede ve aynı kuralla QQQ getirisi, ardından gün içi arındırılmış.
+- Evren: yalnız beta_t'si olan satırlar. 200 seanslık ısınma süresi nedeniyle dışarıda
+  kalan satır yok; satırlar Deney 2 ile aynı.
+- Ek satır: Ridge skoru her gün beta_t'ye kesitsel OLS ile çekilip kalıntısı alınır
+  (yalnız değerlendirme).
+- Önceden yazılı başarı kriteri (karar Ridge satırına göre):
+  1. Artık IC birleşik ölçüde momentumdan yüksek ve en az 3/4 dönemde pozitif.
+  2. Skor–beta günlük sıra korelasyonu −0.20 < r < 0.20 ve ilk 5'in betası evren
+     ortalamasının ±0.20 içinde.
+  3. QQQ ↓ rejiminde IC belirgin negatif değil: günlük IC'lerin Newey-West t > −2.
+- Sonuç: **karşılanmadı**. Ridge artık IC −0,081 (NW t −2,47), 0/4 dönem pozitif;
+  skor–beta korelasyonu +0,41, ilk 5 beta 1,54 (evren 1,33); QQQ ↓ IC −0,178 (t −3,19).
+  Beta-nötrlenmiş skor risk kriterlerini geçiyor (r +0,03, ilk 5 beta 1,37) ama IC hâlâ
+  negatif (−0,042, t −1,36) ve skor–volatilite korelasyonu +0,43. Momentum artık IC +0,023
+  (t 0,90); QQQ ↓ rejiminde onun da t'si −2,22.
+
 Kod: `research/data.py` (hedefler, beta, rejim, bölmeler), `research/models.py`,
 `research/metrics.py`, `research/experiment.py`, `research/report.py`.
 
@@ -63,8 +84,8 @@ Kod: `research/data.py` (hedefler, beta, rejim, bölmeler), `research/models.py`
 
 Aynı değerlendirme çerçevesine, sırası sonuçlara göre belirlenir:
 
-1. Risk-nötr sıralama veya yeni özellikler (ör. daha uzun momentum); seçim validation
-   sonuçlarına bakılarak özellik atmak biçiminde yapılmaz.
+1. Deney 4 (Deney 3'ün önceden yazılı kuralı gereği): uzun momentum, 60/120/250 seans
+   getirisi. Seçim validation sonuçlarına bakılarak özellik atmak biçiminde yapılmaz.
 2. Lojistik regresyon (yön olasılığı; AUC ve kalibrasyon eklenir).
 3. LightGBM (yeni bağımlılık; yalnız bu adımda eklenir).
 4. 5 ve 10 seanslık ufuklar.

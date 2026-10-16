@@ -66,13 +66,15 @@ uv run python train_baseline.py --deney 1
 uv run python train_baseline.py --deney 2
 uv run python train_baseline.py --deney 3
 uv run python train_baseline.py --deney 4a
+uv run python train_baseline.py --deney 4b
 ```
 
 20 seanslık ufukta basit kıyaslar ve Ridge K1–K4 validation yıllarında karşılaştırılır.
 Deney 1 ham özellikleri ve iki hedefi (hissenin kendi getirisi, QQQ'ya göre getiri),
 Deney 2 gün içi sıralanmış özellikleri ve gün ortalamasından arındırılmış hedefi kullanır.
 Deney 3 aynı özelliklerle betadan arındırılmış artık getiriyi hedefler. Deney 4a, Deney 1'in
-kurulumunda Ridge yerine sabit ayarlı LightGBM kullanır (macOS'ta `brew install libomp` gerekir).
+kurulumunda Ridge yerine sabit ayarlı LightGBM kullanır (macOS'ta `brew install libomp` gerekir);
+Deney 4b buna QQQ ve VIX'ten 6 piyasa durumu özelliği ekler.
 2025+ test dönemi okunmaz. Rapor `output/experiments/<zaman>_<deney>_h20/RAPOR.md` altına yazılır.
 Ayrıntılar: [docs/asama1_plan.md](docs/asama1_plan.md).
 

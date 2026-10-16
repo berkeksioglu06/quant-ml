@@ -7,6 +7,7 @@ import math
 from .data import REGIMES
 from .experiment import (
     ERROR_BASELINES,
+    LGBM_REFERENCE,
     NEUTRAL_MODEL,
     RANK_BASELINES,
     REFERENCE_MODEL,
@@ -30,6 +31,7 @@ MODEL_NAMES = {
     "lightgbm": "**LightGBM**",
     "ridge_beta_notr": "Ridge · beta-nötrlenmiş skor",
     "ridge_deney1": "Ridge · Deney 1 (referans)",
+    "lightgbm_4a": "LightGBM 4a (aynı satırlar)",
 }
 MAIN_LABELS = {"ridge": "Ridge", "lightgbm": "LightGBM"}
 REGIME_NAMES = {"yukari": "QQQ ↑", "yatay": "Yatay", "asagi": "QQQ ↓"}
@@ -79,10 +81,18 @@ def table(header, rows, left=1):
     return "\n".join(lines)
 
 
+def _label(config):
+    return config.get("main_label") or MAIN_LABELS[config["main_model"]]
+
+
+def _name(model, config):
+    return f"**{_label(config)}**" if model == config["main_model"] else MODEL_NAMES[model]
+
+
 def _rank_models(summary, main):
     present = set(summary["model"])
-    order = (*RANK_BASELINES, *RISK_BASELINES, main, NEUTRAL_MODEL, REFERENCE_MODEL)
-    return [m for m in order if m in present]
+    order = (main, NEUTRAL_MODEL, LGBM_REFERENCE, REFERENCE_MODEL, *RANK_BASELINES)
+    return [m for m in (*order, *RISK_BASELINES) if m in present]
 
 
 def _universe(context):
@@ -151,24 +161,35 @@ def _criteria_lines(config, folds, summary, context):
     spec = CRITERIA[config["criteria"]]
     main = config["main_model"]
     universe = _universe(context)
+    present = set(summary["model"])
+    infos = [m for m in dict.fromkeys((LGBM_REFERENCE, spec["info"])) if m in present]
     lines = []
     for target in config["targets"]:
         own = criteria_rows(config["criteria"], main, target, folds, summary, universe)
-        info = criteria_rows(config["criteria"], spec["info"], target, folds, summary, universe)
+        others = [
+            criteria_rows(config["criteria"], m, target, folds, summary, universe) for m in infos
+        ]
         rows = [
-            [a[0], a[1], f"{'✅' if a[3] else '❌'} {a[2]}", f"{'✅' if b[3] else '❌'} {b[2]}"]
-            for a, b in zip(own, info, strict=True)
+            [
+                a[0],
+                a[1],
+                *[f"{'✅' if c[3] else '❌'} {c[2]}" for c in (a, *(o[i] for o in others))],
+            ]
+            for i, a in enumerate(own)
         ]
         passed = all(c[3] for c in own)
-        label = MAIN_LABELS[main]
+        label = _label(config)
+        info_labels = [
+            spec["info_label"] if m == spec["info"] else f"{MODEL_NAMES[m]} (bilgi)" for m in infos
+        ]
         lines += [
             para(
                 f"**Önceden yazılı başarı kriteri: {'karşılandı' if passed else 'karşılanmadı'}.** ",
-                f"Karar {label} satırına göre verilir; son sütun bilgi içindir.",
+                f"Karar {label} satırına göre verilir; diğer sütunlar bilgi içindir.",
                 spec["passed"] if passed else spec["failed"],
             ),
             "",
-            table(["Kriter", "Eşik", label, spec["info_label"]], rows, left=2),
+            table(["Kriter", "Eşik", label, *info_labels], rows, left=2),
             "",
             para(
                 '"Düşen piyasada belirgin negatif değil" ölçüsü: QQQ ↓ rejimindeki günlük IC\'lerin ',
@@ -176,8 +197,36 @@ def _criteria_lines(config, folds, summary, context):
                 f"{plain(universe['beta'])}.",
             ),
             "",
+            *_thin_ic_note(config, folds, target),
         ]
     return lines
+
+
+def _ic_cell(row):
+    """Dönem IC'si; IC günlerin %90'ından azında hesaplanabildiyse gün sayısıyla."""
+    cell = num(row["ic_mean"])
+    if not _missing(row.get("ic_days")) and row["ic_days"] < 0.9 * row["val_days"]:
+        cell += f" ({int(row['ic_days'])}/{int(row['val_days'])} g)"
+    return cell
+
+
+def _thin_ic_note(config, folds, target):
+    main = config["main_model"]
+    f = folds.loc[folds["target"].eq(target) & folds["model"].eq(main)]
+    thin = f.loc[f["ic_days"] < 0.5 * f["val_days"]]
+    if thin.empty:
+        return []
+    parts = ", ".join(
+        f"{r.fold} ({int(r.ic_days)}/{int(r.val_days)} gün)" for r in thin.itertuples()
+    )
+    return [
+        para(
+            f"Dikkat: {_label(config)} şu dönemlerde günlerin çoğunda bütün hisselere aynı skoru ",
+            f"verdi; o dönemin IC'si az sayıda güne dayanıyor: {parts}. Kural değişmedi; ",
+            "sabit skorlu günler IC'ye girmez (bölüm 2'de bilgi için 0 sayılmış hali var).",
+        ),
+        "",
+    ]
 
 
 def verdict(target, folds, summary, consistency, main):
@@ -241,7 +290,7 @@ def verdict(target, folds, summary, consistency, main):
 def _short_answer(config, folds, summary, consistency, context, exposures):
     names = [f["name"] for f in config["folds"]]
     main = config["main_model"]
-    label = MAIN_LABELS[main]
+    label = _label(config)
     universe = _universe(context)
     lines = _criteria_lines(config, folds, summary, context) if config.get("criteria") else []
     for target in config["targets"]:
@@ -274,13 +323,15 @@ def _short_answer(config, folds, summary, consistency, context, exposures):
                 f"(evren: {plain(universe['beta'])} / {plain(universe['vol'])}).",
             ),
         ]
-        if REFERENCE_MODEL in s.index:
-            ref = s.loc[REFERENCE_MODEL]
+        for ref_name in (LGBM_REFERENCE, REFERENCE_MODEL):
+            if ref_name not in s.index:
+                continue
+            ref = s.loc[ref_name]
             better = "üstünde" if v["main_ic"] > ref["ic_mean"] else "altında"
             lines.append(
                 para(
-                    f"- Deney 1 Ridge'i (referans) K1–K4 rank IC {num(ref['ic_mean'])} ",
-                    f"(t = {num(ref['ic_t_nw'], 2)}); bu deneyin ana modeli referansın {better}.",
+                    f"- {MODEL_NAMES[ref_name]}: K1–K4 rank IC {num(ref['ic_mean'])} ",
+                    f"(t = {num(ref['ic_t_nw'], 2)}); bu deneyin ana modeli bunun {better}.",
                 )
             )
         lines.append("")
@@ -322,11 +373,12 @@ def _error_section(config, folds, summary):
         f = folds.loc[folds["target"].eq(target)].set_index(["model", "fold"])
         s = summary.loc[summary["target"].eq(target)].set_index("model")
         models = [*ERROR_BASELINES, main]
-        if REFERENCE_MODEL in s.index and s.loc[REFERENCE_MODEL, "kind"] == "forecast":
-            models.append(REFERENCE_MODEL)
+        for ref_name in (LGBM_REFERENCE, REFERENCE_MODEL):
+            if ref_name in s.index and s.loc[ref_name, "kind"] == "forecast":
+                models.append(ref_name)
         rows = [
             [
-                MODEL_NAMES[m],
+                _name(m, config),
                 *[pct(f.loc[(m, k), "r2_oos"]) for k in names],
                 pct(s.loc[m, "r2_oos"]),
                 f"{s.loc[m, 'mse']:.5f}",
@@ -360,8 +412,8 @@ def _rank_section(config, folds, summary):
         s = summary.loc[summary["target"].eq(target)].set_index("model")
         rows = [
             [
-                MODEL_NAMES[m],
-                *[num(f.loc[(m, k), "ic_mean"]) for k in names],
+                _name(m, config),
+                *[_ic_cell(f.loc[(m, k)]) for k in names],
                 num(s.loc[m, "ic_mean"]),
                 num(s.loc[m, "ic_t_nw"], 2),
                 f"{100 * s.loc[m, 'ic_pos_frac']:.0f}%",
@@ -371,6 +423,22 @@ def _rank_section(config, folds, summary):
         ]
         header = ["Model", *names, "K1–K4", "NW t", "IC>0 gün", f"Top{k_top}−tümü"]
         lines += [f"**{TARGET_NAMES[target]}**", "", table(header, rows), ""]
+    thin = summary.loc[summary["ic_days"] < summary["val_days"]]
+    if not thin.empty:
+        lines += [
+            para(
+                "IC'si bazı günlerde hesaplanamayan satırlar (o gün bütün hisselere aynı skor; ",
+                "sıralama yok): ",
+                "; ".join(
+                    ("" if len(config["targets"]) == 1 else f"{TARGET_NAMES[r.target]} · ")
+                    + f"{_name(r.model, config)} {int(r.ic_days)}/{int(r.val_days)} gün, "
+                    f"sabit günler 0 sayılırsa K1–K4 IC {num(r.ic_zero_filled)}"
+                    for r in thin.itertuples()
+                ),
+                ". Dönem hücresinde parantez: IC günü / validation günü (%90'ın altındaysa).",
+            ),
+            "",
+        ]
     note = [
         "Not: Günlük rank IC, hedefe aynı gün bütün hisselerde aynı olan bir sabit ",
         "eklenmesinden etkilenmez (QQQ getirisi, gün ortalaması). ",
@@ -430,7 +498,7 @@ def _regime_section(config, summary, context):
         models = _rank_models(s.reset_index(), config["main_model"])
         regime_rows = [
             [
-                MODEL_NAMES[m],
+                _name(m, config),
                 num(s.loc[m, "ic_mean"]),
                 num(s.loc[m, "ic_raw_mean"]),
                 num(s.loc[m, "ic_beta_mean"]),
@@ -441,7 +509,7 @@ def _regime_section(config, summary, context):
         ]
         risk_rows = [
             [
-                MODEL_NAMES[m],
+                _name(m, config),
                 num(s.loc[m, "corr_beta"], 2),
                 num(s.loc[m, "corr_vol"], 2),
                 plain(s.loc[m, "top5_beta"]),
@@ -483,7 +551,7 @@ def _consistency_section(config, consistency):
     return [
         "## 4. Dönemler arası tutarlılık",
         "",
-        f"{MAIN_LABELS[config['main_model']]} satırının dönem bazında kıyasları geçtiği dönem sayısı.",
+        f"{_label(config)} satırının dönem bazında kıyasları geçtiği dönem sayısı.",
         "",
         table(["Hedef", *columns.values()], rows),
         "",
@@ -537,13 +605,14 @@ def _context_section(config, context, result):
     header = ["Dönem", "Sinyal günleri", "Hisse", f"QQQ {h}g ort.", f"Hisse {h}g ort."]
     header += ["Gün ↑/yatay/↓", "Beta kapsamı", *[f"{label} {TARGET_NAMES[t]}" for t in targets]]
     if "excluded_train" in context:
-        header.append("Betasız dışarıda (eğitim / val.)")
+        reason = "Piyasa özelliği eksik" if config.get("universe") == "market" else "Betasız"
+        header.append(f"{reason}, dışarıda (eğitim / val.)")
     return ["## 5. Dönem bağlamı", "", table(header, rows, left=2), "", note, ""]
 
 
 def _why_section(config, result):
     names = [f["name"] for f in config["folds"]]
-    label = MAIN_LABELS[config["main_model"]]
+    label = _label(config)
     exp = result["exposures"]
     fic = result["feature_ic"].pivot_table(
         index=["feature", "fold"], columns="partition", values="ic_mean"
@@ -555,7 +624,10 @@ def _why_section(config, result):
             top = e.abs().sort_values(ascending=False).index[:3]
             rows.append([TARGET_NAMES[target], k, ", ".join(f"{x} {e[x]:+.2f}" for x in top)])
     lead = exp.assign(a=exp["corr"].abs()).groupby("feature")["a"].mean()
-    lead = [x.removeprefix("xs_") for x in lead.sort_values(ascending=False).index[:4]]
+    # Tek başına IC yalnız hisseye özgü özelliklerde anlamlı; market_* o gün herkeste aynı.
+    known = set(fic.index.get_level_values("feature"))
+    lead = [x.removeprefix("xs_") for x in lead.sort_values(ascending=False).index]
+    lead = [x for x in lead if x in known and not x.startswith("market_")][:4]
     ic_rows = [
         [
             x,
@@ -621,105 +693,223 @@ def _direction(delta):
     return "+" if delta > 1e-9 else "−" if delta < -1e-9 else "düz"
 
 
+def _trees_table(config, result, target, names):
+    trees = result["trees"].loc[result["trees"]["target"].eq(target)]
+    models = list(dict.fromkeys(trees["model"]))
+    t = trees.set_index(["model", "fold"])
+    header = ["Dönem"]
+    for m in models:
+        short = _label(config) if m == config["main_model"] else MODEL_NAMES[m]
+        header += [f"{short} ağaç", f"{short} iç l2"]
+    rows = [
+        [
+            k,
+            *[
+                cell
+                for m in models
+                for cell in (f"{t.loc[(m, k), 'n_trees']:d}", f"{t.loc[(m, k), 'inner_mse']:.5f}")
+            ],
+        ]
+        for k in names
+    ]
+    return table(header, rows)
+
+
+def _curve_table(config, curve, names):
+    counts = config["lightgbm"]["tree_curve"]["counts"]
+    header = ["Dönem", "Ölçü", *[str(n) for n in counts], "Seçilen"]
+    rows = []
+    for k in names:
+        fold = curve.loc[curve["fold"].eq(k)].set_index("n_trees")
+        chosen = int(fold["chosen"].iloc[0])
+        for metric, title, fmt in (("l2", "iç l2", "{:.5f}"), ("rank_ic", "iç rank IC", "{:+.3f}")):
+            cells = []
+            for n in counts:
+                cell = fmt.format(fold.loc[n, metric])
+                cells.append(f"**{cell}**" if n == chosen else cell)
+            rows.append([k, title, *cells, f"{fmt.format(fold.loc[chosen, metric])} (n={chosen})"])
+    return table(header, rows, left=2)
+
+
+def _importance_lines(config, imp, target, names):
+    main = config["main_model"]
+    part = imp.loc[imp["target"].eq(target) & imp["model"].eq(main)]
+    tops = {
+        k: part.loc[part["fold"].eq(k)].sort_values("gain_share", ascending=False).head(10)
+        for k in names
+    }
+    rows = [
+        [
+            str(i + 1),
+            *[
+                (
+                    f"{tops[k].iloc[i]['feature']} {100 * tops[k].iloc[i]['gain_share']:.0f}%"
+                    if i < len(tops[k]) and tops[k].iloc[i]["gain_share"] > 0
+                    else "—"
+                )
+                for k in names
+            ],
+        ]
+        for i in range(10)
+    ]
+    market = []
+    for feature in ("market_qqq_return_20", "market_spy_return_20"):
+        cells = []
+        for k in names:
+            fold = part.loc[part["fold"].eq(k)].sort_values("gain_share", ascending=False)
+            share = float(fold.set_index("feature").loc[feature, "gain_share"])
+            rank = int(fold["feature"].tolist().index(feature)) + 1
+            cells.append(f"{k} {100 * share:.0f}%" + (f" ({rank}.)" if share > 0 else ""))
+        market.append(f"`{feature}`: " + ", ".join(cells))
+    lines = [
+        para(
+            f"**{TARGET_NAMES[target]}** — {_label(config)} kazanç (gain) payı, dönem başına ",
+            "ilk 10 özellik (kullanılmayan özellik —):",
+        ),
+        "",
+        table(["Sıra", *names], rows),
+        "",
+        "Piyasa özellikleri kullanılıyor mu? " + " · ".join(market) + ".",
+        "",
+    ]
+    if config.get("market_features"):
+        new = set(config["market_features"])
+        shares = []
+        for k in names:
+            fold = part.loc[part["fold"].eq(k)]
+            used = fold.loc[fold["feature"].isin(new) & fold["gain_share"].gt(0)]
+            detail = ", ".join(
+                f"{r.feature} {100 * r.gain_share:.0f}%"
+                for r in used.sort_values("gain_share", ascending=False).itertuples()
+            )
+            total = float(fold.loc[fold["feature"].isin(new), "gain_share"].sum())
+            shares.append([k, f"{100 * total:.0f}%", detail or "—"])
+        lines += [
+            f"6 yeni piyasa durumu özelliğinin toplam kazanç payı ({_label(config)}):",
+            "",
+            table(["Dönem", "Toplam pay", "Kullanılanlar"], shares, left=1),
+            "",
+        ]
+    return lines
+
+
+def _dependence_table(dep, target, condition, names):
+    part = dep.loc[dep["target"].eq(target) & dep["condition"].eq(condition)]
+    quantiles = sorted(part["quantile"].unique())
+    rows = []
+    for k in names:
+        fold = part.loc[part["fold"].eq(k)]
+        deltas = {}
+        for subset, title in (("pozitif", "> 0"), ("negatif", "< 0")):
+            sub = fold.loc[fold["subset"].eq(subset)].set_index("quantile")
+            if sub.empty:
+                rows.append([k, f"{title} (0 satır)", *["—"] * len(quantiles), "—"])
+                deltas[subset] = None
+                continue
+            deltas[subset] = sub.loc[quantiles[-1], "pd"] - sub.loc[quantiles[0], "pd"]
+            rows.append(
+                [
+                    k,
+                    f"{title} ({int(sub['rows'].iloc[0])} satır)",
+                    *[pct(sub.loc[q, "pd"]) for q in quantiles],
+                    pct(deltas[subset]),
+                ]
+            )
+        if None in deltas.values():
+            rows[-1].append("— (boş alt küme)")
+        else:
+            same = _direction(deltas["pozitif"]) == _direction(deltas["negatif"])
+            rows[-1].append("aynı" if same else "**farklı**")
+        rows[-2].append("")
+    header = ["Dönem", f"`{condition}`", *[f"vol q{100 * q:.0f}" for q in quantiles]]
+    header += ["Δ (q90 − q10)", "Yön"]
+    return table(header, rows, left=2)
+
+
 def _lgbm_section(config, result):
     names = [f["name"] for f in config["folds"]]
-    trees = result["trees"].set_index(["target", "fold"])
-    imp = result["importance"]
     dep = result["partial_dependence"]
+    curve = result["tree_curve"]
     pd_spec = config["lightgbm"]["partial_dependence"]
     lines = ["## 7. LightGBM ayrıntıları", ""]
     for target in config["targets"]:
-        rows = [
-            [
-                k,
-                f"{trees.loc[(target, k), 'n_trees']:d}",
-                f"{trees.loc[(target, k), 'inner_mse']:.5f}",
-            ]
-            for k in names
-        ]
         lines += [
-            f"**{TARGET_NAMES[target]}** — ağaç sayısı",
+            f"**{TARGET_NAMES[target]}** — seçilen ağaç sayısı ve iç validation l2",
             "",
-            table(["Dönem", "Ağaç", "İç validation MSE"], rows),
+            _trees_table(config, result, target, names),
             "",
         ]
-        part = imp.loc[imp["target"].eq(target)]
-        tops = {
-            k: part.loc[part["fold"].eq(k)].sort_values("gain_share", ascending=False).head(10)
-            for k in names
-        }
-        rows = [
-            [
-                str(i + 1),
-                *[
-                    (
-                        f"{tops[k].iloc[i]['feature']} {100 * tops[k].iloc[i]['gain_share']:.0f}%"
-                        if i < len(tops[k]) and tops[k].iloc[i]["gain_share"] > 0
-                        else "—"
-                    )
-                    for k in names
-                ],
+        if curve is not None:
+            part = curve.loc[curve["target"].eq(target)]
+            lines += [
+                para(
+                    f"**{TARGET_NAMES[target]}** — early stopping incelemesi (4a ayarları, ",
+                    "24 özellik). İç bölmede early stopping olmadan "
+                    f"{config['lightgbm']['max_trees']} ağaç eğitildi; her ağaç sayısında iç ",
+                    "validation l2'si (kırpılmamış hedef, early stopping'in ölçüsü) ve günlük ",
+                    "rank IC'si. Kalın hücre ve son sütun 4a'nın seçtiği ağaç sayısı. ",
+                    "Yalnız rapor; seçim değişmez.",
+                ),
+                "",
+                _curve_table(config, part, names),
+                "",
             ]
-            for i in range(10)
-        ]
-        market = []
-        for feature in ("market_qqq_return_20", "market_spy_return_20"):
-            cells = []
-            for k in names:
-                fold = part.loc[part["fold"].eq(k)].sort_values("gain_share", ascending=False)
-                share = float(fold.set_index("feature").loc[feature, "gain_share"])
-                rank = int(fold["feature"].tolist().index(feature)) + 1
-                cells.append(f"{k} {100 * share:.0f}%" + (f" ({rank}.)" if share > 0 else ""))
-            market.append(f"`{feature}`: " + ", ".join(cells))
-        lines += [
-            para(
-                f"**{TARGET_NAMES[target]}** — kazanç (gain) payı, dönem başına ilk 10 özellik ",
-                "(kullanılmayan özellik —):",
-            ),
-            "",
-            table(["Sıra", *names], rows),
-            "",
-            "Piyasa özellikleri kullanılıyor mu? " + " · ".join(market) + ".",
-            "",
-        ]
-        part = dep.loc[dep["target"].eq(target)]
-        quantiles = sorted(part["quantile"].unique())
-        rows = []
-        for k in names:
-            fold = part.loc[part["fold"].eq(k)]
-            deltas = {}
-            for subset, title in (("pozitif", "> 0"), ("negatif", "< 0")):
-                sub = fold.loc[fold["subset"].eq(subset)].set_index("quantile")
-                deltas[subset] = sub.loc[quantiles[-1], "pd"] - sub.loc[quantiles[0], "pd"]
-                rows.append(
-                    [
-                        k,
-                        f"QQQ 20g {title} ({int(sub['rows'].iloc[0])} satır)",
-                        *[pct(sub.loc[q, "pd"]) for q in quantiles],
-                        pct(deltas[subset]),
-                    ]
-                )
-            same = _direction(deltas["pozitif"]) == _direction(deltas["negatif"])
-            rows[-1].append("aynı" if same else "**farklı**")
-            rows[-2].append("")
-        header = ["Dönem", "Alt küme", *[f"vol q{100 * q:.0f}" for q in quantiles]]
-        header += ["Δ (q90 − q10)", "Yön"]
+        lines += _importance_lines(config, result["importance"], target, names)
         lines += [
             para(
                 f"**{TARGET_NAMES[target]}** — basit kısmi bağımlılık: `{pd_spec['feature']}` ",
-                "sabit değerlere çekildiğinde ortalama tahmini 20 seanslık getiri, ",
-                f"`{pd_spec['condition']}` alt kümelerinde ayrı. Izgara o dönemin validation ",
+                "sabit değerlere çekildiğinde ortalama tahmini 20 seanslık getiri, koşul ",
+                "özelliği > 0 ve < 0 alt kümelerinde ayrı. Izgara o dönemin validation ",
                 "satırlarındaki volatilite kantilleri. Yön iki alt kümede farklıysa model ",
                 "piyasa durumuna bağlı (koşullu) bir volatilite ilişkisi kurmuş demektir.",
             ),
             "",
-            table(header, rows, left=2),
-            "",
         ]
-    lines += [
-        "Ayrıntılar: `lgbm_trees.csv`, `lgbm_importance.csv`, `lgbm_partial_dependence.csv`.",
+        for condition in dict.fromkeys(dep["condition"]):
+            lines += [_dependence_table(dep, target, condition, names), ""]
+    files = ["lgbm_trees.csv", "lgbm_importance.csv", "lgbm_partial_dependence.csv"]
+    if curve is not None:
+        files.append("lgbm_tree_curve.csv")
+    lines += ["Ayrıntılar: " + ", ".join(f"`{f}`" for f in files) + ".", ""]
+    return lines
+
+
+def _coverage_section(config):
+    coverage = config.get("market_coverage")
+    if not coverage:
+        return []
+    rows = [[r["fold"], r["partition"], r["rows"], r["missing_any"]] for r in coverage["summary"]]
+    missing = [r for r in coverage["detail"] if r["missing"] > 0]
+    detail = [
+        [
+            r["fold"],
+            r["partition"],
+            f"`{r['feature']}`",
+            r["missing"],
+            f"{r['first_missing'][:10]} → {r['last_missing'][:10]}",
+        ]
+        for r in missing
+    ]
+    excluded = sum(r["missing_any"] for r in coverage["summary"])
+    lines = [
+        "## 8. Yeni özelliklerin kapsamı",
+        "",
+        para(
+            "Bütün uygun satırlarda sayıldı; doldurma yapılmadı. En az bir yeni özelliği eksik ",
+            "olan satır deneyden çıkarılır ve bütün modeller (4a referansı dahil) kalan ortak ",
+            f"satırlarda çalışır. Toplam çıkarılan: {excluded} satır.",
+        ),
+        "",
+        table(["Dönem", "Bölme", "Satır", "En az bir yeni özelliği eksik"], rows, left=2),
         "",
     ]
+    if detail:
+        lines += [
+            table(["Dönem", "Bölme", "Özellik", "Eksik satır", "Tarih aralığı"], detail, left=3),
+            "",
+        ]
+    else:
+        lines += ["Hiçbir yeni özellikte eksik değer yok; satır kümesi 4a ile aynı.", ""]
     return lines
 
 
@@ -734,6 +924,13 @@ TARGET_SETUP = {
 }
 FEATURE_SETUP = {
     "raw": "manifestteki 24 `feature_columns`, ham değerleriyle (market_* dahil).",
+    "raw_market": para(
+        "manifestteki 24 `feature_columns` + 6 piyasa durumu özelliği ",
+        "(`market_qqq_return_5`, `market_qqq_return_60`, `market_qqq_sma50_dist`, ",
+        "`market_qqq_sma200_dist`, `market_vix_close`, `market_vix_change_5`), ham. Yeni ",
+        "özellikler aynı gün bütün hisselerde aynıdır ve sıraya çevrilmedi; QQQ seans takvimi, ",
+        "tam pencere, yalnız t kapanışına kadarki veri, doldurma yok.",
+    ),
     "xs_rank": para(
         "manifestteki özelliklerden aynı gün bütün hisselerde aynı olanlar (market_*) ",
         "çıkarıldı; kalan {n} özellik her gün hisseler arasında sıraya çevrildi (−0,5…+0,5).",
@@ -795,6 +992,21 @@ def _setup_section(config):
                 "ve hedef bu evrende hesaplandı.",
             )
         )
+    if config.get("universe") == "market":
+        excluded = sum(r["missing_any"] for r in config["market_coverage"]["summary"])
+        lines.append(
+            para(
+                "- Evren: yalnız 6 yeni özelliği eksiksiz olan satırlar; dışarıda kalan ",
+                f"{excluded} satır (bölüm 8).",
+            )
+        )
+    if config.get("lgbm_reference_model"):
+        lines.append(
+            para(
+                "- LightGBM 4a referansı: 24 özellik, aynı ayarlar, aynı satırlarda yeniden ",
+                "eğitildi.",
+            )
+        )
     if config.get("beta_neutral_row"):
         lines.append(
             para(
@@ -808,10 +1020,13 @@ def _setup_section(config):
         )
     prefix = "lgbm" if config["main_model"] == "lightgbm" else "ridge"
     model_files = (
-        "`lgbm_trees.csv`, `lgbm_importance.csv`, `lgbm_partial_dependence.csv`"
+        "`lgbm_trees.csv`, `lgbm_importance.csv`, `lgbm_partial_dependence.csv`, "
+        "`lgbm_tree_curve.csv`"
         if prefix == "lgbm"
         else "`ridge_coefficients.csv`, `ridge_alpha.csv`"
     )
+    if config.get("market_coverage"):
+        model_files += ", `market_coverage.csv`, `market_coverage_detail.csv`"
     lines += [
         "- Değerlendirme her zaman kırpılmamış hedefle yapılır.",
         "",
@@ -860,6 +1075,7 @@ def write_report(output, config, result, summary, consistency, context):
         *_context_section(config, context, result),
         *_why_section(config, result),
         *model_section,
+        *_coverage_section(config),
         *_setup_section(config),
     ]
     (output / "RAPOR.md").write_text("\n".join(lines), encoding="utf-8")

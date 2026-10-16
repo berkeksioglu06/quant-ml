@@ -14,6 +14,8 @@ from sklearn.linear_model import Ridge
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
+from .metrics import daily_rank_ic
+
 ALPHA_GRID = tuple(float(a) for a in np.logspace(0, 6, 13))
 LGBM_SEED = 20261016
 # Sabit ve sığ ayarlar; validation sonuçlarına bakılarak değiştirilmez.
@@ -29,6 +31,7 @@ LGBM_PARAMS = {
 }
 LGBM_MAX_TREES = 2000
 LGBM_EARLY_STOPPING = 100
+TREE_CURVE = (1, 5, 10, 25, 50, 100, 200, 400, 1000, 2000)
 
 
 def purged_inner_split(train, inner_sessions=252):
@@ -244,6 +247,32 @@ class LGBMModel:
 
     def predict(self, frame):
         return self.model_.predict(self._matrix(frame))
+
+    def tree_curve(self, train, target, counts=TREE_CURVE):
+        """Yalnız inceleme: iç bölmede early stopping olmadan ``max_trees`` ağaç eğitir.
+
+        Her ağaç sayısında iç validation l2'si (kırpılmamış hedef, early stopping'in
+        ölçüsü) ve günlük rank IC'si döner. Ağaçlar seed sabit olduğu için early
+        stopping'li eğitimin ilk ağaçlarıyla aynıdır. Modelin seçimini değiştirmez.
+        """
+        inner_train, inner_val = self.inner_split(train)
+        full = self._regressor(self.max_trees).fit(
+            self._matrix(inner_train), clipped_target(inner_train, target, self.quantile)
+        )
+        X = self._matrix(inner_val)
+        y = inner_val[target].to_numpy(dtype=float)
+        rows = []
+        for n in counts:
+            pred = full.predict(X, num_iteration=n)
+            frame = inner_val[["date"]].assign(pred=pred, y=y)
+            rows.append(
+                {
+                    "n_trees": n,
+                    "l2": float(np.mean((y - pred) ** 2)),
+                    "rank_ic": float(daily_rank_ic(frame).mean()),
+                }
+            )
+        return pd.DataFrame(rows)
 
     def importance(self):
         """Toplam kazanç (gain) payı; toplam 1."""

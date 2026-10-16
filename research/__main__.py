@@ -21,7 +21,7 @@ def main():
         "--deney",
         choices=sorted(EXPERIMENTS),
         default="1",
-        help="1, 2, 3: Ridge deneyleri; 4a: LightGBM (ayrıntılar docs/asama1_plan.md)",
+        help="1, 2, 3: Ridge; 4a: LightGBM; 4b: LightGBM + piyasa durumu (docs/asama1_plan.md)",
     )
     parser.add_argument(
         "--output",

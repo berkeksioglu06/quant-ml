@@ -15,6 +15,8 @@ from research.data import (
     cross_sectional_rank,
     daily_returns,
     load_panel,
+    market_coverage,
+    market_state_from_frames,
     residual_return,
     rolling_beta,
 )
@@ -260,18 +262,109 @@ def test_rolling_beta_recovers_multiplier_and_uses_only_past():
 
 def price_frame(close, index, eligible=True):
     close = np.asarray(close, dtype=float)
+    open_ = np.r_[close[0], close[:-1]]
     return pd.DataFrame(
         {
-            "open": np.r_[close[0], close[:-1]],
-            "high": close * 1.01,
-            "low": close * 0.99,
+            "open": open_,
+            "high": np.maximum(open_, close) * 1.01,
+            "low": np.minimum(open_, close) * 0.99,
             "close": close,
             "adj_close": close,
+            "volume": 1_000_000,
+            "splits": 0.0,
             "eligible": eligible,
             "is_session": True,
         },
         index=index,
     )
+
+
+def market_frames(seed=12, start="2020-01-02", end="2021-12-31"):
+    import exchange_calendars as xc
+
+    index = xc.get_calendar("XNYS").sessions_in_range(start, end)
+    rng = np.random.default_rng(seed)
+    qqq = price_frame(100 * np.cumprod(1 + rng.normal(0, 0.01, len(index))), index)
+    vix = price_frame(20 * np.exp(np.cumsum(rng.normal(0, 0.05, len(index)))), index)
+    return index, qqq, vix
+
+
+def test_market_state_ignores_prices_after_t():
+    _, qqq, vix = market_frames()
+    base = market_state_from_frames(qqq, vix)
+    t = 300
+    later_q, later_v = qqq.copy(), vix.copy()
+    for frame in (later_q, later_v):
+        frame.iloc[t + 1 :, :5] *= 1.7
+    moved = market_state_from_frames(later_q, later_v)
+    pd.testing.assert_series_equal(base.iloc[t], moved.iloc[t])
+    assert not np.allclose(base.iloc[t + 10], moved.iloc[t + 10])
+    # Tam pencere: SMA200 ilk 199 seansta, 60 seanslık getiri ilk 60 seansta yok.
+    assert base["market_qqq_sma200_dist"].iloc[:199].isna().all()
+    assert base["market_qqq_sma200_dist"].iloc[199:].notna().all()
+    assert base["market_qqq_return_60"].iloc[:60].isna().all()
+    close = qqq["adj_close"]
+    assert base["market_qqq_return_5"].iloc[t] == pytest.approx(
+        close.iloc[t] / close.iloc[t - 5] - 1
+    )
+    assert base["market_qqq_sma50_dist"].iloc[t] == pytest.approx(
+        close.iloc[t] / close.iloc[t - 49 : t + 1].mean() - 1
+    )
+
+
+def test_vix_is_aligned_to_qqq_sessions():
+    index, qqq, vix = market_frames()
+    missing = index[250]
+    weekend = pd.Timestamp("2021-01-09")
+    extra = vix.loc[[index[0]]].set_axis(pd.DatetimeIndex([weekend]))
+    vix = pd.concat([vix.drop(missing), extra]).sort_index()
+    out = market_state_from_frames(qqq, vix)
+    assert out.index.equals(pd.DatetimeIndex(index, name="date"))
+    assert weekend not in out.index
+    assert np.isnan(out.loc[missing, "market_vix_close"])
+    change = out["market_vix_change_5"]
+    assert change.iloc[250:256].isna().all()
+    assert change.iloc[256:].notna().all()
+    assert out.loc[index[249], "market_vix_close"] == pytest.approx(vix.loc[index[249], "close"])
+    assert out["market_qqq_return_5"].iloc[250:256].notna().all()
+
+
+def test_market_coverage_counts_missing_rows_and_dates():
+    dates = pd.bdate_range("2021-01-04", periods=6)
+    rows = pd.DataFrame(
+        {
+            "fold": ["K1"] * 6 + ["K2"] * 6,
+            "partition": (["train"] * 3 + ["validation"] * 3) * 2,
+            "date": list(dates) * 2,
+            "a": 1.0,
+            "b": 1.0,
+        }
+    )
+    rows.loc[[0, 1], "a"] = np.nan
+    rows.loc[[1, 2], "b"] = np.nan
+    rows.loc[9, "b"] = np.nan
+    summary, detail = market_coverage(rows, ["a", "b"])
+    s = summary.set_index(["fold", "partition"])
+    assert s.loc[("K1", "train"), "rows"] == 3
+    assert s.loc[("K1", "train"), "missing_any"] == 3
+    assert s.loc[("K1", "validation"), "missing_any"] == 0
+    assert s.loc[("K2", "validation"), "missing_any"] == 1
+    d = detail.set_index(["fold", "partition", "feature"])
+    assert d.loc[("K1", "train", "a"), "missing"] == 2
+    assert d.loc[("K1", "train", "b"), "first_missing"] == dates[1]
+    assert d.loc[("K1", "train", "b"), "last_missing"] == dates[2]
+    assert d.loc[("K2", "validation", "b"), "first_missing"] == dates[3]
+    assert pd.isna(d.loc[("K2", "train", "a"), "first_missing"])
+
+
+def test_tree_curve_matches_early_stopping_choice():
+    rows = synthetic_rows(days=1200)
+    train = rows.iloc[: len(rows) // 2]
+    model = LGBMModel(["signal", "noise"]).fit(train, "y")
+    curve = model.tree_curve(train, "y", counts=[1, model.n_trees_, 50]).set_index("n_trees")
+    # Aynı ağaçlar: LightGBM'in kendi l2 hesabıyla yalnız kayan nokta düzeyinde fark.
+    assert curve.loc[model.n_trees_, "l2"] == pytest.approx(model.inner_mse_, rel=1e-6)
+    assert curve["l2"].min() == pytest.approx(curve.loc[model.n_trees_, "l2"])
 
 
 def test_beta_from_prices_ignores_later_prices_and_ineligible_days():
@@ -393,13 +486,14 @@ def test_panel_never_loads_prices_from_test_period(monkeypatch):
 
     monkeypatch.setattr(Source, "load", checked)
     load_panel(DATASET, ROOT, 20)
-    assert "QQQ" in seen and len(set(seen)) == 29
+    assert {"QQQ", "^VIX"} <= set(seen)
+    assert len(set(seen)) == 30
 
 
 @pytest.fixture(scope="module")
 def runs(panel, tmp_path_factory):
     root = tmp_path_factory.mktemp("experiments")
-    keys = ("1", "2", "3", "4a")
+    keys = ("1", "2", "3", "4a", "4b")
     return root, {key: run(panel, root / f"deney{key}", EXPERIMENTS[key]) for key in keys}
 
 
@@ -425,10 +519,11 @@ def test_experiment_writes_report_and_registry(panel, runs):
     assert "## 3. Rejim ve risk" in report
     assert json.loads((out / "config.json").read_text(encoding="utf-8"))["horizon"] == 20
     registry = pd.read_csv(root / "runs.csv")
-    assert registry["run_id"].tolist() == ["deney1", "deney1", "deney2", "deney3", "deney4a"]
-    assert registry["target"].tolist() == ["raw", "vs_qqq", "xs", "resid", "raw"]
-    assert registry["main_model"].tolist() == ["ridge"] * 4 + ["lightgbm"]
-    assert registry["ridge_ic"].isna().tolist() == [False] * 4 + [True]
+    runs_ = ["deney1", "deney1", "deney2", "deney3", "deney4a", "deney4b"]
+    assert registry["run_id"].tolist() == runs_
+    assert registry["target"].tolist() == ["raw", "vs_qqq", "xs", "resid", "raw", "raw"]
+    assert registry["main_model"].tolist() == ["ridge"] * 4 + ["lightgbm"] * 2
+    assert registry["ridge_ic"].isna().tolist() == [False] * 4 + [True] * 2
     with pytest.raises(ValueError, match="zaten var"):
         run(panel, out)
 
@@ -508,3 +603,32 @@ def test_shuffled_validation_targets_do_not_change_predictions(panel):
     permuted = evaluate(shuffled, EXPERIMENTS["4a"])["predictions"]
     pd.testing.assert_series_equal(original["pred"], permuted["pred"])
     assert not np.allclose(original["y"], permuted["y"])
+
+
+def test_deney4b_market_features_and_same_row_4a_reference(runs):
+    root, results = runs
+    config, summary, _ = results["4b"]
+    out = root / "deney4b"
+    assert config["feature_set"] == "raw_market"
+    assert config["features"] == [*results["4a"][0]["features"], *config["market_features"]]
+    assert len(config["market_features"]) == 6
+    assert "market_qqq_return_20" not in config["market_features"]
+    assert {r["missing_any"] for r in config["market_coverage"]["summary"]} == {0}
+    # Satır kümesi 4a ile aynı: "lightgbm_4a" referansı Deney 4a'nın LightGBM'iyle birebir aynı.
+    p4b = pd.read_parquet(out / "predictions.parquet")
+    p4a = pd.read_parquet(root / "deney4a" / "predictions.parquet")
+    ref = p4b.loc[p4b["model"].eq("lightgbm_4a")].reset_index(drop=True)
+    own = p4a.loc[p4a["model"].eq("lightgbm")].reset_index(drop=True)
+    pd.testing.assert_frame_equal(
+        ref[["date", "symbol", "fold", "pred", "y"]], own[["date", "symbol", "fold", "pred", "y"]]
+    )
+    trees = pd.read_csv(out / "lgbm_trees.csv")
+    assert set(trees["model"]) == {"lightgbm", "lightgbm_4a"}
+    curve = pd.read_csv(out / "lgbm_tree_curve.csv")
+    assert set(curve["model"]) == {"lightgbm_4a"}
+    dependence = pd.read_csv(out / "lgbm_partial_dependence.csv")
+    assert set(dependence["condition"]) == {"market_qqq_sma200_dist", "market_qqq_return_20"}
+    report = (out / "RAPOR.md").read_text(encoding="utf-8")
+    for heading in ("early stopping incelemesi", "6 yeni piyasa durumu", "## 8. Yeni özelliklerin"):
+        assert heading in report
+    assert summary.set_index("model").loc["lightgbm_4a", "kind"] == "forecast"

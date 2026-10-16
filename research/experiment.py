@@ -7,6 +7,8 @@ Deney 3: Deney 2 ile aynı; tek fark hedef: hisse − beta_t × QQQ, gün içi a
 Yalnız betası olan satırlar; Ridge skorunun beta-nötrlenmiş hali ek satırdır.
 Deney 4a: Deney 1 ile aynı (hissenin kendi getirisi, ham 24 özellik); tek fark model:
 sabit ayarlı LightGBM.
+Deney 4b: 4a ile aynı; tek fark 6 piyasa durumu özelliği. Yalnız bu özellikleri eksiksiz
+olan satırlar; 4a ayarlı LightGBM aynı satırlarda "lightgbm_4a" referansı olarak eğitilir.
 """
 
 from __future__ import annotations
@@ -23,7 +25,14 @@ import pandas as pd
 
 from dataset_builder.common import sha256
 
-from .data import BETA_MIN_OBS, BETA_WINDOW, REGIME_THRESHOLD, REGIMES, Panel
+from .data import (
+    BETA_MIN_OBS,
+    BETA_WINDOW,
+    REGIME_THRESHOLD,
+    REGIMES,
+    Panel,
+    market_coverage,
+)
 from .metrics import (
     daily_rank_ic,
     error_metrics,
@@ -39,6 +48,7 @@ from .models import (
     LGBM_MAX_TREES,
     LGBM_PARAMS,
     LGBM_SEED,
+    TREE_CURVE,
     LGBMModel,
     RidgeModel,
     baseline_models,
@@ -51,10 +61,12 @@ ERROR_BASELINES = ("sifir", "egitim_ortalamasi")
 RANK_BASELINES = ("momentum_20", "geri_donus_5")
 RISK_BASELINES = ("en_oynak_20", "yuksek_beta")
 REFERENCE_MODEL = "ridge_deney1"
+LGBM_REFERENCE = "lightgbm_4a"
 EVAL_COLUMNS = ["date", "symbol", "beta_252", "volatility_20", "beta_adj_return", "regime"]
 NEUTRAL_MODEL = "ridge_beta_notr"
 PD_FEATURE = "volatility_20"
 PD_CONDITION = "market_qqq_return_20"
+PD_MARKET_CONDITION = "market_qqq_sma200_dist"
 PD_QUANTILES = (0.1, 0.25, 0.5, 0.75, 0.9)
 # İlk sürümdeki kolonlar korunur (eski kayıtlar ve okuyan script'ler için); ana model
 # kolonları sona eklenir. ridge_* yalnız ana model Ridge ise doludur.
@@ -89,6 +101,8 @@ class Experiment:
     beta_neutral_row: bool = False
     criteria: str | None = None
     main_model: str = MAIN_MODEL
+    lgbm_reference: bool = False
+    label: str | None = None
 
 
 EXPERIMENTS = {
@@ -132,11 +146,37 @@ EXPERIMENTS = {
         criteria="lgbm_4a",
         main_model="lightgbm",
     ),
+    "4b": Experiment(
+        key="4b",
+        name="asama1_deney4b_lightgbm_market",
+        slug="lgbm_market",
+        title="Deney 4b — LightGBM + piyasa durumu özellikleri",
+        targets=("raw",),
+        feature_set="raw_market",
+        reference=True,
+        universe="market",
+        criteria="lgbm_4a",
+        main_model="lightgbm",
+        lgbm_reference=True,
+        label="LightGBM 4b",
+    ),
 }
 
 
+def model_features(experiment: Experiment, panel: Panel):
+    if experiment.feature_set == "raw_market":
+        return [*panel.features, *panel.market_features]
+    return panel.features if experiment.feature_set == "raw" else panel.xs_features
+
+
+def pd_conditions(experiment: Experiment):
+    if experiment.feature_set == "raw_market":
+        return [PD_MARKET_CONDITION, PD_CONDITION]
+    return [PD_CONDITION]
+
+
 def make_models(experiment: Experiment, panel: Panel):
-    features = panel.features if experiment.feature_set == "raw" else panel.xs_features
+    features = model_features(experiment, panel)
     if experiment.main_model == "lightgbm":
         main = LGBMModel(features)
     else:
@@ -146,6 +186,8 @@ def make_models(experiment: Experiment, panel: Panel):
         # Referans aynı hedefe eğitildiyse getiri tahmini olarak da karşılaştırılır.
         kind = "forecast" if experiment.targets == ("raw",) else "score"
         models.append(RidgeModel(panel.features, name=REFERENCE_MODEL, kind=kind, target_key="raw"))
+    if experiment.lgbm_reference:
+        models.append(LGBMModel(panel.features, name=LGBM_REFERENCE))
     return models
 
 
@@ -218,11 +260,14 @@ def partial_dependence(model, frame, feature=PD_FEATURE, condition=PD_CONDITION)
     """``feature`` sabit değerlere çekildiğinde ortalama tahmin; ``condition`` > 0 ve < 0 ayrı.
 
     Izgara bütün satırlardaki ``feature`` kantilleridir; iki alt kümede aynı değerler kullanılır.
+    Boş alt küme (ör. dönem boyunca QQQ hep SMA200 üstünde) atlanır.
     """
     grid = frame[feature].quantile(list(PD_QUANTILES))
     rows = []
     for subset, mask in (("pozitif", frame[condition] > 0), ("negatif", frame[condition] < 0)):
         part = frame.loc[mask]
+        if part.empty:
+            continue
         for quantile, value in grid.items():
             pred = model.predict(part.assign(**{feature: value}))
             rows.append(
@@ -234,7 +279,8 @@ def partial_dependence(model, frame, feature=PD_FEATURE, condition=PD_CONDITION)
                     "rows": int(mask.sum()),
                 }
             )
-    return pd.DataFrame(rows)
+    columns = ["subset", "quantile", "value", "pd", "rows"]
+    return pd.DataFrame(rows, columns=columns).assign(condition=condition)
 
 
 def _frame(items):
@@ -246,7 +292,7 @@ def evaluate(panel: Panel, experiment: Experiment):
     lags = panel.horizon - 1
     main_name = experiment.main_model
     fold_rows, daily, preds, exposures = [], [], [], []
-    coefs, alphas, trees, importance, dependence = [], [], [], [], []
+    coefs, alphas, trees, importance, dependence, curves = [], [], [], [], [], []
     raw = panel.targets["raw"]
     for target_key in experiment.targets:
         target = panel.targets[target_key]
@@ -273,9 +319,34 @@ def evaluate(panel: Panel, experiment: Experiment):
                     preds.append(scored)
                     if days is not None:
                         daily.append(days)
+                keys = {"target": target_key, "fold": name}
+                if isinstance(model, LGBMModel):
+                    trees.append(
+                        keys
+                        | {
+                            "model": model.name,
+                            "n_trees": model.n_trees_,
+                            "at_max_trees": model.n_trees_ == model.max_trees,
+                            "inner_mse": model.inner_mse_,
+                        }
+                    )
+                    importance.append(
+                        model.importance()
+                        .rename("gain_share")
+                        .rename_axis("feature")
+                        .reset_index()
+                        .assign(**keys, model=model.name)
+                    )
+                    if model.features == panel.features:
+                        # 4a ayarlarının early stopping incelemesi; seçimi değiştirmez.
+                        counts = sorted({*TREE_CURVE, model.n_trees_})
+                        curves.append(
+                            model.tree_curve(train, fit_target, counts).assign(
+                                **keys, model=model.name, chosen=model.n_trees_
+                            )
+                        )
                 if model.name != main_name:
                     continue
-                keys = {"target": target_key, "fold": name}
                 exposures.append(
                     val[model.features]
                     .corrwith(pd.Series(pred, index=val.index))
@@ -302,22 +373,10 @@ def evaluate(panel: Panel, experiment: Experiment):
                         }
                     )
                 if isinstance(model, LGBMModel):
-                    trees.append(
-                        keys
-                        | {
-                            "n_trees": model.n_trees_,
-                            "at_max_trees": model.n_trees_ == model.max_trees,
-                            "inner_mse": model.inner_mse_,
-                        }
-                    )
-                    importance.append(
-                        model.importance()
-                        .rename("gain_share")
-                        .rename_axis("feature")
-                        .reset_index()
-                        .assign(**keys)
-                    )
-                    dependence.append(partial_dependence(model, val).assign(**keys))
+                    for condition in pd_conditions(experiment):
+                        dependence.append(
+                            partial_dependence(model, val, condition=condition).assign(**keys)
+                        )
     return {
         "folds": pd.DataFrame(fold_rows),
         "daily": pd.concat(daily, ignore_index=True),
@@ -328,6 +387,7 @@ def evaluate(panel: Panel, experiment: Experiment):
         "trees": pd.DataFrame(trees) if trees else None,
         "importance": _frame(importance),
         "partial_dependence": _frame(dependence),
+        "tree_curve": _frame(curves),
         "feature_ic": feature_ic(panel),
     }
 
@@ -368,8 +428,11 @@ def pooled(result, panel: Panel, experiment: Experiment):
         if row["kind"] == "forecast":
             row |= error_metrics(p["y"], p["pred"])
         d = daily.loc[daily["target"].eq(target) & daily["model"].eq(model)]
+        row["val_days"] = int(part["val_days"].sum())
         if not d.empty:
             row |= summarize_ic(d.set_index("date")["rank_ic"], lags)
+            # Bilgi: skorun sabit olduğu (sıralama üretmediği) günler 0 sayılırsa ortalama.
+            row["ic_zero_filled"] = float(d["rank_ic"].sum() / row["val_days"])
             by_regime = d.groupby("regime")["rank_ic"].mean()
             row |= {f"ic_{r}": float(by_regime.get(r, np.nan)) for r in REGIMES}
             down = d.loc[d["regime"].eq("asagi")].set_index("date")["rank_ic"]
@@ -422,8 +485,13 @@ def run(panel: Panel, output: Path, experiment: Experiment = EXPERIMENTS["1"]):
     output = Path(output)
     if output.exists():
         raise ValueError(f"Çıktı klasörü zaten var: {output}")
+    coverage = None
     if experiment.universe == "beta":
         panel = panel.with_beta()
+    elif experiment.universe == "market":
+        # Kapsam bütün uygun satırlarda sayılır; deney yalnız ortak satırlarda koşar.
+        coverage = market_coverage(panel.rows, panel.market_features)
+        panel = panel.with_market()
     result = evaluate(panel, experiment)
     summary, consistency, context = pooled(result, panel, experiment)
 
@@ -440,10 +508,14 @@ def run(panel: Panel, output: Path, experiment: Experiment = EXPERIMENTS["1"]):
         "trees": "lgbm_trees.csv",
         "importance": "lgbm_importance.csv",
         "partial_dependence": "lgbm_partial_dependence.csv",
+        "tree_curve": "lgbm_tree_curve.csv",
     }
     for key, file in files.items():
         if result[key] is not None:
             result[key].to_csv(output / file, index=False)
+    if coverage is not None:
+        coverage[0].to_csv(output / "market_coverage.csv", index=False)
+        coverage[1].to_csv(output / "market_coverage_detail.csv", index=False)
     result["feature_ic"].to_csv(output / "feature_ic.csv", index=False)
     result["daily"].to_parquet(output / "daily_ic.parquet", index=False)
     result["predictions"].to_parquet(output / "predictions.parquet", index=False)
@@ -466,18 +538,33 @@ def run(panel: Panel, output: Path, experiment: Experiment = EXPERIMENTS["1"]):
         "targets": {k: panel.targets[k] for k in experiment.targets},
         "benchmark": "QQQ",
         "main_model": experiment.main_model,
+        "main_label": experiment.label,
         "feature_set": experiment.feature_set,
+        "market_features": (
+            panel.market_features if experiment.feature_set == "raw_market" else None
+        ),
         "features": main.features,
         "folds": panel.folds,
         "test_start": str(panel.test_start.date()),
         "test_period_read": False,
         "models": [m.name for m in models],
         "reference_model": REFERENCE_MODEL if experiment.reference else None,
+        "lgbm_reference_model": LGBM_REFERENCE if experiment.lgbm_reference else None,
         "universe": experiment.universe,
         "excluded_rows": (
             panel.excluded.to_dict("records") if panel.excluded is not None else None
         ),
         "beta_neutral_row": NEUTRAL_MODEL if experiment.beta_neutral_row else None,
+        "market_coverage": (
+            {
+                "summary": coverage[0].to_dict("records"),
+                "detail": coverage[1]
+                .astype({"first_missing": str, "last_missing": str})
+                .to_dict("records"),
+            }
+            if coverage is not None
+            else None
+        ),
         "criteria": experiment.criteria,
         "ridge": {
             "alpha_grid": list(ALPHA_GRID),
@@ -507,9 +594,14 @@ def run(panel: Panel, output: Path, experiment: Experiment = EXPERIMENTS["1"]):
             "target_winsor_quantile": 0.01,
             "partial_dependence": {
                 "feature": PD_FEATURE,
-                "condition": f"{PD_CONDITION} > 0 / < 0",
+                "conditions": [f"{c} > 0 / < 0" for c in pd_conditions(experiment)],
                 "quantiles": list(PD_QUANTILES),
                 "rows": "validation",
+            },
+            "tree_curve": {
+                "counts": list(TREE_CURVE),
+                "model": "4a ayarları (24 özellik)",
+                "rows": "iç bölme: eğitimin son 252 seansı, purge'lü",
             },
         }
     (output / "config.json").write_text(

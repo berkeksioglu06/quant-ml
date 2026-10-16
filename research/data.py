@@ -14,6 +14,11 @@ Tanı kolonları (model girdisi değildir):
 - ``regime``: etiket penceresinde gerçekleşen QQQ getirisi ±%2 eşiğine göre.
   Gerçekleşmiş getiriye dayandığı için yalnız değerlendirmeyi bölmek içindir.
 
+Piyasa durumu özellikleri (``MARKET_FEATURES``; aynı gün bütün hisselerde aynı, sıraya
+çevrilmez): QQQ 5/60 seans getirisi, QQQ'nun SMA50/SMA200'e uzaklığı, ^VIX kapanışı ve
+5 seanslık değişimi. QQQ seans takvimi (XNYS) kullanılır; pencereler tam olmalı, eksik
+seans NaN bırakır; yalnız t kapanışına kadarki veri. Doldurma yapılmaz.
+
 QQQ getirisi ``dataset_builder.labels.make_labels`` ile aynı kuralla hesaplanır.
 Satır seçimi ``partition_membership.parquet`` üzerinden yapılır; purge kuralı oradadır.
 Fiyatlar ve veri seti satırları test başlangıcından önce kesilir; 2025+ okunmaz.
@@ -22,12 +27,13 @@ Fiyatlar ve veri seti satırları test başlangıcından önce kesilir; 2025+ ok
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
+from dataset_builder.features import _grid, _return
 from dataset_builder.labels import make_labels
 from dataset_builder.source import discover
 
@@ -37,6 +43,15 @@ BETA_MIN_OBS = 200
 REGIME_THRESHOLD = 0.02
 REGIMES = ("yukari", "yatay", "asagi")
 DAY_KEYS = ["fold", "partition", "date"]
+VIX = "^VIX"
+MARKET_FEATURES = [
+    "market_qqq_return_5",
+    "market_qqq_return_60",
+    "market_qqq_sma50_dist",
+    "market_qqq_sma200_dist",
+    "market_vix_close",
+    "market_vix_change_5",
+]
 
 
 @dataclass(frozen=True)
@@ -52,6 +67,7 @@ class Panel:
     dataset_dir: Path
     dataset_manifest: dict
     excluded: pd.DataFrame | None = None
+    market_features: list[str] = field(default_factory=lambda: list(MARKET_FEATURES))
 
     def split(self, fold: str) -> tuple[pd.DataFrame, pd.DataFrame]:
         part = self.rows.loc[self.rows["fold"].eq(fold)]
@@ -61,20 +77,27 @@ class Panel:
             raise ValueError(f"{fold}: boş eğitim veya validation")
         return train, val
 
-    def with_beta(self) -> Panel:
-        """Yalnız betası olan satırlar; gün içi sıralar ve hedefler bu evrende yeniden kurulur."""
-        has_beta = self.rows["beta_252"].notna()
+    def subset(self, keep) -> Panel:
+        """Yalnız ``keep`` satırları; gün içi sıralar ve hedefler bu evrende yeniden kurulur."""
         excluded = (
-            self.rows.assign(excluded=~has_beta)
+            self.rows.assign(excluded=~keep)
             .groupby(["fold", "partition"])["excluded"]
             .agg(rows="size", excluded="sum")
             .reset_index()
         )
-        rows = self.rows.loc[has_beta].copy()
+        rows = self.rows.loc[keep].copy()
         base = [f.removeprefix("xs_") for f in self.xs_features]
         add_cross_sectional(rows, base, self.targets)
         rows = rows.reset_index(drop=True)
         return replace(self, rows=rows, excluded=excluded)
+
+    def with_beta(self) -> Panel:
+        """Yalnız betası olan satırlar."""
+        return self.subset(self.rows["beta_252"].notna())
+
+    def with_market(self) -> Panel:
+        """Yalnız piyasa durumu özelliklerinin hepsi mevcut olan satırlar."""
+        return self.subset(self.rows[self.market_features].notna().all(axis=1))
 
 
 def benchmark_returns(source, horizon, as_of, symbol=BENCHMARK):
@@ -106,6 +129,62 @@ def rolling_beta(stock, bench, window=BETA_WINDOW, min_obs=BETA_MIN_OBS):
     cov = stock.rolling(window, min_periods=min_obs).cov(bench)
     var = bench.rolling(window, min_periods=min_obs).var()
     return cov / var
+
+
+def market_state_from_frames(qqq, vix):
+    """QQQ ve ^VIX temiz tablolarından tarih bazlı piyasa durumu özellikleri.
+
+    ``dataset_builder.features`` ile aynı kurallar: XNYS seans ızgarası, geçerlilik
+    denetimi ve tam pencere. ^VIX QQQ ızgarasına hizalanır; XNYS dışı günleri düşer,
+    eksik seansı NaN kalır.
+    """
+    qx, qvalid = _grid(qqq)
+    close = qx["adj_close"].where(qvalid)
+    vx, vvalid = _grid(vix)
+    vix_close = vx["close"].where(vvalid).reindex(qx.index)
+    values = {
+        "market_qqq_return_5": _return(close, 5),
+        "market_qqq_return_60": _return(close, 60),
+        "market_qqq_sma50_dist": close / close.rolling(50, min_periods=50).mean() - 1,
+        "market_qqq_sma200_dist": close / close.rolling(200, min_periods=200).mean() - 1,
+        "market_vix_close": vix_close,
+        "market_vix_change_5": _return(vix_close, 5),
+    }
+    out = pd.DataFrame(values, index=qx.index)[MARKET_FEATURES]
+    out.index.name = "date"
+    return out.replace([np.inf, -np.inf], np.nan)
+
+
+def market_state_features(source, as_of):
+    """Test başlangıcından önce kesilmiş fiyatlarla piyasa durumu tablosu."""
+    return market_state_from_frames(source.load(BENCHMARK, as_of), source.load(VIX, as_of))
+
+
+def market_coverage(rows, columns=MARKET_FEATURES):
+    """Dönem × bölme başına eksik sayımı; özellik başına eksik satır ve tarih aralığı."""
+    missing = rows[columns].isna()
+    summary = (
+        rows[["fold", "partition"]]
+        .assign(missing_any=missing.any(axis=1))
+        .groupby(["fold", "partition"])["missing_any"]
+        .agg(rows="size", missing_any="sum")
+        .reset_index()
+    )
+    detail = []
+    for (fold, partition), part in rows.groupby(["fold", "partition"]):
+        for column in columns:
+            dates = part.loc[part[column].isna(), "date"]
+            detail.append(
+                {
+                    "fold": fold,
+                    "partition": partition,
+                    "feature": column,
+                    "missing": len(dates),
+                    "first_missing": dates.min() if len(dates) else pd.NaT,
+                    "last_missing": dates.max() if len(dates) else pd.NaT,
+                }
+            )
+    return summary, pd.DataFrame(detail)
 
 
 def residual_return(stock_return, beta, bench_return):
@@ -191,6 +270,7 @@ def load_panel(dataset_dir, project, horizon=20) -> Panel:
     rows["beta_adj_return"] = residual_return(
         rows[raw_target], rows["beta_252"], rows["benchmark_return"]
     )
+    rows = rows.join(market_state_features(source, as_of), on="date")
     rows["regime"] = np.select(
         [
             rows["benchmark_return"] > REGIME_THRESHOLD,
@@ -208,6 +288,7 @@ def load_panel(dataset_dir, project, horizon=20) -> Panel:
 
     keep = ["date", "symbol", "fold", "partition", "label_end", *features, *xs_features]
     keep += [*targets.values(), "benchmark_return", "beta_252", "beta_adj_return", "regime"]
+    keep += MARKET_FEATURES
     rows = rows[keep].sort_values(["fold", "partition", "date", "symbol"]).reset_index(drop=True)
     folds = [f for f in manifest["folds"] if f["name"] in set(rows["fold"])]
     return Panel(

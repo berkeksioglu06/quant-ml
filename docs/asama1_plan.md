@@ -10,6 +10,7 @@ uv run python train_baseline.py --deney 1
 uv run python train_baseline.py --deney 2
 uv run python train_baseline.py --deney 3
 uv run python train_baseline.py --deney 4a
+uv run python train_baseline.py --deney 4b
 ```
 
 LightGBM macOS'ta OpenMP ister: `brew install libomp`. Linux ve Windows paketlerinde gerekmez.
@@ -27,7 +28,7 @@ kaydına eklenir; denenen hiçbir kombinasyon silinmez. Bu klasör Git takibinde
 | Hata kıyasları | Sıfır, eğitim ortalaması |
 | Sıralama kıyasları | Momentum (`return_20`), geri dönüş (−`return_5`) |
 | Risk kıyasları | En oynak (`volatility_20`), yüksek beta (`beta_252`); hükme girmez |
-| Model | Ridge (Deney 1–3): %1/%99 kırpma, standartlaştırma, α eğitimin son 252 seansında seçilir; LightGBM (Deney 4a) |
+| Model | Ridge (Deney 1–3): %1/%99 kırpma, standartlaştırma, α eğitimin son 252 seansında seçilir; LightGBM (Deney 4a–4b) |
 | Ölçüler | MSE ve R²_oos; günlük Spearman rank IC, Newey-West t (19 gecikme); dönem tutarlılığı |
 | Tanılar | QQQ ↑/yatay/↓ rejim IC'si (±%2), beta-düzeltmeli IC, ilk 5 hissenin beta/volatilitesi |
 
@@ -108,6 +109,32 @@ arası *karışık*.
   gösteriyordu. Plan 4a (LightGBM) → 4b (piyasa durumu özellikleri) → Deney 5 (üç bariyerli
   hedef) olarak güncellendi; uzun momentum şimdilik planda yok.
 
+## Deney 4b — LightGBM + piyasa durumu özellikleri
+
+- 4a ile tek fark 6 yeni özellik (aynı gün bütün hisselerde aynı, sıraya çevrilmez):
+  `market_qqq_return_5`, `market_qqq_return_60`, `market_qqq_sma50_dist`,
+  `market_qqq_sma200_dist`, `market_vix_close`, `market_vix_change_5`. QQQ seans takvimi
+  (XNYS), ^VIX bu takvime hizalanır (XNYS dışı günler düşer), tam pencere, eksik seans NaN,
+  yalnız t kapanışına kadarki veri, doldurma yok. Hesap `dataset_builder.features` ile aynı.
+- Kapsam: bütün uygun satırlarda 6 özellik de mevcut; çıkarılan satır 0. Satır kümesi 4a
+  ile aynı. 4a ayarlı LightGBM aynı koşuda "lightgbm_4a" referansı olarak eğitilir ve
+  Deney 4a'nın tahminlerini birebir üretir.
+- Önceden yazılı kriter: 4a ile aynı.
+- Sonuç: **karşılanmadı** (yalnız 3. kriter geçti). Rank IC −0,023 (NW t −0,56), 1/4 dönem
+  pozitif (K3 +0,068); R²_oos −2,1% (4a −2,9%); QQQ ↓ IC −0,216 (t −2,90); skor–beta +0,291,
+  skor–volatilite +0,39. K4'te model 232 günün 231'inde bütün hisselere aynı skoru verdi;
+  K4 IC'si tek güne dayanıyor. Sabit günler 0 sayılırsa K1–K4 IC −0,016 (bilgi; kural aynı).
+- Ağaç sayısı 4a ile aynı örüntü: K1 126, K2–K4 1. Yeni özelliklerin kazanç payı %48–79,
+  büyük kısmı `market_vix_close` (aynı gün herkeste aynı; sıralamaya değil zamanlamaya
+  katkı). Kısmi bağımlılık: K1'de volatilite etkisi iki piyasa durumunda da pozitif; K2–K4'te
+  düz; SMA200 altı alt kümesi K1 ve K4'te boş. Model koşullu bir ilişki kurmadı.
+- 4a early stopping incelemesi (madde 0): K2–K4'te seçilen ağaç sayısı 1 doğrulandı. İç
+  rank IC K2'de (−0,05…−0,10) ve K3'te (−0,06…−0,17) bütün ağaç sayılarında negatif; K4'te
+  küçük pozitif (+0,02…+0,04) ama l2 ağaç ekledikçe kötüleşiyor; K1'de pozitif
+  (+0,07…+0,16). Early stopping'in ölçüsü l2 ile sıralama ölçüsü IC aynı yönü göstermiyor.
+- Rapor eki: IC'nin hesaplanabildiği gün sayısı ve sabit günleri 0 sayan bilgi ortalaması
+  bütün deney raporlarında gösterilir.
+
 Kod: `research/data.py` (hedefler, beta, rejim, bölmeler), `research/models.py`,
 `research/metrics.py`, `research/experiment.py`, `research/report.py`.
 
@@ -115,9 +142,8 @@ Kod: `research/data.py` (hedefler, beta, rejim, bölmeler), `research/models.py`
 
 Aynı değerlendirme çerçevesine, sırası sonuçlara göre belirlenir:
 
-1. Deney 4b: piyasa durumu özellikleri (4a'nın kuralı gereği, 4a geçmese de denenir).
-2. 4b de geçemezse Deney 5: üç bariyerli hedef.
-3. Lojistik regresyon (yön olasılığı; AUC ve kalibrasyon eklenir).
-4. 5 ve 10 seanslık ufuklar.
-5. Maliyetli portföy karşılaştırması (top-N, H dilim, %20 pozisyon sınırı,
+1. Deney 5: üç bariyerli hedef (4b geçemediği için, 4a'nın önceden yazılı kuralı gereği).
+2. Lojistik regresyon (yön olasılığı; AUC ve kalibrasyon eklenir).
+3. 5 ve 10 seanslık ufuklar.
+4. Maliyetli portföy karşılaştırması (top-N, H dilim, %20 pozisyon sınırı,
    10 bps temel, 20/50 bps stres; yalnız long, "sat" = pozisyondan çık).

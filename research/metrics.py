@@ -28,13 +28,18 @@ def daily_rank_ic(frame, pred_col="pred", target_col="y", min_names=5):
     return ic.rename("rank_ic")
 
 
+def top_k_mean(frame, column, k=5, pred_col="pred"):
+    """Günlük: en yüksek skorlu k hissede ``column`` ortalaması (eksikler atlanır)."""
+    ordered = frame.sort_values(["date", pred_col], ascending=[True, False])
+    return ordered.groupby("date").head(k).groupby("date")[column].mean()
+
+
 def top_minus_all(frame, k=5, pred_col="pred", target_col="y"):
     """Günlük: en yüksek skorlu k hissenin ortalama hedefi − bütün hisselerin ortalaması.
 
     Maliyetsiz bir sıralama ölçüsüdür; portföy getirisi değildir.
     """
-    ordered = frame.sort_values(["date", pred_col], ascending=[True, False])
-    top = ordered.groupby("date").head(k).groupby("date")[target_col].mean()
+    top = top_k_mean(frame, target_col, k, pred_col)
     return (top - frame.groupby("date")[target_col].mean()).rename("top_minus_all")
 
 

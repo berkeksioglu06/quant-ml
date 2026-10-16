@@ -60,7 +60,10 @@ class TrainMean:
 
 
 class FeatureScore:
-    """Eğitim gerektirmeyen sıralama skoru; getiri birimi değildir."""
+    """Eğitim gerektirmeyen sıralama skoru; getiri birimi değildir.
+
+    Kolon eksikse (ör. beta için yeterli geçmiş yoksa) skor NaN kalır.
+    """
 
     kind = "score"
 
@@ -83,12 +86,25 @@ class RidgeModel:
     etiketi iç validation başlamadan biter (purge). Seçilen alpha ile bütün eğitim
     dönemine yeniden fit edilir. Eğitim hedefi de eğitim kantillerine kırpılır;
     değerlendirme her zaman kırpılmamış hedefle yapılır.
+
+    ``target_key`` verilirse model deneyin hedefi yerine o hedefe eğitilir; referans
+    satırları (ör. Deney 1 Ridge'i) böyle kurulur.
     """
 
-    name = "ridge"
-    kind = "forecast"
-
-    def __init__(self, features, alphas=ALPHA_GRID, quantile=0.01, inner_sessions=252):
+    def __init__(
+        self,
+        features,
+        alphas=ALPHA_GRID,
+        quantile=0.01,
+        inner_sessions=252,
+        *,
+        name="ridge",
+        kind="forecast",
+        target_key=None,
+    ):
+        self.name = name
+        self.kind = kind
+        self.target_key = target_key
         self.features = list(features)
         self.alphas = tuple(alphas)
         self.quantile = quantile
@@ -135,4 +151,6 @@ def baseline_models():
         TrainMean(),
         FeatureScore("momentum_20", "return_20", 1.0),
         FeatureScore("geri_donus_5", "return_5", -1.0),
+        FeatureScore("en_oynak_20", "volatility_20", 1.0),
+        FeatureScore("yuksek_beta", "beta_252", 1.0),
     ]

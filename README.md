@@ -62,12 +62,14 @@ Maliyet ve sınıf eşikleri seçilmedi.
 ## Aşama 1 model deneyleri
 
 ```bash
-uv run python train_baseline.py
+uv run python train_baseline.py --deney 1
+uv run python train_baseline.py --deney 2
 ```
 
-20 seanslık ufukta iki hedef (hissenin kendi getirisi, QQQ'ya göre getiri), dört basit
-kıyas ve Ridge K1–K4 validation yıllarında karşılaştırılır. 2025+ test dönemi okunmaz.
-Rapor `output/experiments/<zaman>_ridge_h20/RAPOR.md` altına yazılır.
+20 seanslık ufukta basit kıyaslar ve Ridge K1–K4 validation yıllarında karşılaştırılır.
+Deney 1 ham özellikleri ve iki hedefi (hissenin kendi getirisi, QQQ'ya göre getiri),
+Deney 2 gün içi sıralanmış özellikleri ve gün ortalamasından arındırılmış hedefi kullanır.
+2025+ test dönemi okunmaz. Rapor `output/experiments/<zaman>_<deney>_h20/RAPOR.md` altına yazılır.
 Ayrıntılar: [docs/asama1_plan.md](docs/asama1_plan.md).
 
 Yalnız yukarıdaki seçili snapshot ve hazır çıktı Git takibindedir. Sonraki indirmeler

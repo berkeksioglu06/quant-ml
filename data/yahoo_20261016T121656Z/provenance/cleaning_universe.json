@@ -1,0 +1,489 @@
+{
+  "version": "Veri kapsamı planı (4 Ekim 2026) — 29 şirket + 18 bağlam; kripto kapsam dışı",
+  "start": "2016-01-01",
+  "calendar": "XNYS",
+  "warmup_sessions": 200,
+  "min_train_samples": 252,
+  "horizons": [
+    5,
+    10,
+    20
+  ],
+  "folds": [
+    {
+      "name": "K1",
+      "train_end": "2020-12-31",
+      "val_start": "2021-01-01",
+      "val_end": "2021-12-31"
+    },
+    {
+      "name": "K2",
+      "train_end": "2021-12-31",
+      "val_start": "2022-01-01",
+      "val_end": "2022-12-31"
+    },
+    {
+      "name": "K3",
+      "train_end": "2022-12-31",
+      "val_start": "2023-01-01",
+      "val_end": "2023-12-31"
+    },
+    {
+      "name": "K4",
+      "train_end": "2023-12-31",
+      "val_start": "2024-01-01",
+      "val_end": "2024-12-31"
+    }
+  ],
+  "test": {
+    "name": "TEST",
+    "start": "2025-01-01"
+  },
+  "_not_tarihler": "eligible_from / expected_first_date / expected_splits elle girildi; script veriyle karşılaştırır, uyuşmazlığı raporlar. Kesin kabul öncesi resmi kaynaktan teyit edilmeli.",
+  "symbols": [
+    {
+      "symbol": "RKLB",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "eligible_from": "2021-08-25",
+      "event": "SPAC: Vector Acquisition (VACQ) birleşmesi; RKLB olarak işlem 2021-08-25. Öncesi boş SPAC dönemi."
+    },
+    {
+      "symbol": "HIMS",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "eligible_from": "2021-01-21",
+      "event": "SPAC: Oaktree Acquisition Corp (OAC) birleşmesi; HIMS olarak işlem 2021-01-21."
+    },
+    {
+      "symbol": "SOFI",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "eligible_from": "2021-06-01",
+      "event": "SPAC: Social Capital Hedosophia V (IPOE) birleşmesi; SOFI olarak işlem 2021-06-01."
+    },
+    {
+      "symbol": "PLTR",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2020-09-30",
+      "event": "Doğrudan listeleme 2020-09-30."
+    },
+    {
+      "symbol": "MU",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "MRVL",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "BE",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2018-07-25",
+      "event": "Halka arz 2018-07-25."
+    },
+    {
+      "symbol": "TSLA",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2020-08-31",
+          5.0
+        ],
+        [
+          "2022-08-25",
+          3.0
+        ]
+      ]
+    },
+    {
+      "symbol": "AMD",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "NVDA",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2021-07-20",
+          4.0
+        ],
+        [
+          "2024-06-10",
+          10.0
+        ]
+      ]
+    },
+    {
+      "symbol": "ENPH",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "SHOP",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2022-06-29",
+          10.0
+        ]
+      ]
+    },
+    {
+      "symbol": "ROKU",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2017-09-28",
+      "event": "Halka arz 2017-09-28."
+    },
+    {
+      "symbol": "XYZ",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "legacy_symbol": "SQ",
+      "ticker_change_date": "2025-01-21",
+      "event": "Block: SQ -> XYZ ticker değişimi 2025-01-21. Geçmişin XYZ altında kesintisiz olup olmadığı kontrol edilir.",
+      "legacy_merge_approved": false
+    },
+    {
+      "symbol": "SNAP",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2017-03-02",
+      "event": "Halka arz 2017-03-02."
+    },
+    {
+      "symbol": "UPST",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2020-12-16",
+      "event": "Halka arz 2020-12-16."
+    },
+    {
+      "symbol": "SMCI",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2024-10-01",
+          10.0
+        ]
+      ]
+    },
+    {
+      "symbol": "PLUG",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "PTON",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2019-09-26",
+      "event": "Halka arz 2019-09-26."
+    },
+    {
+      "symbol": "RIVN",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2021-11-10",
+      "event": "Halka arz 2021-11-10."
+    },
+    {
+      "symbol": "AAPL",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2020-08-31",
+          4.0
+        ]
+      ]
+    },
+    {
+      "symbol": "MSFT",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "GOOGL",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2022-07-18",
+          20.0
+        ]
+      ]
+    },
+    {
+      "symbol": "AMZN",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2022-06-06",
+          20.0
+        ]
+      ]
+    },
+    {
+      "symbol": "MRNA",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "expected_first_date": "2018-12-07",
+      "event": "Halka arz 2018-12-07."
+    },
+    {
+      "symbol": "JPM",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "XOM",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity"
+    },
+    {
+      "symbol": "WMT",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "expected_splits": [
+        [
+          "2024-02-26",
+          3.0
+        ]
+      ]
+    },
+    {
+      "symbol": "NBIS",
+      "roles": [
+        "nbis"
+      ],
+      "asset": "equity",
+      "eligible_from": "2024-10-21",
+      "event": "Eski Yandex N.V.; işlem 2022-02-28'de durdu, NBIS olarak 2024-10-21'de yeniden başladı. Yandex geçmişi birleştirilmez."
+    },
+    {
+      "symbol": "SPY",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "QQQ",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "IWM",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "^VIX",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "index_vol",
+      "event": "Endeks: hacim/temettü yok; seviye ve puan değişimi olarak işlenir."
+    },
+    {
+      "symbol": "^TNX",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "index_rate",
+      "event": "10Y getiri endeksi; ölçek (yüzde mi, x10 mu) doğrulanır; değişim baz puan olarak işlenir."
+    },
+    {
+      "symbol": "XLK",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_splits": [["2025-12-05", 2]],
+      "split_source": "https://www.ssga.com/us/en/intermediary/library-content/products/fund-docs/etfs/us/information-schedules/select-sector-spdr-fund-share-splits-faq.pdf"
+    },
+    {
+      "symbol": "SMH",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_splits": [["2023-05-05", 2]],
+      "split_source": "https://www.vaneck.com/us/en/press-releases/smh-vaneck-semiconductor-etf-share-split-press-release.pdf"
+    },
+    {
+      "symbol": "IGV",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_splits": [["2024-03-07", 5]],
+      "split_source": "https://www.sec.gov/Archives/edgar/data/1100663/000119312523298660/d611816d497.htm"
+    },
+    {
+      "symbol": "XLC",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_first_date": "2018-06-19",
+      "event": "ETF kuruluşu 2018-06-19; öncesine satır yaratılmaz."
+    },
+    {
+      "symbol": "XLY",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_splits": [["2025-12-05", 2]],
+      "split_source": "https://www.ssga.com/us/en/intermediary/library-content/products/fund-docs/etfs/us/information-schedules/select-sector-spdr-fund-share-splits-faq.pdf"
+    },
+    {
+      "symbol": "XLF",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "historical_unverified_before": "2016-09-19",
+      "historical_unverified_reason": "XLRE pay dağıtımı; sağlayıcının 1.231 split kaydı sıradan hisse bölünmesi değildir. Olay öncesi tarihsel fiyat/hacim ayrıca doğrulanmalıdır.",
+      "corporate_action_source": "https://www.miaxglobal.com/sites/default/files/alert-files/XLF_Distribution_39575.pdf"
+    },
+    {
+      "symbol": "XLE",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_splits": [["2025-12-05", 2]],
+      "split_source": "https://www.ssga.com/us/en/intermediary/library-content/products/fund-docs/etfs/us/information-schedules/select-sector-spdr-fund-share-splits-faq.pdf"
+    },
+    {
+      "symbol": "XLV",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "XLP",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "XLI",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "ITA",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "expected_splits": [["2020-12-07", 2]],
+      "split_source": "https://www.miaxglobal.com/sites/default/files/alert-files/ITA_Split_47890.pdf"
+    },
+    {
+      "symbol": "ICLN",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf"
+    },
+    {
+      "symbol": "UFO",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "event": "Procure Space ETF; 2019 Nisan'da kuruldu (yaklaşık ay, teyit edilmeli); öncesine satır yaratılmaz.",
+      "expected_first_month": "2019-04"
+    }
+  ]
+}

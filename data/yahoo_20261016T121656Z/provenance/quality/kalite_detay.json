@@ -1,0 +1,5452 @@
+{
+  "exp_last_session": "2026-10-15",
+  "checksum": {
+    "kontrol_edilen": 76,
+    "uyusmayan": [],
+    "eksik_dosya": [],
+    "checksumsiz": []
+  },
+  "split_yontemi": {
+    "referans_dosyasi": "C:\\Users\\user\\Projects\\quant-ml\\config\\data\\reference_points.csv",
+    "referans_satir": 10,
+    "fiyat": {
+      "durum": "dogrulandi",
+      "yontem": "geri_duzeltilmis",
+      "bilgi_tasiyan_nokta": 4,
+      "sembol": [
+        "AAPL",
+        "AMZN",
+        "GOOGL",
+        "TSLA"
+      ],
+      "tutarsiz": [],
+      "noktalar": [
+        {
+          "symbol": "TSLA",
+          "date": "2020-08-28",
+          "F": 15.0,
+          "gercek/saglayici": 15.0,
+          "kaynak": "Drive Tesla Canada 2020-08-31: closing at $2,213.40 last week https://driveteslacanada.ca/?p=12297 (Benzinga 2020-08-31 2238.75 yazıyor ama kendi 442.68x5=2213.40 ile çelişiyor)",
+          "sonuc": "geri_duzeltilmis"
+        },
+        {
+          "symbol": "AAPL",
+          "date": "2020-08-28",
+          "F": 4.0,
+          "gercek/saglayici": 4.0,
+          "kaynak": "Market Realist 2020-08-31 (Mark Pygas): worth $499.23 when markets closed https://marketrealist.com/p/what-does-the-apple-stock-split-mean/",
+          "sonuc": "geri_duzeltilmis"
+        },
+        {
+          "symbol": "AMZN",
+          "date": "2022-06-03",
+          "F": 20.0,
+          "gercek/saglayici": 20.0,
+          "kaynak": "Deseret News 2022-06-07 (Lindsey Harper): going from $2,447 a share https://www.deseret.com/2022/6/7/23157244/amazon-stock-split-2022-shares-what-it-means-market-buying-amazon-stock/ (yuvarlanmış)",
+          "sonuc": "geri_duzeltilmis"
+        },
+        {
+          "symbol": "GOOGL",
+          "date": "2022-07-15",
+          "F": 20.0,
+          "gercek/saglayici": 20.000001,
+          "kaynak": "Motley Fool 2022-07-18: stock had risen to $2,235.55 https://www.fool.com/investing/2022/07/18/alphabets-stock-split-has-taken-effect-now-what/ (sınıf GOOGL/GOOG belirtilmemiş; fark %2 toleransın altında beklenir)",
+          "sonuc": "geri_duzeltilmis"
+        }
+      ],
+      "neden": null
+    },
+    "hacim": {
+      "durum": "dogrulanmadi",
+      "yontem": null,
+      "bilgi_tasiyan_nokta": 0,
+      "sembol": [],
+      "tutarsiz": [],
+      "noktalar": [],
+      "neden": "referans yok"
+    }
+  },
+  "manifest": {
+    "snapshot_id": "yahoo_20261016T121656Z",
+    "source": "Yahoo Finance via yfinance Ticker.history",
+    "downloaded_at_utc": "2026-10-16T12:16:56.959019+00:00",
+    "request": {
+      "start": "2016-01-01",
+      "end_exclusive": "2026-10-17",
+      "interval": "1d",
+      "auto_adjust": false,
+      "back_adjust": false,
+      "actions": true,
+      "repair": false,
+      "prepost": false,
+      "keepna": false,
+      "raise_errors": true
+    },
+    "versions": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "yfinance": "1.7.0",
+      "pandas": "3.0.6",
+      "numpy": "2.5.3",
+      "pyarrow": "25.0.1",
+      "exchange_calendars": "4.13.2",
+      "curl_cffi": "0.16.3"
+    },
+    "universe_version": "Veri kapsamı planı (4 Ekim 2026) — 29 şirket + 18 bağlam; kripto kapsam dışı",
+    "legacy_symbols": {
+      "SQ": "XYZ"
+    }
+  },
+  "results": {
+    "RKLB": {
+      "symbol": "RKLB",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "SPAC: Vector Acquisition (VACQ) birleşmesi; RKLB olarak işlem 2021-08-25. Öncesi boş SPAC dönemi.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "KESIM_ONCESI",
+          "msg": "188 satır kesim (2021-08-25) öncesi; eligible=False işaretlendi — SPAC imzası (fiyat ~$10 bandı)"
+        },
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 5 gün (silinmedi)"
+        }
+      ],
+      "satir": 1479,
+      "eligible_satir": 1291,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 2
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2020-11-24",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2021-08-25",
+        "beklenen_kaynak": "faaliyet / kesim başlangıcı (veri en geç burada başlamalı)",
+        "ilk_tarih_fark_gun": -274,
+        "kesim_tarihi": "2021-08-25",
+        "kesim_oncesi_satir": 188,
+        "kesim_sonrasi_satir": 1291,
+        "kesim_oncesi": {
+          "satir": 188,
+          "ilk": "2020-11-24",
+          "son": "2021-08-24",
+          "medyan_kapanis": 10.45,
+          "medyan_abs_getiri": 0.0093,
+          "9_11.5_bandi": 0.888,
+          "medyan_dolar_hacim": 5851442.0
+        },
+        "kesim_sonrasi_ilk60": {
+          "satir": 60,
+          "ilk": "2021-08-25",
+          "son": "2021-11-17",
+          "medyan_kapanis": 14.3,
+          "medyan_abs_getiri": 0.0309,
+          "9_11.5_bandi": 0.1,
+          "medyan_dolar_hacim": 46265972.0
+        }
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2021-03-01",
+            "ret": 0.361,
+            "gap": 0.3122,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 376.05
+          },
+          {
+            "date": "2021-09-09",
+            "ret": 0.3731,
+            "gap": 0.0782,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 25.03
+          },
+          {
+            "date": "2024-11-13",
+            "ret": 0.2844,
+            "gap": 0.3124,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 10.98
+          },
+          {
+            "date": "2025-01-21",
+            "ret": 0.3029,
+            "gap": 0.0833,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 4.02
+          },
+          {
+            "date": "2026-05-08",
+            "ret": 0.3422,
+            "gap": 0.0949,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 3.87
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 1459.7,
+        "yillik_vol_1y": 0.92,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.31,
+        "gercek_fiyat_lt5_son_tarih": "2024-08-08"
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 21,
+        "en_eski": "2021-11-15",
+        "en_yeni": "2026-11-09",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 20,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 24,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 0.83
+      },
+      "durum": "OK"
+    },
+    "HIMS": {
+      "symbol": "HIMS",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "SPAC: Oaktree Acquisition Corp (OAC) birleşmesi; HIMS olarak işlem 2021-01-21.",
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "DONUK",
+          "msg": "25 satır önceki günle birebir aynı (donmuş veri?)"
+        },
+        {
+          "severity": "UYARI",
+          "code": "ZERO_VOL",
+          "msg": "63 işlem gününde hacim 0"
+        },
+        {
+          "severity": "BILGI",
+          "code": "KESIM_ONCESI",
+          "msg": "341 satır kesim (2021-01-21) öncesi; eligible=False işaretlendi — SPAC imzası (fiyat ~$10 bandı)"
+        },
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 7 gün (silinmedi)"
+        }
+      ],
+      "satir": 1782,
+      "eligible_satir": 1441,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 63,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 25,
+        "ohlc_esit_satir": 104
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2019-09-13",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2021-01-21",
+        "beklenen_kaynak": "faaliyet / kesim başlangıcı (veri en geç burada başlamalı)",
+        "ilk_tarih_fark_gun": -496,
+        "kesim_tarihi": "2021-01-21",
+        "kesim_oncesi_satir": 341,
+        "kesim_sonrasi_satir": 1441,
+        "kesim_oncesi": {
+          "satir": 341,
+          "ilk": "2019-09-13",
+          "son": "2021-01-20",
+          "medyan_kapanis": 10.05,
+          "medyan_abs_getiri": 0.002,
+          "9_11.5_bandi": 0.906,
+          "medyan_dolar_hacim": 200384.0
+        },
+        "kesim_sonrasi_ilk60": {
+          "satir": 60,
+          "ilk": "2021-01-21",
+          "son": "2021-04-16",
+          "medyan_kapanis": 15.02,
+          "medyan_abs_getiri": 0.0446,
+          "9_11.5_bandi": 0.0,
+          "medyan_dolar_hacim": 32941416.0
+        }
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2021-01-28",
+            "ret": 0.2729,
+            "gap": 0.3059,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 3.66
+          },
+          {
+            "date": "2024-02-27",
+            "ret": 0.3102,
+            "gap": 0.2029,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 14.27
+          },
+          {
+            "date": "2024-05-20",
+            "ret": 0.2766,
+            "gap": 0.0947,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 13.06
+          },
+          {
+            "date": "2025-02-13",
+            "ret": 0.2771,
+            "gap": 0.0257,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 3.84
+          },
+          {
+            "date": "2025-02-21",
+            "ret": -0.2579,
+            "gap": -0.1942,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 5.52
+          },
+          {
+            "date": "2025-06-23",
+            "ret": -0.3463,
+            "gap": -0.2501,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 4.83
+          },
+          {
+            "date": "2026-03-09",
+            "ret": 0.4079,
+            "gap": 0.4749,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 5.71
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 478.2,
+        "yillik_vol_1y": 0.881,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.078,
+        "gercek_fiyat_lt5_son_tarih": "2022-11-07"
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 24,
+        "en_eski": "2021-03-18",
+        "en_yeni": "2026-11-09",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 23,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 28,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 0.82
+      },
+      "durum": "UYARI"
+    },
+    "SOFI": {
+      "symbol": "SOFI",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "SPAC: Social Capital Hedosophia V (IPOE) birleşmesi; SOFI olarak işlem 2021-06-01.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "KESIM_ONCESI",
+          "msg": "102 satır kesim (2021-06-01) öncesi; eligible=False işaretlendi"
+        },
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 2 gün (silinmedi)"
+        }
+      ],
+      "satir": 1453,
+      "eligible_satir": 1351,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2021-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2021-06-01",
+        "beklenen_kaynak": "faaliyet / kesim başlangıcı (veri en geç burada başlamalı)",
+        "ilk_tarih_fark_gun": -148,
+        "kesim_tarihi": "2021-06-01",
+        "kesim_oncesi_satir": 102,
+        "kesim_sonrasi_satir": 1351,
+        "kesim_oncesi": {
+          "satir": 102,
+          "ilk": "2021-01-04",
+          "son": "2021-05-28",
+          "medyan_kapanis": 18.22,
+          "medyan_abs_getiri": 0.0292,
+          "9_11.5_bandi": 0.0,
+          "medyan_dolar_hacim": 83663121.0
+        },
+        "kesim_sonrasi_ilk60": {
+          "satir": 60,
+          "ilk": "2021-06-01",
+          "son": "2021-08-24",
+          "medyan_kapanis": 16.8,
+          "medyan_abs_getiri": 0.0259,
+          "9_11.5_bandi": 0.0,
+          "medyan_dolar_hacim": 235659978.0
+        }
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2021-01-07",
+            "ret": 0.5792,
+            "gap": 0.0066,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 49.75
+          },
+          {
+            "date": "2022-08-03",
+            "ret": 0.2839,
+            "gap": 0.1357,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 6.97
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 1211.2,
+        "yillik_vol_1y": 0.568,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.034,
+        "gercek_fiyat_lt5_son_tarih": "2023-05-19"
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 22,
+        "en_eski": "2021-08-12",
+        "en_yeni": "2026-10-27",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 21,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 23,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 0.91
+      },
+      "durum": "OK"
+    },
+    "PLTR": {
+      "symbol": "PLTR",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "Doğrudan listeleme 2020-09-30.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 3 gün (silinmedi)"
+        }
+      ],
+      "satir": 1518,
+      "eligible_satir": 1518,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2020-09-30",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2020-09-30",
+        "beklenen_kaynak": "halka arz / kuruluş",
+        "ilk_tarih_fark_gun": 0,
+        "beklenen_ilk_tarih": "2020-09-30"
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2021-01-22",
+            "ret": 0.254,
+            "gap": -0.005,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 4.05
+          },
+          {
+            "date": "2024-02-06",
+            "ret": 0.308,
+            "gap": 0.2141,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 10.51
+          },
+          {
+            "date": "2026-08-04",
+            "ret": 0.2945,
+            "gap": 0.1552,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 5.55
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 6030.5,
+        "yillik_vol_1y": 0.586,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 25,
+        "en_eski": "2020-11-12",
+        "en_yeni": "2026-11-02",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 24,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 24,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "OK"
+    },
+    "MU": {
+      "symbol": "MU",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 21,
+        "temettu_toplam": 2.475,
+        "temettu_faktor_max_hata": 2.4023416922425156e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 20257.2,
+        "yillik_vol_1y": 0.801,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 100,
+        "en_eski": "2002-03-21",
+        "en_yeni": "2026-12-23",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 99,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "OK"
+    },
+    "MRVL": {
+      "symbol": "MRVL",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 2 gün (silinmedi)"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 2.5799999999999996,
+        "temettu_faktor_max_hata": 5.925348139923514e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2023-05-26",
+            "ret": 0.3242,
+            "gap": 0.186,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.25
+          },
+          {
+            "date": "2026-06-02",
+            "ret": 0.3252,
+            "gap": 0.1551,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 4.58
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 3450.4,
+        "yillik_vol_1y": 0.777,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 100,
+        "en_eski": "2002-02-28",
+        "en_yeni": "2026-12-01",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 99,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "OK"
+    },
+    "BE": {
+      "symbol": "BE",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "Halka arz 2018-07-25.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 11 gün (silinmedi)"
+        }
+      ],
+      "satir": 2068,
+      "eligible_satir": 2068,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2018-07-25",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2018-07-25",
+        "beklenen_kaynak": "halka arz / kuruluş",
+        "ilk_tarih_fark_gun": 0,
+        "beklenen_ilk_tarih": "2018-07-25"
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2018-11-06",
+            "ret": -0.2503,
+            "gap": -0.0895,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 7.51
+          },
+          {
+            "date": "2019-08-13",
+            "ret": -0.425,
+            "gap": -0.2525,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 16.54
+          },
+          {
+            "date": "2020-03-19",
+            "ret": 0.4235,
+            "gap": 0.0391,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 1.54
+          },
+          {
+            "date": "2020-03-24",
+            "ret": 0.4447,
+            "gap": 0.0977,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 1.81
+          },
+          {
+            "date": "2020-06-30",
+            "ret": 0.3236,
+            "gap": 0.1046,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 7.29
+          },
+          {
+            "date": "2020-07-15",
+            "ret": 0.3484,
+            "gap": 0.0733,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 5.72
+          },
+          {
+            "date": "2021-10-25",
+            "ret": 0.3715,
+            "gap": 0.2506,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 9.47
+          },
+          {
+            "date": "2024-11-15",
+            "ret": 0.5919,
+            "gap": 0.5776,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 10.1
+          },
+          {
+            "date": "2025-10-13",
+            "ret": 0.2652,
+            "gap": 0.2201,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 2.04
+          },
+          {
+            "date": "2026-04-29",
+            "ret": 0.2721,
+            "gap": 0.2217,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 2.15
+          },
+          {
+            "date": "2026-07-30",
+            "ret": 0.2649,
+            "gap": 0.1374,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 2.31
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 2166.9,
+        "yillik_vol_1y": 1.103,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.032,
+        "gercek_fiyat_lt5_son_tarih": "2020-04-03"
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 33,
+        "en_eski": "2018-11-06",
+        "en_yeni": "2026-10-22",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 32,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 33,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 0.97
+      },
+      "durum": "OK"
+    },
+    "TSLA": {
+      "symbol": "TSLA",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1673 satırda raw_volume üretilmedi"
+        },
+        {
+          "severity": "UYARI",
+          "code": "BILANCO_BELIRSIZ",
+          "msg": "1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2020-08-31",
+            "ratio": 5.0,
+            "close_ratio": 1.1257,
+            "open_ratio": 1.0044,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 1.278,
+            "hacim_isaret": "duzeltilmis_gibi"
+          },
+          {
+            "date": "2022-08-25",
+            "ratio": 3.0,
+            "close_ratio": 0.9965,
+            "open_ratio": 1.0177,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.686,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 22725.9,
+        "yillik_vol_1y": 0.452,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 65,
+        "en_eski": "2010-11-09",
+        "en_yeni": "2026-10-21",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 63,
+        "durumu_belirsiz": 1,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "UYARI"
+    },
+    "AMD": {
+      "symbol": "AMD",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 1 gün (silinmedi)"
+        },
+        {
+          "severity": "UYARI",
+          "code": "BILANCO_BELIRSIZ",
+          "msg": "1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2016-04-22",
+            "ret": 0.5229,
+            "gap": 0.2176,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 15.82
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 11288.7,
+        "yillik_vol_1y": 0.671,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.044,
+        "gercek_fiyat_lt5_son_tarih": "2016-07-05"
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 100,
+        "en_eski": "2002-01-16",
+        "en_yeni": "2026-11-03",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 98,
+        "durumu_belirsiz": 1,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "UYARI"
+    },
+    "NVDA": {
+      "symbol": "NVDA",
+      "roles": [
+        "ana20",
+        "islem10"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2122 satırda raw_volume üretilmedi"
+        },
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 1 gün (silinmedi)"
+        },
+        {
+          "severity": "UYARI",
+          "code": "BILANCO_BELIRSIZ",
+          "msg": "28 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2021-07-20",
+            "ratio": 4.0,
+            "close_ratio": 0.9911,
+            "open_ratio": 0.9974,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.509,
+            "hacim_isaret": "duzeltilmis_gibi"
+          },
+          {
+            "date": "2024-06-10",
+            "ratio": 10.0,
+            "close_ratio": 1.0075,
+            "open_ratio": 0.9957,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.677,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 0.7056250000000002,
+        "temettu_faktor_max_hata": 4.037718015492686e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2016-11-11",
+            "ret": 0.2981,
+            "gap": 0.1732,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 6.6
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 30021.4,
+        "yillik_vol_1y": 0.372,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 100,
+        "en_eski": "2002-05-22",
+        "en_yeni": "2026-11-17",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 71,
+        "durumu_belirsiz": 28,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "UYARI"
+    },
+    "ENPH": {
+      "symbol": "ENPH",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 11 gün (silinmedi)"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2016-03-03",
+            "ret": 0.2759,
+            "gap": 0.0153,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 2.51
+          },
+          {
+            "date": "2016-09-23",
+            "ret": -0.2814,
+            "gap": -0.2994,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 39.94
+          },
+          {
+            "date": "2017-01-11",
+            "ret": 0.2743,
+            "gap": 0.1947,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 9.05
+          },
+          {
+            "date": "2018-06-13",
+            "ret": 0.3289,
+            "gap": 0.3556,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.51
+          },
+          {
+            "date": "2019-05-01",
+            "ret": 0.2928,
+            "gap": 0.2251,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.75
+          },
+          {
+            "date": "2019-07-31",
+            "ret": 0.3002,
+            "gap": 0.2152,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 6.74
+          },
+          {
+            "date": "2019-10-30",
+            "ret": -0.2553,
+            "gap": -0.1389,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 7.93
+          },
+          {
+            "date": "2020-02-19",
+            "ret": 0.4244,
+            "gap": 0.1827,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 6.95
+          },
+          {
+            "date": "2020-06-17",
+            "ret": -0.26,
+            "gap": -0.0116,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 9.71
+          },
+          {
+            "date": "2023-04-26",
+            "ret": -0.2573,
+            "gap": -0.1903,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.59
+          },
+          {
+            "date": "2026-02-04",
+            "ret": 0.386,
+            "gap": 0.2876,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.71
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 204.9,
+        "yillik_vol_1y": 0.799,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.242,
+        "gercek_fiyat_lt5_son_tarih": "2019-01-03"
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 59,
+        "en_eski": "2012-05-10",
+        "en_yeni": "2026-10-27",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 58,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "OK"
+    },
+    "SHOP": {
+      "symbol": "SHOP",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1633 satırda raw_volume üretilmedi"
+        },
+        {
+          "severity": "UYARI",
+          "code": "BILANCO_BELIRSIZ",
+          "msg": "11 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı"
+        },
+        {
+          "severity": "BILGI",
+          "code": "BILANCO_KISMI",
+          "msg": "sonuç kaydı olan 34 kayıt / ~43 çeyrek (en eski 2015-07-30)"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2022-06-29",
+            "ratio": 10.0,
+            "close_ratio": 0.9436,
+            "open_ratio": 0.9821,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.651,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 1075.0,
+        "yillik_vol_1y": 0.587,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 46,
+        "en_eski": "2015-07-30",
+        "en_yeni": "2026-11-03",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 34,
+        "durumu_belirsiz": 11,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 0.79
+      },
+      "durum": "UYARI"
+    },
+    "ROKU": {
+      "symbol": "ROKU",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "Halka arz 2017-09-28.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 7 gün (silinmedi)"
+        },
+        {
+          "severity": "UYARI",
+          "code": "BILANCO_BELIRSIZ",
+          "msg": "1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı"
+        }
+      ],
+      "satir": 2274,
+      "eligible_satir": 2274,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2017-09-28",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2017-09-28",
+        "beklenen_kaynak": "halka arz / kuruluş",
+        "ilk_tarih_fark_gun": 0,
+        "beklenen_ilk_tarih": "2017-09-28"
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2017-11-09",
+            "ret": 0.5494,
+            "gap": 0.3137,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 17.99
+          },
+          {
+            "date": "2017-11-13",
+            "ret": 0.2845,
+            "gap": 0.049,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 28.46
+          },
+          {
+            "date": "2019-01-07",
+            "ret": 0.2505,
+            "gap": 0.0919,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 6.05
+          },
+          {
+            "date": "2019-02-22",
+            "ret": 0.2523,
+            "gap": 0.0701,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 4.7
+          },
+          {
+            "date": "2019-05-09",
+            "ret": 0.2811,
+            "gap": 0.0783,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 6.07
+          },
+          {
+            "date": "2023-07-28",
+            "ret": 0.3141,
+            "gap": 0.0996,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 10.16
+          },
+          {
+            "date": "2023-11-02",
+            "ret": 0.3074,
+            "gap": 0.1869,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.0
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 287.4,
+        "yillik_vol_1y": 0.402,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 37,
+        "en_eski": "2017-11-08",
+        "en_yeni": "2026-11-05",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 35,
+        "durumu_belirsiz": 1,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 36,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 0.97
+      },
+      "durum": "UYARI"
+    },
+    "XYZ": {
+      "symbol": "XYZ",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "Block: SQ -> XYZ ticker değişimi 2025-01-21. Geçmişin XYZ altında kesintisiz olup olmadığı kontrol edilir.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 2 gün (silinmedi)"
+        },
+        {
+          "severity": "BILGI",
+          "code": "LEGACY_OK",
+          "msg": "XYZ geçmişi 2016-01-04'den başlıyor; SQ gerekmiyor (eski sembol verisi yok)"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2020-03-16",
+            "ret": -0.2856,
+            "gap": -0.1475,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 2.18
+          },
+          {
+            "date": "2022-02-25",
+            "ret": 0.2614,
+            "gap": 0.2096,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 3.18
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 389.3,
+        "yillik_vol_1y": 0.462,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 44,
+        "en_eski": "2016-03-10",
+        "en_yeni": "2026-11-03",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 43,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "legacy": {
+        "eski_sembol": "SQ",
+        "degisim_tarihi": "2025-01-21",
+        "yeni_ilk": "2016-01-04",
+        "yeni_son": "2026-10-15",
+        "yeni_satir": 2712,
+        "degisim_cevresi_max_abs_getiri": 0.0427,
+        "birlestirme": {
+          "eski": "SQ",
+          "onay": false,
+          "karar": "eski sembol verisi yok",
+          "birlesti": false,
+          "gerekli": false
+        }
+      },
+      "durum": "OK"
+    },
+    "SNAP": {
+      "symbol": "SNAP",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "Halka arz 2017-03-02.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 11 gün (silinmedi)"
+        },
+        {
+          "severity": "UYARI",
+          "code": "BILANCO_BELIRSIZ",
+          "msg": "1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı"
+        }
+      ],
+      "satir": 2420,
+      "eligible_satir": 2420,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2017-03-02",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2017-03-02",
+        "beklenen_kaynak": "halka arz / kuruluş",
+        "ilk_tarih_fark_gun": 0,
+        "beklenen_ilk_tarih": "2017-03-02"
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2018-02-07",
+            "ret": 0.4758,
+            "gap": 0.2198,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 15.67
+          },
+          {
+            "date": "2020-04-22",
+            "ret": 0.3674,
+            "gap": 0.2203,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 6.54
+          },
+          {
+            "date": "2020-10-21",
+            "ret": 0.283,
+            "gap": 0.2292,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 17.25
+          },
+          {
+            "date": "2021-10-22",
+            "ret": -0.2659,
+            "gap": -0.2178,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 9.35
+          },
+          {
+            "date": "2022-02-04",
+            "ret": 0.5882,
+            "gap": 0.4396,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 11.22
+          },
+          {
+            "date": "2022-05-24",
+            "ret": -0.4308,
+            "gap": -0.3551,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 9.01
+          },
+          {
+            "date": "2022-07-22",
+            "ret": -0.3908,
+            "gap": -0.3211,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 12.17
+          },
+          {
+            "date": "2022-10-21",
+            "ret": -0.2808,
+            "gap": -0.2808,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.43
+          },
+          {
+            "date": "2024-02-07",
+            "ret": -0.3461,
+            "gap": -0.3106,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 9.18
+          },
+          {
+            "date": "2024-04-26",
+            "ret": 0.2763,
+            "gap": 0.2702,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 6.91
+          },
+          {
+            "date": "2024-08-02",
+            "ret": -0.2693,
+            "gap": -0.2092,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 6.72
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 230.7,
+        "yillik_vol_1y": 0.575,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.026,
+        "gercek_fiyat_lt5_son_tarih": "2026-07-31"
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 39,
+        "en_eski": "2017-05-10",
+        "en_yeni": "2026-11-04",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 37,
+        "durumu_belirsiz": 1,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 38,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 0.97
+      },
+      "durum": "UYARI"
+    },
+    "UPST": {
+      "symbol": "UPST",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "Halka arz 2020-12-16.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 14 gün (silinmedi)"
+        }
+      ],
+      "satir": 1464,
+      "eligible_satir": 1464,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2020-12-16",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2020-12-16",
+        "beklenen_kaynak": "halka arz / kuruluş",
+        "ilk_tarih_fark_gun": 0,
+        "beklenen_ilk_tarih": "2020-12-16"
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2021-03-18",
+            "ret": 0.8932,
+            "gap": 0.3742,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 15.06
+          },
+          {
+            "date": "2021-03-22",
+            "ret": 0.316,
+            "gap": 0.0212,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 5.53
+          },
+          {
+            "date": "2021-03-23",
+            "ret": -0.2814,
+            "gap": -0.0297,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 7.51
+          },
+          {
+            "date": "2021-08-11",
+            "ret": 0.2618,
+            "gap": 0.2295,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 7.4
+          },
+          {
+            "date": "2022-02-16",
+            "ret": 0.3565,
+            "gap": 0.2574,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 4.83
+          },
+          {
+            "date": "2022-05-10",
+            "ret": -0.5642,
+            "gap": -0.5594,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.12
+          },
+          {
+            "date": "2022-11-10",
+            "ret": 0.272,
+            "gap": 0.0856,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 1.91
+          },
+          {
+            "date": "2023-02-15",
+            "ret": 0.2813,
+            "gap": 0.0985,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 4.24
+          },
+          {
+            "date": "2023-05-10",
+            "ret": 0.3463,
+            "gap": 0.3939,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.47
+          },
+          {
+            "date": "2023-08-09",
+            "ret": -0.3424,
+            "gap": -0.1733,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 2.8
+          },
+          {
+            "date": "2023-11-08",
+            "ret": -0.273,
+            "gap": -0.2764,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 5.55
+          },
+          {
+            "date": "2024-08-07",
+            "ret": 0.3951,
+            "gap": 0.2568,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 7.86
+          },
+          {
+            "date": "2024-11-08",
+            "ret": 0.4602,
+            "gap": 0.1767,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 6.23
+          },
+          {
+            "date": "2025-02-12",
+            "ret": 0.3182,
+            "gap": 0.2391,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 9.37
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 145.3,
+        "yillik_vol_1y": 0.657,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 24,
+        "en_eski": "2021-03-17",
+        "en_yeni": "2026-11-03",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 23,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 23,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "OK"
+    },
+    "SMCI": {
+      "symbol": "SMCI",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2200 satırda raw_volume üretilmedi"
+        },
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 12 gün (silinmedi)"
+        },
+        {
+          "severity": "UYARI",
+          "code": "BILANCO_BELIRSIZ",
+          "msg": "2 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 1
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2024-10-01",
+            "ratio": 10.0,
+            "close_ratio": 0.9738,
+            "open_ratio": 1.0026,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.538,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2016-01-12",
+            "ret": 0.2672,
+            "gap": 0.138,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.37
+          },
+          {
+            "date": "2016-07-19",
+            "ret": -0.2779,
+            "gap": -0.2202,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 27.63
+          },
+          {
+            "date": "2018-10-04",
+            "ret": -0.4112,
+            "gap": -0.2916,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 44.86
+          },
+          {
+            "date": "2022-05-04",
+            "ret": 0.3121,
+            "gap": 0.1177,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 10.47
+          },
+          {
+            "date": "2023-05-03",
+            "ret": 0.2827,
+            "gap": 0.1108,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 5.44
+          },
+          {
+            "date": "2024-01-19",
+            "ret": 0.3594,
+            "gap": 0.116,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.21
+          },
+          {
+            "date": "2024-02-22",
+            "ret": 0.3287,
+            "gap": 0.1782,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 1.81
+          },
+          {
+            "date": "2024-10-30",
+            "ret": -0.3268,
+            "gap": -0.2905,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 6.35
+          },
+          {
+            "date": "2024-11-19",
+            "ret": 0.3124,
+            "gap": 0.2586,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 3.24
+          },
+          {
+            "date": "2024-12-02",
+            "ret": 0.2868,
+            "gap": 0.1575,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 2.76
+          },
+          {
+            "date": "2026-03-20",
+            "ret": -0.3332,
+            "gap": -0.2686,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 9.38
+          },
+          {
+            "date": "2026-06-10",
+            "ret": -0.2798,
+            "gap": -0.124,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 5.18
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 1064.9,
+        "yillik_vol_1y": 0.949,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 76,
+        "en_eski": "2007-05-09",
+        "en_yeni": "2026-11-03",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 73,
+        "durumu_belirsiz": 2,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "UYARI"
+    },
+    "PLUG": {
+      "symbol": "PLUG",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 13 gün (silinmedi)"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2017-02-10",
+            "ret": 0.3882,
+            "gap": 0.0,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 7.5
+          },
+          {
+            "date": "2017-04-05",
+            "ret": 0.7308,
+            "gap": 0.8308,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 31.28
+          },
+          {
+            "date": "2018-12-26",
+            "ret": 0.2843,
+            "gap": 0.0,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 3.54
+          },
+          {
+            "date": "2021-01-07",
+            "ret": 0.3511,
+            "gap": 0.2457,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 2.93
+          },
+          {
+            "date": "2022-07-28",
+            "ret": 0.259,
+            "gap": 0.1647,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 4.68
+          },
+          {
+            "date": "2023-11-10",
+            "ret": -0.4047,
+            "gap": -0.3761,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 9.7
+          },
+          {
+            "date": "2024-01-23",
+            "ret": 0.3099,
+            "gap": 0.1831,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 5.06
+          },
+          {
+            "date": "2025-04-28",
+            "ret": 0.2593,
+            "gap": 0.2346,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 3.99
+          },
+          {
+            "date": "2025-06-09",
+            "ret": 0.2577,
+            "gap": 0.0309,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 0.88
+          },
+          {
+            "date": "2025-06-30",
+            "ret": 0.2845,
+            "gap": 0.1207,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 2.83
+          },
+          {
+            "date": "2025-07-09",
+            "ret": 0.2535,
+            "gap": 0.0211,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 3.02
+          },
+          {
+            "date": "2025-10-01",
+            "ret": 0.2575,
+            "gap": 0.0429,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 3.07
+          },
+          {
+            "date": "2025-10-03",
+            "ret": 0.3463,
+            "gap": 0.1378,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 5.99
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 172.9,
+        "yillik_vol_1y": 0.788,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.68,
+        "gercek_fiyat_lt5_son_tarih": "2026-10-15"
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 100,
+        "en_eski": "2002-02-26",
+        "en_yeni": "2026-11-09",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 99,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "OK"
+    },
+    "PTON": {
+      "symbol": "PTON",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "Halka arz 2019-09-26.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 6 gün (silinmedi)"
+        },
+        {
+          "severity": "UYARI",
+          "code": "BILANCO_BELIRSIZ",
+          "msg": "1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı"
+        }
+      ],
+      "satir": 1773,
+      "eligible_satir": 1773,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2019-09-26",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2019-09-26",
+        "beklenen_kaynak": "halka arz / kuruluş",
+        "ilk_tarih_fark_gun": 0,
+        "beklenen_ilk_tarih": "2019-09-26"
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2021-11-05",
+            "ret": -0.3535,
+            "gap": -0.3362,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 15.27
+          },
+          {
+            "date": "2022-02-08",
+            "ret": 0.2528,
+            "gap": 0.0151,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 10.8
+          },
+          {
+            "date": "2023-02-01",
+            "ret": 0.2653,
+            "gap": 0.0634,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 7.53
+          },
+          {
+            "date": "2024-08-22",
+            "ret": 0.3542,
+            "gap": 0.1399,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 12.51
+          },
+          {
+            "date": "2024-10-31",
+            "ret": 0.2782,
+            "gap": 0.185,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.21
+          },
+          {
+            "date": "2026-02-05",
+            "ret": -0.2572,
+            "gap": -0.1861,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 8.39
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 52.3,
+        "yillik_vol_1y": 0.613,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.151,
+        "gercek_fiyat_lt5_son_tarih": "2026-10-08"
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 29,
+        "en_eski": "2019-11-05",
+        "en_yeni": "2026-11-05",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 27,
+        "durumu_belirsiz": 1,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 28,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 0.96
+      },
+      "durum": "UYARI"
+    },
+    "RIVN": {
+      "symbol": "RIVN",
+      "roles": [
+        "ana20"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "Halka arz 2021-11-10.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 2 gün (silinmedi)"
+        }
+      ],
+      "satir": 1237,
+      "eligible_satir": 1237,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2021-11-10",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2021-11-10",
+        "beklenen_kaynak": "halka arz / kuruluş",
+        "ilk_tarih_fark_gun": 0,
+        "beklenen_ilk_tarih": "2021-11-10"
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2024-02-22",
+            "ret": -0.256,
+            "gap": -0.2216,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 6.28
+          },
+          {
+            "date": "2026-02-13",
+            "ret": 0.2664,
+            "gap": 0.2693,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 5.01
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 418.3,
+        "yillik_vol_1y": 0.687,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 21,
+        "en_eski": "2021-12-16",
+        "en_yeni": "2026-10-29",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 20,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 20,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "OK"
+    },
+    "AAPL": {
+      "symbol": "AAPL",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1173 satırda raw_volume üretilmedi"
+        },
+        {
+          "severity": "UYARI",
+          "code": "BILANCO_BELIRSIZ",
+          "msg": "12 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2020-08-31",
+            "ratio": 4.0,
+            "close_ratio": 1.0339,
+            "open_ratio": 1.0222,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.995,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 8.99,
+        "temettu_faktor_max_hata": 4.624360914196046e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 12629.9,
+        "yillik_vol_1y": 0.245,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 100,
+        "en_eski": "2002-04-17",
+        "en_yeni": "2026-11-02",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 87,
+        "durumu_belirsiz": 12,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "UYARI"
+    },
+    "MSFT": {
+      "symbol": "MSFT",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 25.6,
+        "temettu_faktor_max_hata": 3.6157523253255164e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 12719.1,
+        "yillik_vol_1y": 0.325,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 100,
+        "en_eski": "2002-01-17",
+        "en_yeni": "2026-10-28",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 99,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "OK"
+    },
+    "GOOGL": {
+      "symbol": "GOOGL",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1645 satırda raw_volume üretilmedi"
+        },
+        {
+          "severity": "UYARI",
+          "code": "BILANCO_BELIRSIZ",
+          "msg": "1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2022-07-18",
+            "ratio": 20.0,
+            "close_ratio": 0.9754,
+            "open_ratio": 1.0077,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.785,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 10,
+        "temettu_toplam": 2.08,
+        "temettu_faktor_max_hata": 1.7916417383023742e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 9495.2,
+        "yillik_vol_1y": 0.312,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 89,
+        "en_eski": "2004-10-21",
+        "en_yeni": "2026-10-28",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 87,
+        "durumu_belirsiz": 1,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "UYARI"
+    },
+    "AMZN": {
+      "symbol": "AMZN",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1617 satırda raw_volume üretilmedi"
+        },
+        {
+          "severity": "UYARI",
+          "code": "BILANCO_BELIRSIZ",
+          "msg": "8 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2022-06-06",
+            "ratio": 20.0,
+            "close_ratio": 1.0199,
+            "open_ratio": 1.0237,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.707,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 9821.4,
+        "yillik_vol_1y": 0.337,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 100,
+        "en_eski": "2002-04-23",
+        "en_yeni": "2026-10-29",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 91,
+        "durumu_belirsiz": 8,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "UYARI"
+    },
+    "MRNA": {
+      "symbol": "MRNA",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "Halka arz 2018-12-07.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 2 gün (silinmedi)"
+        }
+      ],
+      "satir": 1974,
+      "eligible_satir": 1974,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2018-12-07",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2018-12-07",
+        "beklenen_kaynak": "halka arz / kuruluş",
+        "ilk_tarih_fark_gun": 0,
+        "beklenen_ilk_tarih": "2018-12-07"
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2020-02-25",
+            "ret": 0.2781,
+            "gap": 0.1915,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 14.08
+          },
+          {
+            "date": "2026-08-19",
+            "ret": 1.7697,
+            "gap": 0.8428,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 39.06
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 360.7,
+        "yillik_vol_1y": 1.284,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 32,
+        "en_eski": "2019-03-13",
+        "en_yeni": "2026-11-06",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 31,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 31,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "OK"
+    },
+    "JPM": {
+      "symbol": "JPM",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 44,
+        "temettu_toplam": 41.31,
+        "temettu_faktor_max_hata": 4.009233504076448e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 2629.0,
+        "yillik_vol_1y": 0.223,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 100,
+        "en_eski": "2002-04-17",
+        "en_yeni": "2027-01-14",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 99,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "OK"
+    },
+    "XOM": {
+      "symbol": "XOM",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 37.83,
+        "temettu_faktor_max_hata": 3.663564811517972e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 2219.0,
+        "yillik_vol_1y": 0.26,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 100,
+        "en_eski": "2002-01-23",
+        "en_yeni": "2026-10-30",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 99,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "OK"
+    },
+    "WMT": {
+      "symbol": "WMT",
+      "roles": [
+        "kontrol8"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2049 satırda raw_volume üretilmedi"
+        },
+        {
+          "severity": "UYARI",
+          "code": "BILANCO_BELIRSIZ",
+          "msg": "1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2024-02-26",
+            "ratio": 3.0,
+            "close_ratio": 1.0185,
+            "open_ratio": 1.0103,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.863,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 8.222668,
+        "temettu_faktor_max_hata": 3.1269335054595615e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 2360.2,
+        "yillik_vol_1y": 0.264,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 100,
+        "en_eski": "2002-05-14",
+        "en_yeni": "2026-11-19",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 98,
+        "durumu_belirsiz": 1,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 43,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "UYARI"
+    },
+    "NBIS": {
+      "symbol": "NBIS",
+      "roles": [
+        "nbis"
+      ],
+      "asset": "equity",
+      "indirme": "OK",
+      "event": "Eski Yandex N.V.; işlem 2022-02-28'de durdu, NBIS olarak 2024-10-21'de yeniden başladı. Yandex geçmişi birleştirilmez.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "BUYUK_HAREKET",
+          "msg": "|getiri|>25% olan 4 gün (silinmedi)"
+        }
+      ],
+      "satir": 498,
+      "eligible_satir": 498,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2024-10-21",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2024-10-21",
+        "beklenen_kaynak": "faaliyet / kesim başlangıcı (veri en geç burada başlamalı)",
+        "ilk_tarih_fark_gun": 0,
+        "kesim_tarihi": "2024-10-21",
+        "kesim_oncesi_satir": 0,
+        "kesim_sonrasi_satir": 498,
+        "kesim_oncesi": null,
+        "kesim_sonrasi_ilk60": {
+          "satir": 60,
+          "ilk": "2024-10-21",
+          "son": "2025-01-16",
+          "medyan_kapanis": 26.23,
+          "medyan_abs_getiri": 0.0442,
+          "9_11.5_bandi": 0.0,
+          "medyan_dolar_hacim": 148093209.0
+        }
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 0,
+        "temettu_toplam": 0.0,
+        "temettu_faktor_max_hata": 0.0,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2025-01-27",
+            "ret": -0.3744,
+            "gap": -0.1964,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 7.25
+          },
+          {
+            "date": "2025-09-09",
+            "ret": 0.4942,
+            "gap": 0.5173,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 9.52
+          },
+          {
+            "date": "2026-07-30",
+            "ret": 0.2713,
+            "gap": 0.1617,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 2.34
+          },
+          {
+            "date": "2026-08-12",
+            "ret": 0.3414,
+            "gap": 0.1696,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": 2.71
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 2341.6,
+        "yillik_vol_1y": 1.068,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "bilanco": {
+        "durum": "var",
+        "kayit": 53,
+        "en_eski": "2011-07-28",
+        "en_yeni": "2026-11-10",
+        "planlanan": 1,
+        "sonuc_kaydi_var": 52,
+        "durumu_belirsiz": 0,
+        "reported_kolonu": "Reported EPS",
+        "beklenen_ceyrek_yaklasik": 8,
+        "saat_bilgisi_var": true,
+        "not": "Sağlayıcı takvim kaydıdır. Gerçekleşme, ilan saati ve önceden duyurulma zamanı bu kaynakla doğrulanmaz.",
+        "sonuc_kaydi_kapsama": 1.0
+      },
+      "durum": "OK"
+    },
+    "SPY": {
+      "symbol": "SPY",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 64.357,
+        "temettu_faktor_max_hata": 5.152023472287937e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 42561.7,
+        "yillik_vol_1y": 0.127,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "OK"
+    },
+    "QQQ": {
+      "symbol": "QQQ",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 21.197,
+        "temettu_faktor_max_hata": 5.572542124410163e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 30297.5,
+        "yillik_vol_1y": 0.197,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "OK"
+    },
+    "IWM": {
+      "symbol": "IWM",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 24.135,
+        "temettu_faktor_max_hata": 4.650329685773613e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 8078.9,
+        "yillik_vol_1y": 0.183,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "OK"
+    },
+    "^VIX": {
+      "symbol": "^VIX",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "index_vol",
+      "indirme": "OK",
+      "event": "Endeks: hacim/temettü yok; seviye ve puan değişimi olarak işlenir.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "KISMI_GUN",
+          "msg": "seansı bitmemiş 2026-10-16 çıkarıldı"
+        },
+        {
+          "severity": "UYARI",
+          "code": "FAZLA_TARIH",
+          "msg": "2 satır ABD seansı olmayan günde: ['2026-05-25', '2026-09-07']"
+        }
+      ],
+      "satir": 2714,
+      "eligible_satir": 2714,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": null,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 2,
+        "fazla_tarihler": [
+          "2026-05-25",
+          "2026-09-07"
+        ],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2016-06-24",
+            "ret": 0.4933,
+            "gap": 0.5107,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2016-09-09",
+            "ret": 0.3989,
+            "gap": 0.0008,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2017-04-24",
+            "ret": -0.2591,
+            "gap": -0.2098,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2017-05-17",
+            "ret": 0.4638,
+            "gap": 0.1164,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2017-08-10",
+            "ret": 0.4437,
+            "gap": 0.0414,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2017-08-17",
+            "ret": 0.3245,
+            "gap": 0.006,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2018-02-02",
+            "ret": 0.2851,
+            "gap": 0.0126,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2018-02-05",
+            "ret": 1.156,
+            "gap": 0.0653,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2018-03-22",
+            "ret": 0.3068,
+            "gap": 0.0151,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2018-05-29",
+            "ret": 0.2874,
+            "gap": 0.0885,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2018-06-25",
+            "ret": 0.2585,
+            "gap": 0.0944,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2018-10-10",
+            "ret": 0.4395,
+            "gap": 0.005,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2018-12-04",
+            "ret": 0.2616,
+            "gap": 0.0243,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2019-05-07",
+            "ret": 0.2513,
+            "gap": 0.0298,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2019-05-13",
+            "ret": 0.2812,
+            "gap": 0.1608,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2019-08-05",
+            "ret": 0.3964,
+            "gap": 0.1334,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2019-08-14",
+            "ret": 0.2614,
+            "gap": 0.0166,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2020-01-27",
+            "ret": 0.2521,
+            "gap": 0.1964,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2020-02-24",
+            "ret": 0.4655,
+            "gap": 0.3027,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2020-02-27",
+            "ret": 0.4209,
+            "gap": 0.0504,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2020-03-09",
+            "ret": 0.2985,
+            "gap": 0.0,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2020-03-12",
+            "ret": 0.4002,
+            "gap": 0.1403,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2020-03-16",
+            "ret": 0.4299,
+            "gap": 0.0,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2020-06-11",
+            "ret": 0.4795,
+            "gap": 0.1045,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2020-09-03",
+            "ret": 0.2646,
+            "gap": -0.0109,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2021-01-27",
+            "ret": 0.6164,
+            "gap": 0.0348,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2021-02-25",
+            "ret": 0.3538,
+            "gap": 0.0183,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2021-05-12",
+            "ret": 0.2633,
+            "gap": 0.0266,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2021-11-26",
+            "ret": 0.5404,
+            "gap": 0.4327,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2024-08-02",
+            "ret": 0.2582,
+            "gap": 0.1038,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2024-08-05",
+            "ret": 0.649,
+            "gap": 0.0,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2024-08-06",
+            "ret": -0.2816,
+            "gap": -0.126,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2024-09-03",
+            "ret": 0.3813,
+            "gap": 0.0507,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2024-12-18",
+            "ret": 0.7404,
+            "gap": -0.0189,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2025-04-03",
+            "ret": 0.3956,
+            "gap": 0.2264,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2025-04-04",
+            "ret": 0.5093,
+            "gap": 0.0033,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2025-04-09",
+            "ret": -0.3575,
+            "gap": -0.0258,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2025-10-10",
+            "ret": 0.3183,
+            "gap": -0.0043,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2026-01-20",
+            "ret": 0.2667,
+            "gap": 0.2573,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2026-06-05",
+            "ret": 0.3968,
+            "gap": 0.0305,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "endeks": {
+        "min": 9.140000343322754,
+        "max": 82.69000244140625,
+        "medyan_son252": 17.085000038146973,
+        "olcek_sicramasi": []
+      },
+      "likidite": {},
+      "durum": "UYARI"
+    },
+    "^TNX": {
+      "symbol": "^TNX",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "index_rate",
+      "indirme": "OK",
+      "event": "10Y getiri endeksi; ölçek (yüzde mi, x10 mu) doğrulanır; değişim baz puan olarak işlenir.",
+      "issues": [
+        {
+          "severity": "BILGI",
+          "code": "EKSIK_SEANS",
+          "msg": "1 ABD seansı eksik (en uzun boşluk 1 seans, 2016-11-11): ['2016-11-11']"
+        },
+        {
+          "severity": "BILGI",
+          "code": "TNX_BIRIM",
+          "msg": "^TNX aralık 0.50–5.31: yüzde (ör. 4.25 = %4.25)"
+        }
+      ],
+      "satir": 2711,
+      "eligible_satir": 2711,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": null,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 18
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 1,
+        "eksik_tarihler": [
+          "2016-11-11"
+        ],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 1,
+        "en_uzun_bosluk_baslangic": "2016-11-11",
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [
+          {
+            "date": "2020-03-09",
+            "ret": -0.2932,
+            "gap": -0.3144,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2020-03-10",
+            "ret": 0.499,
+            "gap": 0.3106,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2020-03-17",
+            "ret": 0.3695,
+            "gap": 0.0907,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          },
+          {
+            "date": "2020-03-18",
+            "ret": 0.2698,
+            "gap": 0.0853,
+            "split": 0.0,
+            "div": 0.0,
+            "vol_x": null
+          }
+        ],
+        "gizli_split_suphesi": []
+      },
+      "endeks": {
+        "min": 0.49900001287460327,
+        "max": 5.310999870300293,
+        "medyan_son252": 4.335500001907349,
+        "olcek_sicramasi": [],
+        "olcek_yorumu": "yüzde (ör. 4.25 = %4.25)"
+      },
+      "likidite": {},
+      "durum": "OK"
+    },
+    "XLK": {
+      "symbol": "XLK",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2496 satırda raw_volume üretilmedi"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2025-12-05",
+            "ratio": 2.0,
+            "close_ratio": 1.0073,
+            "open_ratio": 1.0046,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.473,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 6.5835,
+        "temettu_faktor_max_hata": 5.749881254457634e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 1937.1,
+        "yillik_vol_1y": 0.263,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "UYARI"
+    },
+    "SMH": {
+      "symbol": "SMH",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1847 satırda raw_volume üretilmedi"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2023-05-05",
+            "ratio": 2.0,
+            "close_ratio": 1.0211,
+            "open_ratio": 1.0029,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 1.053,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 10,
+        "temettu_toplam": 8.823,
+        "temettu_faktor_max_hata": 1.3961423950270557e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 3677.9,
+        "yillik_vol_1y": 0.395,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "UYARI"
+    },
+    "IGV": {
+      "symbol": "IGV",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2057 satırda raw_volume üretilmedi"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2024-03-07",
+            "ratio": 5.0,
+            "close_ratio": 1.0118,
+            "open_ratio": 1.0087,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.916,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 17,
+        "temettu_toplam": 0.546,
+        "temettu_faktor_max_hata": 1.5900557182035868e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 1095.7,
+        "yillik_vol_1y": 0.32,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "UYARI"
+    },
+    "XLC": {
+      "symbol": "XLC",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": "ETF kuruluşu 2018-06-19; öncesine satır yaratılmaz.",
+      "issues": [],
+      "satir": 2093,
+      "eligible_satir": 2093,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2018-06-19",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2018-06-19",
+        "beklenen_kaynak": "halka arz / kuruluş",
+        "ilk_tarih_fark_gun": 0,
+        "beklenen_ilk_tarih": "2018-06-19"
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 33,
+        "temettu_toplam": 6.154,
+        "temettu_faktor_max_hata": 4.924123764293853e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 639.6,
+        "yillik_vol_1y": 0.161,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "OK"
+    },
+    "XLY": {
+      "symbol": "XLY",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2496 satırda raw_volume üretilmedi"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2025-12-05",
+            "ratio": 2.0,
+            "close_ratio": 1.0055,
+            "open_ratio": 1.0009,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.748,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 7.7475000000000005,
+        "temettu_faktor_max_hata": 4.1946907503032094e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 982.3,
+        "yillik_vol_1y": 0.192,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "UYARI"
+    },
+    "XLF": {
+      "symbol": "XLF",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "KURUMSAL_ISLEM_DOGRULANMADI",
+          "msg": "2016-09-19 öncesi 179 satırda tarihsel fiyat/hacim üretilmedi: XLRE pay dağıtımı; sağlayıcının 1.231 split kaydı sıradan hisse bölünmesi değildir. Olay öncesi tarihsel fiyat/hacim ayrıca doğrulanmalıdır. Kaynak: https://www.miaxglobal.com/sites/default/files/alert-files/XLF_Distribution_39575.pdf"
+        },
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 179 satırda raw_volume üretilmedi"
+        },
+        {
+          "severity": "BILGI",
+          "code": "SPLIT_YENI",
+          "msg": "manifestoda olmayan split: 2016-09-19 oran 1.231 (manifestoya eklenmeli)"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2016-09-19",
+            "ratio": 1.231,
+            "close_ratio": 1.0064,
+            "open_ratio": 0.9996,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.872,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 6.479137,
+        "temettu_faktor_max_hata": 3.4338138876766067e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 2034.6,
+        "yillik_vol_1y": 0.147,
+        "gercek_fiyat_dogrulanamayan_orani": 0.066,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "UYARI"
+    },
+    "XLE": {
+      "symbol": "XLE",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2496 satırda raw_volume üretilmedi"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2025-12-05",
+            "ratio": 2.0,
+            "close_ratio": 0.9959,
+            "open_ratio": 0.9983,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.845,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 44,
+        "temettu_toplam": 14.3635,
+        "temettu_faktor_max_hata": 2.857771327358094e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 1917.8,
+        "yillik_vol_1y": 0.22,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "UYARI"
+    },
+    "XLV": {
+      "symbol": "XLV",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 44,
+        "temettu_toplam": 20.283,
+        "temettu_faktor_max_hata": 3.169509728007114e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 1667.3,
+        "yillik_vol_1y": 0.161,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "OK"
+    },
+    "XLP": {
+      "symbol": "XLP",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 19.022,
+        "temettu_faktor_max_hata": 4.992535652670327e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 1067.4,
+        "yillik_vol_1y": 0.147,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "OK"
+    },
+    "XLI": {
+      "symbol": "XLI",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 16.995,
+        "temettu_faktor_max_hata": 5.503573332621414e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 1502.1,
+        "yillik_vol_1y": 0.172,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "OK"
+    },
+    "ITA": {
+      "symbol": "ITA",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [
+        {
+          "severity": "UYARI",
+          "code": "RAW_HACIM_YOK",
+          "msg": "sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1241 satırda raw_volume üretilmedi"
+        }
+      ],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": [
+          {
+            "date": "2020-12-07",
+            "ratio": 2.0,
+            "close_ratio": 0.9989,
+            "open_ratio": 1.0028,
+            "fiyat_isaret": "duzeltilmis_gibi",
+            "volume_ratio": 0.586,
+            "hacim_isaret": "duzeltilmis_gibi"
+          }
+        ]
+      },
+      "temettu": {
+        "temettu_olay": 43,
+        "temettu_toplam": 11.3545,
+        "temettu_faktor_max_hata": 4.2585750847923265e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 167.2,
+        "yillik_vol_1y": 0.231,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "UYARI"
+    },
+    "ICLN": {
+      "symbol": "ICLN",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": null,
+      "issues": [],
+      "satir": 2712,
+      "eligible_satir": 2712,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2016-01-04",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2016-01-04",
+        "beklenen_kaynak": "istenen başlangıç",
+        "ilk_tarih_fark_gun": 0
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 23,
+        "temettu_toplam": 2.232,
+        "temettu_faktor_max_hata": 2.943600513338751e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 97.3,
+        "yillik_vol_1y": 0.308,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "OK"
+    },
+    "UFO": {
+      "symbol": "UFO",
+      "roles": [
+        "baglam"
+      ],
+      "asset": "etf",
+      "indirme": "OK",
+      "event": "Procure Space ETF; 2019 Nisan'da kuruldu (yaklaşık ay, teyit edilmeli); öncesine satır yaratılmaz.",
+      "issues": [],
+      "satir": 1889,
+      "eligible_satir": 1889,
+      "ohlcv": {
+        "nan_ohlc": 0,
+        "nan_volume": 0,
+        "nonpos_price": 0,
+        "neg_volume": 0,
+        "zero_volume": 0,
+        "high_low_ihlal": 0,
+        "high_low_ihlal_tarih": [],
+        "donuk_satir": 0,
+        "ohlc_esit_satir": 0
+      },
+      "takvim": {
+        "takvim": "exchange_calendars 4.13.2 XNYS",
+        "eksik_seans": 0,
+        "eksik_tarihler": [],
+        "fazla_tarih": 0,
+        "fazla_tarihler": [],
+        "en_uzun_bosluk_seans": 0,
+        "son_tarih": "2026-10-15",
+        "beklenen_son_seans": "2026-10-15"
+      },
+      "gecmis": {
+        "ilk_tarih": "2019-04-11",
+        "son_tarih": "2026-10-15",
+        "beklenen_ilk_seans": "2019-04-01",
+        "beklenen_kaynak": "yaklaşık kuruluş ayı",
+        "ilk_tarih_fark_gun": 10
+      },
+      "split": {
+        "split_olaylari": []
+      },
+      "temettu": {
+        "temettu_olay": 26,
+        "temettu_toplam": 2.338,
+        "temettu_faktor_max_hata": 2.0268258360545133e-07,
+        "temettu_faktor_uyumsuz": [],
+        "adj_aciklanamayan_degisim": 0,
+        "adj_aciklanamayan_tarih": [],
+        "adj_close_ratio_son": 1.0,
+        "adj_gt_close": 0
+      },
+      "hareket": {
+        "buyuk_hareket": [],
+        "gizli_split_suphesi": []
+      },
+      "likidite": {
+        "medyan_dolar_hacim_1y_musd": 19.0,
+        "yillik_vol_1y": 0.41,
+        "gercek_fiyat_dogrulanamayan_orani": 0.0,
+        "gercek_fiyat_lt5_orani_dogrulanan_icinde": 0.0,
+        "gercek_fiyat_lt5_son_tarih": null
+      },
+      "durum": "OK"
+    }
+  }
+}

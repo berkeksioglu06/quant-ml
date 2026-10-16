@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "native_layout_matches_reviewed_v1_1_dataset": true,
+  "all_47_raw_and_clean_price_files_identical": true,
+  "native_visualizer_smoke_test": "passed",
+  "verified_output": {
+    "status": "verified",
+    "files": 12,
+    "rows": 65413,
+    "symbols": 29
+  },
+  "source_files_verified": 122
+}

@@ -1,0 +1,60 @@
+﻿symbol,severity,code,msg
+RKLB,BILGI,KESIM_ONCESI,188 satır kesim (2021-08-25) öncesi; eligible=False işaretlendi — SPAC imzası (fiyat ~$10 bandı)
+RKLB,BILGI,BUYUK_HAREKET,|getiri|>25% olan 5 gün (silinmedi)
+HIMS,UYARI,DONUK,25 satır önceki günle birebir aynı (donmuş veri?)
+HIMS,UYARI,ZERO_VOL,63 işlem gününde hacim 0
+HIMS,BILGI,KESIM_ONCESI,341 satır kesim (2021-01-21) öncesi; eligible=False işaretlendi — SPAC imzası (fiyat ~$10 bandı)
+HIMS,BILGI,BUYUK_HAREKET,|getiri|>25% olan 7 gün (silinmedi)
+SOFI,BILGI,KESIM_ONCESI,102 satır kesim (2021-06-01) öncesi; eligible=False işaretlendi
+SOFI,BILGI,BUYUK_HAREKET,|getiri|>25% olan 2 gün (silinmedi)
+PLTR,BILGI,BUYUK_HAREKET,|getiri|>25% olan 3 gün (silinmedi)
+MRVL,BILGI,BUYUK_HAREKET,|getiri|>25% olan 2 gün (silinmedi)
+BE,BILGI,BUYUK_HAREKET,|getiri|>25% olan 11 gün (silinmedi)
+TSLA,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1673 satırda raw_volume üretilmedi
+TSLA,UYARI,BILANCO_BELIRSIZ,1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı
+AMD,BILGI,BUYUK_HAREKET,|getiri|>25% olan 1 gün (silinmedi)
+AMD,UYARI,BILANCO_BELIRSIZ,1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı
+NVDA,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2122 satırda raw_volume üretilmedi
+NVDA,BILGI,BUYUK_HAREKET,|getiri|>25% olan 1 gün (silinmedi)
+NVDA,UYARI,BILANCO_BELIRSIZ,28 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı
+ENPH,BILGI,BUYUK_HAREKET,|getiri|>25% olan 11 gün (silinmedi)
+SHOP,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1633 satırda raw_volume üretilmedi
+SHOP,UYARI,BILANCO_BELIRSIZ,11 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı
+SHOP,BILGI,BILANCO_KISMI,sonuç kaydı olan 34 kayıt / ~43 çeyrek (en eski 2015-07-30)
+ROKU,BILGI,BUYUK_HAREKET,|getiri|>25% olan 7 gün (silinmedi)
+ROKU,UYARI,BILANCO_BELIRSIZ,1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı
+XYZ,BILGI,BUYUK_HAREKET,|getiri|>25% olan 2 gün (silinmedi)
+XYZ,BILGI,LEGACY_OK,XYZ geçmişi 2016-01-04'den başlıyor; SQ gerekmiyor (eski sembol verisi yok)
+SNAP,BILGI,BUYUK_HAREKET,|getiri|>25% olan 11 gün (silinmedi)
+SNAP,UYARI,BILANCO_BELIRSIZ,1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı
+UPST,BILGI,BUYUK_HAREKET,|getiri|>25% olan 14 gün (silinmedi)
+SMCI,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2200 satırda raw_volume üretilmedi
+SMCI,BILGI,BUYUK_HAREKET,|getiri|>25% olan 12 gün (silinmedi)
+SMCI,UYARI,BILANCO_BELIRSIZ,2 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı
+PLUG,BILGI,BUYUK_HAREKET,|getiri|>25% olan 13 gün (silinmedi)
+PTON,BILGI,BUYUK_HAREKET,|getiri|>25% olan 6 gün (silinmedi)
+PTON,UYARI,BILANCO_BELIRSIZ,1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı
+RIVN,BILGI,BUYUK_HAREKET,|getiri|>25% olan 2 gün (silinmedi)
+AAPL,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1173 satırda raw_volume üretilmedi
+AAPL,UYARI,BILANCO_BELIRSIZ,12 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı
+GOOGL,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1645 satırda raw_volume üretilmedi
+GOOGL,UYARI,BILANCO_BELIRSIZ,1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı
+AMZN,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1617 satırda raw_volume üretilmedi
+AMZN,UYARI,BILANCO_BELIRSIZ,8 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı
+MRNA,BILGI,BUYUK_HAREKET,|getiri|>25% olan 2 gün (silinmedi)
+WMT,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2049 satırda raw_volume üretilmedi
+WMT,UYARI,BILANCO_BELIRSIZ,1 geçmiş tarihli kayıtta sonuç bilgisi yok; gerçekleşmiş sayılmadı
+NBIS,BILGI,BUYUK_HAREKET,|getiri|>25% olan 4 gün (silinmedi)
+^VIX,BILGI,KISMI_GUN,seansı bitmemiş 2026-10-16 çıkarıldı
+^VIX,UYARI,FAZLA_TARIH,"2 satır ABD seansı olmayan günde: ['2026-05-25', '2026-09-07']"
+^TNX,BILGI,EKSIK_SEANS,"1 ABD seansı eksik (en uzun boşluk 1 seans, 2016-11-11): ['2016-11-11']"
+^TNX,BILGI,TNX_BIRIM,^TNX aralık 0.50–5.31: yüzde (ör. 4.25 = %4.25)
+XLK,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2496 satırda raw_volume üretilmedi
+SMH,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1847 satırda raw_volume üretilmedi
+IGV,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2057 satırda raw_volume üretilmedi
+XLY,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2496 satırda raw_volume üretilmedi
+XLF,UYARI,KURUMSAL_ISLEM_DOGRULANMADI,2016-09-19 öncesi 179 satırda tarihsel fiyat/hacim üretilmedi: XLRE pay dağıtımı; sağlayıcının 1.231 split kaydı sıradan hisse bölünmesi değildir. Olay öncesi tarihsel fiyat/hacim ayrıca doğrulanmalıdır. Kaynak: https://www.miaxglobal.com/sites/default/files/alert-files/XLF_Distribution_39575.pdf
+XLF,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 179 satırda raw_volume üretilmedi
+XLF,BILGI,SPLIT_YENI,manifestoda olmayan split: 2016-09-19 oran 1.231 (manifestoya eklenmeli)
+XLE,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 2496 satırda raw_volume üretilmedi
+ITA,UYARI,RAW_HACIM_YOK,sağlayıcının hacim split yöntemi dış referansla doğrulanmadı (referans yok); son split öncesi 1241 satırda raw_volume üretilmedi

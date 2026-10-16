@@ -377,21 +377,42 @@
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2025-12-05",
+          2
+        ]
+      ],
+      "split_source": "https://www.ssga.com/us/en/intermediary/library-content/products/fund-docs/etfs/us/information-schedules/select-sector-spdr-fund-share-splits-faq.pdf"
     },
     {
       "symbol": "SMH",
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2023-05-05",
+          2
+        ]
+      ],
+      "split_source": "https://www.vaneck.com/us/en/press-releases/smh-vaneck-semiconductor-etf-share-split-press-release.pdf"
     },
     {
       "symbol": "IGV",
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2024-03-07",
+          5
+        ]
+      ],
+      "split_source": "https://www.sec.gov/Archives/edgar/data/1100663/000119312523298660/d611816d497.htm"
     },
     {
       "symbol": "XLC",
@@ -407,7 +428,14 @@
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2025-12-05",
+          2
+        ]
+      ],
+      "split_source": "https://www.ssga.com/us/en/intermediary/library-content/products/fund-docs/etfs/us/information-schedules/select-sector-spdr-fund-share-splits-faq.pdf"
     },
     {
       "symbol": "XLF",
@@ -421,7 +449,14 @@
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2025-12-05",
+          2
+        ]
+      ],
+      "split_source": "https://www.ssga.com/us/en/intermediary/library-content/products/fund-docs/etfs/us/information-schedules/select-sector-spdr-fund-share-splits-faq.pdf"
     },
     {
       "symbol": "XLV",
@@ -449,7 +484,14 @@
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "expected_splits": [
+        [
+          "2020-12-07",
+          2
+        ]
+      ],
+      "split_source": "https://www.miaxglobal.com/sites/default/files/alert-files/ITA_Split_47890.pdf"
     },
     {
       "symbol": "ICLN",

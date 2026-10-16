@@ -7,5 +7,10 @@ __pycache__/
 .env
 
 # indirilen veri ve çıktılar
-/data/
-/output/
+/data/*
+!/data/yahoo_20261016T121656Z/
+/output/*
+!/output/yahoo_20261016T121656Z_dataset_v1_1/
+
+# geçici yerel deneyler
+/tmp/

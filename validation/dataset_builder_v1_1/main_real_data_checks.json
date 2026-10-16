@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "snapshot": "yahoo_20261016T121656Z",
+  "prefix_checks": 110,
+  "independent_feature_checks": 203,
+  "note": "Satır bazında geleceğe erişim denetimidir; sağlayıcı revizyonlarına karşı point-in-time garantisi değildir."
+}

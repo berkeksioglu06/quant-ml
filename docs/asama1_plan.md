@@ -323,8 +323,29 @@ Okuma:
   edilince kırpılmış hedefte oynak hisselerin eğitim ortalaması yüksek kaldığı için skor volatiliteye
   yükleniyor. Çözüm hisse sayısı değil; hedefi volatiliteye ölçeklemek ya da volatilite ailesini
   girdiden çıkarmak/nötrlemek (tanı bölümündeki öneri aynen geçerli).
-- Deney 4a (LightGBM, tek iş parçacığı, 2,8 M satır) bu evrende ayrıca koşuldu; sonucu aşağıdaki
-  alt bölümde.
+
+**Deney 4a — LightGBM, sabit ayar (kural evreni, `20261016T200530Z_lgbm_h20`; kriter 0/4)**
+
+| Ölçü | 29 hisse | 281 hisse | Kural evreni |
+|---|---:|---:|---:|
+| Rank IC (NW t) | −0,050 (−1,48) | −0,105 (−2,56) | −0,075 (−3,20) |
+| IC hesaplanan gün | 925/925 | 463/925 | 693/923: K3 0/230 (her gün sabit skor) |
+| Pozitif IC'li dönem | 2/4 | 0/4 | 0/4 |
+| QQQ ↓ IC (NW t) | −0,257 (−5,42) | −0,255 (−6,25) | −0,176 (−7,35) |
+| Skor–beta sıra kor. | +0,30 | +0,52 | +0,47 |
+| İlk 5 beta / vol. (evren) | — | — | 1,04 / 0,94 (0,70 / 0,39) |
+| R²_oos | −2,92% | −1,10% | −0,43% |
+| Ağaç K1/K2/K3/K4 | 124/1/1/1 | 147/30/1/2 | 73/5/1/50 |
+| Skorla en çok korelasyonlu girdi | `market_spy_return_20` | `market_spy_return_20` | `market_qqq_return_20` (0,56), `market_spy_return_20` (0,49), `atr_14_ratio` (0,32) |
+
+2,8 M satırda da ağaç gün bazlı piyasa getirisine ve ATR'ye bölünüyor; seçtiği ilk 5 hissenin
+volatilitesi evrenin 2,4 katı. Sonuç üç evrende aynı.
+
+Izgara ve early stopping (`20261016T201323Z_diag_lgbm_h20`, 23 dk): 24 ayarın hiçbiri momentumu
+(−0,000) geçmiyor; raw24 val IC −0,026…−0,046, xs22 −0,009…−0,013 (281'lik evrende −0,020…−0,040 /
+−0,022…−0,053). Early stopping'i l2 yerine IC ile yapmak da kazandırmıyor (raw24 K1: 100 ağaç
+−0,117 / 1000 ağaç −0,089; K3'te iki kural da 1 ağaç, IC 0). Ayar ve ağaç sayısı sorusu üçüncü
+evrende de kapanıyor.
 
 ## Sonraki deneyler
 

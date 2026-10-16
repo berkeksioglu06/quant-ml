@@ -238,12 +238,14 @@ def membership(snap: Path) -> pd.DataFrame:
         except Exception as exc:  # noqa: BLE001 - bozuk tek dosya raporlanır
             problems.append((sym, repr(exc)[:200]))
             continue
-        daily = daily.loc[
-            daily.index.isin(
-                md.CAL.sessions_in_range(daily.index.min(), daily.index.max()).tz_localize(None)
-            )
-        ]
+        daily = daily.loc[daily.index.notna()]
         if daily.empty:
+            problems.append((sym, "temizlik sonrası tamamlanmış seans yok"))
+            continue
+        sessions = md.CAL.sessions_in_range(daily.index.min(), daily.index.max())
+        daily = daily.loc[daily.index.isin(sessions.tz_localize(None))]
+        if daily.empty:
+            problems.append((sym, "XNYS seansına denk gelen satır yok"))
             continue
         m = rule_metrics(daily)
         frames.append(m.reset_index().assign(symbol=sym))

@@ -21,6 +21,7 @@ import argparse
 import hashlib
 import json
 import os
+import sys
 import time
 from datetime import UTC, datetime
 from importlib.metadata import version
@@ -58,6 +59,13 @@ SESSION_BUFFER = pd.Timedelta(minutes=15)  # kapanıştan sonra son mumun kesinl
 BIG_MOVE = 0.25
 REF_TOL = {"price": 0.02, "volume": 0.15}  # hacimde kaynaklar arası fark (konsolide/birincil) büyük
 TRAIN_ROLES = {"ana20", "kontrol8"}
+
+
+def utf8_console() -> None:
+    """Windows'ta yönlendirilen çıktı cp1254 olur; ≥ ve → gibi karakterler çalışmayı düşürmesin."""
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="replace")
 
 
 def safe(symbol: str) -> str:
@@ -1048,6 +1056,7 @@ def load(snapshot: str | None = None, symbols: list[str] | None = None) -> pd.Da
 
 
 if __name__ == "__main__":
+    utf8_console()
     ap = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )

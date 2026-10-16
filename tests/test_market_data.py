@@ -1,5 +1,6 @@
 """Main veri hattı: bozuk veri örnekleri ve sabit gerçek veriyle uçtan uca denetim."""
 
+import io
 import json
 import shutil
 import sys
@@ -237,3 +238,13 @@ def test_real_main_clean_quality_dataset_chain_matches_reviewed_output(tmp_path)
     actual = pd.read_parquet(output / "dataset.parquet")
     pd.testing.assert_frame_equal(actual, expected)
     assert verify_output(output)["rows"] == 65413
+
+
+def test_utf8_console_survives_cp1254_redirect(monkeypatch):
+    out = io.TextIOWrapper(io.BytesIO(), encoding="cp1254", newline="\n")
+    monkeypatch.setattr(sys, "stdout", out)
+    monkeypatch.setattr(sys, "stderr", out)
+    m.utf8_console()
+    print("Kapsama ≥252 · → data/x")
+    out.flush()
+    assert out.buffer.getvalue().decode("utf-8") == "Kapsama ≥252 · → data/x\n"

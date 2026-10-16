@@ -1,6 +1,6 @@
 # Geniş evren referans script'leri
 
-`docs/deney6_hazirlik.md` için referans. 16 Ekim 2026'da 2.957 hisselik veriyi bu script'ler üretti.
+Geniş evren G1 hazırlığı için referans. 16 Ekim 2026'da 2.957 hisselik veriyi bu script'ler üretti.
 Repo dışı yerel klasöre (`data/genis_2957_<tarih>/`, Git'e girmez) yazarlar. Kalıcı hali
 `genis_evren.py`'ye `clean` ve `dataset` komutları olarak taşınacak (hazırlık belgesi, bölüm 1).
 

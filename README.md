@@ -8,6 +8,23 @@ uv run python market_data.py all
 uv run streamlit run viz.py
 ```
 
+## Tek aktif veri hattı
+
+Yeni geliştirmeler güncel main yapısında yapılır: `market_data.py` indirme,
+temizleme ve kalite kontrolünü, `dataset_builder/` özellik ve etiket üretimini,
+`viz.py` görselleştirmeyi yürütür. Eski `codex/data-pipeline` dalı geliştirme
+kaynağı olarak kullanılmaz; silinmiş `src/quant_ml/data/` yapısı geri getirilmez.
+
+`all` veya `build` yeni kayıtta `issues.csv`, `quality_detail.json` ve
+`quality_report.md` üretir. Taşınan kontroller: SPAC/faaliyet öncesi dönem,
+ilk/son seans ve uzun veri boşlukları, OHLCV, temettü/Adj Close tutarlılığı,
+split fiyat kırılmaları ve gizli split şüphesi, endeks ölçeği, bilanço takvimi.
+Bilanço tarihleri yeni indirmelerde alınır ve checksum ile saklanır; eksik veya
+belirsiz sonuçlar açıkça raporlanır. Bu kayıtlar 24 özelliğe eklenmez.
+XLF'nin özel şirket işlemi öncesinde tarihsel mutlak fiyat/hacim üretilmez.
+
+Ayrıntılar: [docs/main_veri_hatti.md](docs/main_veri_hatti.md).
+
 ## Repodaki veri kaydı
 
 `data/yahoo_20261016T121656Z/` 16 Ekim 2026 indirmesidir; son tamamlanmış fiyat günü

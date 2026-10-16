@@ -1,0 +1,14 @@
+{
+  "snapshot": "yahoo_20261016T121656Z",
+  "symbols": 47,
+  "issue_counts": {
+    "HATA": 0,
+    "UYARI": 17,
+    "BILGI": 27
+  },
+  "dataset_rows": 65413,
+  "dataset_columns": 50,
+  "full_dataframe_equal": true,
+  "archived_snapshot_unchanged": true,
+  "automated_tests": 90
+}

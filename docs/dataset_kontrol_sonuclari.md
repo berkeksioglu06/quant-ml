@@ -4,7 +4,7 @@
 
 ## Doğrulananlar
 
-- **69 otomatik test geçti.** Ayrıntılı kayıt: `validation/tests.xml`.
+- **Main entegrasyonunda 90 otomatik test geçti.** Kayıt: `validation/dataset_builder_v1_1/main_quality_tests.xml`. İlk bağımsız paket incelemesindeki 69 testin kaydı da saklanır.
 - Eski ve yeni klasör düzenlerinde aynı girdiyle aynı veri seti üretildi.
 - 24 formülün tamamı bağımsız skaler hesaplarla sentetik veride karşılaştırıldı.
 - Gelecek satırların değiştirilmesi geçmiş özellikleri değiştirmedi.
@@ -33,7 +33,7 @@
 - Fiyat özellikleri, bütün hedefler, giriş/çıkış tarihleri ve purge sayıları v1 ile aynı.
 - `labels.py` dosyası v1 ile bayt düzeyinde aynı; etiket formülleri değiştirilmedi.
 - Genel UYARI kayıtları hisseye özel kalite durumundan ayrıldı; genel HATA durdurucu.
-- İlk sürüm ZIP'i korunmuştur. Ayrıntılı karşılaştırma: `validation/regression.json`.
+- İlk sürüm ZIP'i korunmuştur. Ayrıntılı karşılaştırma: `validation/dataset_builder_v1_1/regression.json`.
 
 | Tarih kesimi | Hisse | Satır | Atlananlar |
 |---|---:|---:|---|
@@ -48,5 +48,5 @@ tarihinde bilinen etiketler de eşleşti; henüz bilinmeyen sonuçlar boş bıra
 
 Henüz model eğitimi, kârlılık kanıtı, portföy backtesti veya yeni main'e merge yoktur.
 Verinin güncel düzeltilmiş hali geçmişte yayımlanmış halinin aynısı olmak zorunda değildir.
-Kaynak kalite kontrollerinin main'e taşınması ayrı bir entegrasyon işidir.
+Kaynak kalite kontrolleri `market_data.py` içine taşındı; yeni temizleme + kalite + özellik/etiket zinciri gerçek veride test edildi. 65.413 satır ve 50 kolonun tamamı incelenmiş tabloyla birebir eşleşti.
 Bu paket seçilen temiz veriden türetilmiş tablolar üretir; yeni veri indirmez.

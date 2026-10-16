@@ -442,7 +442,10 @@
       "roles": [
         "baglam"
       ],
-      "asset": "etf"
+      "asset": "etf",
+      "historical_unverified_before": "2016-09-19",
+      "historical_unverified_reason": "XLRE pay dağıtımı; sağlayıcının 1.231 split kaydı sıradan hisse bölünmesi değildir. Olay öncesi tarihsel fiyat/hacim ayrıca doğrulanmalıdır.",
+      "corporate_action_source": "https://www.miaxglobal.com/sites/default/files/alert-files/XLF_Distribution_39575.pdf"
     },
     {
       "symbol": "XLE",
